@@ -1,0 +1,68 @@
+/* Dashboard Weather Widget css */
+.white {color: #ffffff;}
+.dark {color: #6f7a8a;}
+.red {color: #f40a0a;}
+.red-smooth {color: #d8605f;}
+.blue {color: #62aeef;}
+.green {color: #72b110;}
+.yellow {color: #f7cb38;}
+.orange {color: #F88C00;}
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; outline: 0 !important; }
+.center {text-align: center;}
+/* ------------------ Weather widget--------------------*/
+.weather ul {list-style:none; margin-left: 0; margin-bottom: 0; margin-top: 10px; border-top: 1px dashed #c9c9c9;}
+.weather li {
+	margin-bottom: 0;
+	display: inline;
+	padding: 10px 0 0 0;
+	width: 16.6%;
+	float: left;
+	text-align: center;
+	border-right: 1px dashed #c9c9c9;
+}
+.weather li:last-child {border-right: none;}
+	.weather .pull-left {width: 50%;}
+	.weather .pull-right {width: 50%;}
+	.weather .location {margin-bottom: 15px; font-weight: bold;}
+	.weather .icon {
+		display: inline-block;
+		width: 100%;
+		text-align: right;
+		padding-right: 40px;
+		margin-bottom: 5;
+	}
+	.weather .degree {
+		font-size: 100px;
+		margin-top: 25px;
+		display: inline-block;
+		width: 100%;
+		text-align: left;
+		margin-bottom: 5px;
+		text-shadow: 0px 1px 0px rgba(0,0,0,0.5);
+	}
+	.weather .today {
+		display: inline-block;
+		width: 100%;
+		margin-top: 5px;
+		margin-left: 5px;
+		font-weight: bold;
+		text-align: right;
+		padding-right: 50px;
+		margin-bottom: 5px;
+	}
+	.weather li .day {text-transform: uppercase; color: #666; margin-bottom: 5px;display: inline-block;}
+	.weather li .dayicon {width: 100%; display: inline-block; margin-bottom: 5px;}
+	.weather li .max {width: 100%; display: inline-block; font-weight: bold; color: #62aaef;}
+	.weather li .min {width: 100%; display: inline-block; color: #999;}
+	.weather-container{padding:10px;}
+	/* end Dashboard Weather Widget css */
+	.search-suboption
+	{
+		opacity:1 !important; 
+		color:#000 !important;
+		text-decoration: none !important;
+	}
+	.search-suboption:hover
+	{
+		opacity:0.7 !important; 
+	}

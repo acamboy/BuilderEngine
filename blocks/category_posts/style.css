@@ -1,0 +1,73 @@
+/*!
+ * BuilderEngine Themes (http://builderengine.com)
+ * Blog Category Posts
+ */
+
+
+/* -------------------------------
+    Blog Post / General Styles
+------------------------------- */
+
+#blog h2 a {
+    text-decoration: none;
+	font-weight: 500;
+    color: #428bca;
+}
+
+#blog h2 a:hover{
+    color: #346C9D;
+}
+
+.space14 {
+    font-size: 14px;
+    
+}
+
+.blog-header-small {
+    margin-bottom: 15px;
+}
+
+.divider {
+    border: 0;
+    margin: 10px 0;
+    border-top: #ddd 1px solid;
+    text-align: center;
+    position: relative;
+    clear: both;
+}
+
+.btn-xs, .btn-xs:hover {
+    text-decoration: none;
+}
+
+
+/** Blog Masonry
+ **************************************************************** **/
+#blog .masonry-item-blog-category-post {
+	margin: 2% 2% 0 0;
+	padding: 20px;
+	position: relative;
+	min-height: 1px;
+	background-color: #F8F8F8;
+	width:100%; overflow:hidden;
+
+	-webkit-border-radius: 6px;
+	   -moz-border-radius: 6px;
+			border-radius: 6px;
+}
+	#blog .masonry-item-blog-category-post  .item {
+		background:none !important;
+		margin-bottom:0 !important;
+		padding-bottom:0 !important;
+	}
+
+	.masonry-list {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style: none;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    transition: opacity 1s;
+}

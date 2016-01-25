@@ -1,0 +1,504 @@
+/*!
+ * BuilderEngine Themes (http://builderengine.com)
+ */
+
+
+/* -------------------------------
+    Component - Buttons
+------------------------------- */
+
+.btn {
+    padding: 15px 30px;
+    font-size: 14px;
+    font-weight: 500;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.btn.btn-outline {
+    color: #fff;
+    border-width: 2px;
+    border-color: #8F8E8E;
+    background: none;
+}
+.btn.btn-outline:hover,
+.btn.btn-outline:focus {
+    border-color: #fff;
+}
+.btn:focus, 
+.btn:active:focus, 
+.btn.active:focus {
+    outline: none;
+}
+.btn-icon,
+.btn.btn-icon {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    line-height: 28px;
+    text-align: center;
+    font-size: 14px;
+}
+.btn-circle,
+.btn.btn-circle {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.btn-icon.btn-xs {
+    width: 16px;
+    height: 16px;
+    font-size: 8px;
+    line-height: 16px;
+}
+.btn-icon.btn-sm {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    line-height: 22px;
+}
+.btn-icon.btn-lg {
+    width: 34px;
+    height: 34px;
+    font-size: 17px;
+    line-height: 34px;
+}
+.btn-scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 25px;
+    z-index: 1020;
+}
+.page-with-right-sidebar .btn-scroll-to-top {
+    left: 25px;
+    right: auto;
+}
+.btn > .pull-left, 
+.btn > .pull-right {
+    line-height: 1.428571429;
+}
+.btn-block {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.btn:active,
+.btn.active {
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Component - Button - Default */
+
+.btn.btn-default {
+    color: #fff;
+    background: #b6c2c9;
+    border-color: #b6c2c9;
+}
+.btn-default:hover, 
+.btn-default:focus, 
+.btn-default:active, 
+.btn-default.active, 
+.open .dropdown-toggle.btn-default {
+    background: #929ba1;
+    border-color: #929ba1;
+}
+.btn-group .btn.btn-default:not(.active) + .btn.btn-default,
+.input-group-btn .btn.btn-default:not(.active) + .btn.btn-default {
+    border-left-color: #929ba1;
+}
+
+
+/* Component - Button - White */
+
+.btn.btn-white {
+    font-weight: normal;
+    color: #333;
+    background: #fff;
+    border-color: #e2e7eb;
+}
+.btn.btn-white.btn-white-without-border {
+    border-color: #fff;
+}
+.btn.btn-white.btn-white-without-border.active,
+.btn.btn-white.btn-white-without-border.active:hover,
+.btn.btn-white.btn-white-without-border.active:focus {
+    border-color: #ddd;
+}
+.btn.btn-white.btn-white-without-border:hover,
+.btn.btn-white.btn-white-without-border:focus {
+    border-color: #eee;
+}
+.btn-white:hover, 
+.btn-white:focus, 
+.btn-white:active, 
+.btn-white.active,
+.open .dropdown-toggle.btn-white {
+    background: #e2e7eb;
+    border-color: #d8dde1;
+}
+.btn-group .btn.btn-white:not(.active) + .btn.btn-white,
+.input-group-btn .btn.btn-white:not(.active) + .btn.btn-white {
+    border-left-color: #eee;
+}
+
+
+/* Component - Button - Inverse */
+
+.btn.btn-inverse {
+    color: #fff;
+    background: #2d353c;
+    border-color: #2d353c;
+}
+.btn-inverse:hover, 
+.btn-inverse:focus, 
+.btn-inverse:active, 
+.btn-inverse.active, 
+.open .dropdown-toggle.btn-inverse {
+    background: #242a30;
+    border-color: #242a30;
+}
+.btn-group .btn.btn-inverse:not(.active) + .btn.btn-inverse,
+.input-group-btn .btn.btn-inverse:not(.active) + .btn.btn-inverse {
+    border-left-color: #242a30;
+}
+
+
+/* Component - Button - Primary */
+
+.btn.btn-primary {
+    color: #fff;
+    background: #348fe2;
+    border-color: #348fe2;
+}
+.btn-primary:hover, 
+.btn-primary:focus, 
+.btn-primary:active, 
+.btn-primary.active, 
+.open .dropdown-toggle.btn-primary {
+    background: #2a72b5;
+    border-color: #2a72b5;
+}
+.btn-group .btn.btn-primary:not(.active) + .btn.btn-primary,
+.input-group-btn .btn.btn-primary:not(.active) + .btn.btn-primary {
+    border-left-color: #2a72b5;
+}
+
+
+/* Component - Button - Success */
+
+.btn.btn-success {
+    color: #fff;
+    background: #00acac;
+    border-color: #00acac;
+}
+.btn.btn-success:hover, 
+.btn.btn-success:focus, 
+.btn.btn-success:active, 
+.btn.btn-success.active, 
+.open .dropdown-toggle.btn-success {
+    background: #008a8a;
+    border-color: #008a8a;
+}
+.btn-group .btn.btn-success:not(.active) + .btn.btn-success,
+.input-group-btn .btn.btn-success:not(.active) + .btn.btn-success {
+    border-left-color: #008a8a;
+}
+
+
+/* Component - Button - Warning */
+
+.btn.btn-warning {
+    color: #fff;
+    background: #f59c1a;
+    border-color: #f59c1a;
+}
+.btn-warning:hover, 
+.btn-warning:focus, 
+.btn-warning:active, 
+.btn-warning.active, 
+.open .dropdown-toggle.btn-warning {
+    background: #c47d15;
+    border-color: #c47d15;
+}
+.btn-group .btn.btn-warning:not(.active) + .btn.btn-warning,
+.input-group-btn .btn.btn-warning:not(.active) + .btn.btn-warning {
+    border-left-color: #c47d15;
+}
+
+
+/* Component - Button - Danger */
+
+.btn.btn-danger {
+    color: #fff;
+    background: #ff5b57;
+    border-color: #ff5b57;
+}
+.btn-danger:hover, 
+.btn-danger:focus, 
+.btn-danger:active, 
+.btn-danger.active, 
+.open .dropdown-toggle.btn-danger {
+    background: #cc4946;
+    border-color: #cc4946;
+}
+.btn-group .btn.btn-danger:not(.active) + .btn.btn-danger,
+.input-group-btn .btn.btn-danger:not(.active) + .btn.btn-danger {
+    border-left-color: #cc4946;
+}
+
+
+/* Component - Button - Info */
+
+.btn.btn-info {
+    color: #fff;
+    background: #49b6d6;
+    border-color: #49b6d6;
+}
+.btn-info:hover, 
+.btn-info:focus, 
+.btn-info:active, 
+.btn-info.active, 
+.open .dropdown-toggle.btn-info {
+    background: #3a92ab;
+    border-color: #3a92ab;
+}
+.btn-group .btn.btn-info:not(.active) + .btn.btn-info,
+.input-group-btn .btn.btn-info:not(.active) + .btn.btn-info {
+    border-left-color: #3a92ab;
+}
+
+
+/* -------------------------------
+    Component - Progress Bar
+------------------------------- */
+
+.progress {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    height: 15px;
+    overflow: visible;
+    background: #e2e7eb;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.progress .progress-bar {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    position: relative;
+}
+.progress .progress-bar .progress-number {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    background: #333;
+    padding: 2px 6px 1px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    display: block;
+    line-height: 16px;
+}
+.progress .progress-bar .progress-number:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    margin-left: -5px;
+    bottom: -10px;
+    border: 5px solid transparent;
+    border-top-color: #333;
+}
+.progress-bar.progress-bar-success {
+    background: #00acac;
+}
+.progress.progress-striped .progress-bar {
+    background-image: -webkit-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-image: -o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    -webkit-background-size: 40px 40px;
+    background-size: 40px 40px;
+}
+.progress-xs {
+    height: 5px;
+}
+.progress-xs .progress-bar {
+    line-height: 5px;
+}
+.progress-sm {
+    height: 10px;
+}
+.progress-sm .progress-bar {
+    line-height: 10px;
+}
+.progress-lg {
+    height: 30px;
+}
+.progress-lg .progress-bar {
+    line-height: 30px;
+}
+.progress-bar {
+    background: #348fe2;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.progress-bar.progress-bar-success {
+    background-color: #00acac;
+}
+.progress-bar.progress-bar-info {
+    background-color: #49b6d6;
+}
+.progress-bar.progress-bar-warning {
+    background-color: #f59c1a;
+}
+.progress-bar.progress-bar-danger {
+    background-color: #ff5b57;
+}
+.progress-bar.progress-bar-inverse {
+    background-color: #2d353c;
+}
+.progress-bar.progress-bar-purple {
+    background-color: #727cb6;
+}
+
+
+/* -------------------------------
+    Component - From Control
+------------------------------- */
+
+.form-control {
+    border: 2px solid #ccd0d4;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    font-size: 12px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+.form-control.input-white {
+    background: #fff;
+    border-color: #fff;
+}
+.form-control.input-white:focus {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.form-control[disabled], 
+.form-control[readonly],
+fieldset[disabled] .form-control {
+    background: #e5e9ed;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+.form-control[disabled]:focus, 
+.form-control[readonly]:focus,
+fieldset[disabled] .form-control:focus {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    border: 1px solid #ccd0d4;
+}
+.form-control:focus {
+    border-color: #9fa2a5;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.form-horizontal.form-bordered .form-group {
+    border-bottom: 1px solid #eee;
+    margin: 0;
+}
+.form-horizontal.form-bordered .form-group:last-child {
+    border-bottom: 0;
+}
+.form-horizontal.form-bordered .form-group > .control-label {
+    padding: 22px 15px 15px;
+}
+.form-horizontal.form-bordered .form-group > div {
+    padding: 15px;
+}
+.form-horizontal.form-bordered .form-group > div {
+    border-left: 1px solid #eee;
+}
+.form-horizontal.form-bordered .form-group > .control-label {
+    border-right: 1px solid #eee;
+    margin-right: -1px;
+}
+.form-horizontal.form-bordered .has-feedback .form-control-feedback {
+    top: 15px;
+}
+label {
+    font-weight: 500;
+}
+.has-success .form-control,
+.has-success .form-control:focus,
+.has-warning .form-control,
+.has-warning .form-control:focus,
+.has-error .form-control,
+.has-error .form-control:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.has-success .help-block, 
+.has-success .control-label, 
+.has-success .radio, 
+.has-success .checkbox, 
+.has-success .radio-inline, 
+.has-success .checkbox-inline,
+.has-success .form-control-feedback {
+    color: #00acac;
+}
+.has-success .form-control {
+    border-color: #00acac;
+}
+.has-success .form-control:focus {
+    border-color: #008a8a;
+}
+.has-warning .help-block, 
+.has-warning .control-label, 
+.has-warning .radio, 
+.has-warning .checkbox, 
+.has-warning .radio-inline, 
+.has-warning .checkbox-inline,
+.has-warning .form-control-feedback {
+    color: #f59c1a;
+}
+.has-warning .form-control {
+    border-color: #f59c1a;
+}
+.has-warning .form-control:focus {
+    border-color: #c47d15;
+}
+.has-error .help-block, 
+.has-error .control-label, 
+.has-error .radio, 
+.has-error .checkbox, 
+.has-error .radio-inline, 
+.has-error .checkbox-inline,
+.has-error .form-control-feedback {
+    color: #ff5b57;
+}
+.has-error .form-control {
+    border-color: #ff5b57;
+}
+.has-error .form-control:focus {
+    border-color: #cc4946;
+}
+.form-control-feedback {
+    line-height: 34px;
+}
+
+select.form-control {
+    border-color: #ccd0d4;
+}
+select[multiple].form-control {
+    border-color: #ccd0d4;
+}
+.input-group-addon {
+    background: #e2e7eb;
+    border: none;
+}
+legend {
+    padding-bottom: 3px;
+    border-bottom: 1px solid #e2e7eb;
+}

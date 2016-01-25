@@ -1,0 +1,50 @@
+/*!
+ * BuilderEngine Themes (http://builderengine.com)
+ * Blog Tags
+ */
+
+
+/* -------------------------------
+    Blog Post / General Styles
+------------------------------- */
+
+.widgetblogtags ul.nav-list li a {
+    padding-left: 0;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+.widgetblogtags  ul.nav-list li a {
+    color: #428bca;
+}
+
+.widgetblogtags  ul.nav-list li a:hover {
+    color: #346C9D;
+}
+
+
+/** Blog Masonry
+ **************************************************************** **/
+#blog .masonry-item-blog-tags {
+	margin: 2% 2% 0 0;
+	padding: 20px;
+	position: relative;
+	min-height: 1px;
+	background-color: #F8F8F8;
+	width:100%; overflow:hidden;
+
+	-webkit-border-radius: 6px;
+	   -moz-border-radius: 6px;
+			border-radius: 6px;
+}
+	#blog .masonry-item-blog-tags  .item {
+		background:none !important;
+		margin-bottom:0 !important;
+		padding-bottom:0 !important;
+	}
+
+.tagsblock {
+    font-size: 155% !important;
+}

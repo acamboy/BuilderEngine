@@ -1,0 +1,116 @@
+/*!
+ * BuilderEngine Blog (http://builderengine.com)
+ */
+
+	h1,h2,h3,h4,h5,h6,
+	.divider.dark .fa,
+	.divider.white .fa,
+	div.tabs ul.nav-tabs li.active a,
+	h4.panel-title a,
+	div.toggle > label,
+	.noimg-slider h1,
+	.noimg-slider p,
+	.list-icon li:before,
+	.styleColor {
+		color:#2E363F;
+	}
+	#slider h2,
+	#slider .image-caption .inner p.dark,
+	div.price-table.popular,
+	.styleBackground {
+		color:#fff;
+		background-color:#2E363F;
+	}
+	/* overlay two colors */
+	.overlay.color1 {
+		background:rgba(41,47,56,0.8) !important;
+	}
+	.overlay.color2 {
+		background:rgba(25,128,182,0.8) !important;
+	}
+
+
+	/* second color [orange] */
+	a, .styleSecondColor, 
+	.list-icon.color li:before,
+	.item-box-desc small,
+	p.dropcap:first-letter,
+	ul.pagination a,
+	ul.pagination a:hover,
+	ul.pagination li.active .fa,
+	ul.star-rated.styleSecondColor li i,
+	.tp-catpion a,
+	.divider.styleColor .fa {
+		color:#1980B6;
+	}
+	#slider .btn.btn-default {
+		color:#1980B6 !important;
+	}
+
+	a:hover, a:active {
+		color:#146794;
+	}
+
+
+	/* top Head */
+	header#topHead.color {
+		color:#fff;
+		background-color:#1980B6;
+	}
+	header#topHead.color a {
+		color:#fff;
+	}
+
+	header#page-title {
+		color:#2d2f3c;
+	}
+	header#page-title h1,
+	header#page-title h2 {
+		color:#2d2f3c;
+	}
+
+
+	/* Buttons */
+	.btn-default {
+		border:#1980B6 2px solid;
+	}
+	.btn-default:hover, .btn-default:active, .btn-default:focus {
+		border:#146794 2px solid;
+	}
+	.btn-primary {
+		background-color:#1980B6 !important;
+	}
+	.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+		border:rgba(255,255,255,0) 2px solid;
+		background-color:#146794 !important;
+	}
+
+	
+	/* Toggle */
+	div.toggle.active > label {
+		color:#fff;
+		background-color:#1980B6;
+	}
+
+	/* Panels */
+
+	.panel-primary .panel-heading {
+		background-color:#1980B6;
+		border-bottom:#1980B6 1px solid;
+	}
+	.panel-body {
+		background-color:#fff;
+		-webkit-border-bottom-right-radius: 6px;
+		-webkit-border-bottom-left-radius: 6px;
+		-moz-border-radius-bottomright: 6px;
+		-moz-border-radius-bottomleft: 6px;
+		border-bottom-right-radius: 6px;
+		border-bottom-left-radius: 6px;
+	}
+
+
+	/* Popover */
+	.popover-title {
+		color:#fff;
+		background-color:#1980B6;
+	}

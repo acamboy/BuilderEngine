@@ -1,0 +1,1 @@
+[18-Nov-2014 16:23:08 Europe/Sofia] PHP Fatal error:  Class 'CI_Model' not found in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/models/gateways/paypalbuilderpaymentgateway.php on line 3

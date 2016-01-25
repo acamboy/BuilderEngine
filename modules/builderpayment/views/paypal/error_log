@@ -1,0 +1,2 @@
+[18-Nov-2014 16:22:46 Europe/Sofia] PHP Fatal error:  Call to undefined function get_theme_path() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/paypal/settings.php on line 2
+[18-Nov-2014 16:22:58 Europe/Sofia] PHP Fatal error:  Using $this when not in object context in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/paypal/payment_redirect.php on line 8

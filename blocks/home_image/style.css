@@ -1,0 +1,151 @@
+/*!
+ * BuilderEngine Block Theme (http://builderengine.com)
+ * Home Image
+ */
+
+
+/* -------------------------------
+    General Styles
+------------------------------- */
+
+.blockcontent-homeimage .content-title {
+    text-align: center;
+    position: relative;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    margin-top: 0;
+}
+.blockcontent-homeimage .content-title:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 40px;
+    background: #242a30;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -20px;
+}
+.blockcontent-homeimage .content-desc {
+    text-align: center;
+    margin-bottom: 60px;
+    color: #242a30;
+}
+.blockcontent-homeimage {
+    padding: 60px 15px 75px;
+}
+.blockcontent-homeimage.has-bg {
+    padding-bottom: 60px;
+    overflow: hidden;
+    position: relative;
+	margin-top: -20px;
+	background: #323232;
+}
+.blockcontent-homeimage.has-bg .content-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+	overflow: hidden;
+}
+.blockcontent-homeimage.has-bg .content-bg img {
+    max-width: 100%;
+	height: 100%;
+}
+.blockcontent-homeimage.has-bg .content-title:after {
+    background: #fff;
+}
+.blockcontent-homeimage.has-bg .content-bg:before {
+    content: '';
+    background: url('images/content-bg-cover.png');
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.blockcontent-homeimage.has-bg .container {
+    position: relative;
+}
+.blockcontent-homeimage.has-bg .container .content-title {
+    color: #fff;
+}
+.blockcontent-homeimage.has-bg .container .content-desc {
+    color: rgba(255,255,255,0.6);
+}
+.blockcontent-homeimage.has-bg h1,
+.blockcontent-homeimage.has-bg h2,
+.blockcontent-homeimage.has-bg h3,
+.blockcontent-homeimage.has-bg h4,
+.blockcontent-homeimage.has-bg h5,
+.blockcontent-homeimage.has-bg h6 {
+    color: #fff;
+	font-weight: 500;
+}
+
+.bg-green {
+    background: #00acac;
+}
+.text-theme, a {
+    color: #00acac;
+}
+
+/* -------------------------------
+    #Home Section Settings
+------------------------------- */
+
+.home {
+    padding: 0 !important;
+    color: #fff;
+}
+.home-content {
+    z-index: 1020;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    color: #8F8E8E;
+    margin-top: -120px;
+    padding: 0 15px;
+    text-align: center;
+}
+.home-content h1,
+.home-content h2,
+.home-content h3,
+.home-content h4 {
+    color: #fff;
+    margin: 0 0 40px;
+    font-weight: 300;
+}
+.home-content h1 {
+    font-size: 64px;
+    font-weight: 600;
+}
+.home-content h3 {
+    font-size: 32px;
+}
+.home-content p {
+    margin-bottom: 60px;
+	color: #DEDEDE
+}
+.home-content a:hover,
+.home-content a:focus {
+    color: #fff;
+}
+.home-content .btn + .btn {
+    margin-left: 15px;
+}
+.block-big-image {
+height: 100%;
+}
+.btn.btn-homeimage {
+    background: #00acac;
+    border-color: #00acac;
+    color: #fff;
+}
+.btn.btn-homeimage:hover,
+.btn.btn-homeimage:focus {
+    background: #008a8a;
+    border-color: #008a8a;
+}

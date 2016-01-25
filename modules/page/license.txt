@@ -1,0 +1,173 @@
+BUILDERENGINE COMMERCIAL SOFTWARE LICENSE AGREEMENT
+
+THIS DOCUMENT IS A LEGAL AGREEMENT BETWEEN RADIAN ENTERPRISE SYSTEMS LIMITED ("We," "Us", "Licensor") AND
+YOU OR THE ORGANIZATION ON WHOSE BEHALF YOU ARE UNDERTAKING THE LICENSE ("You, Licensee")
+IN RELATION TO THE BUILDERENGINE CMS BUILDER PAGE MODULE SOFTWARE (THE "Software") AND/OR ALL RELATED
+MATERIALS. BY DOWNLOADING, COPYING OR OTHERWISE USING THE SOFTWARE, YOU ACCEPT
+THE FOLLOWING CONDITIONS. IF YOU DO NOT AGREE WITH ANY OF THE TERMS OF THIS
+LICENSE AGREEMENT, DO NOT PROCEED WITH THE DOWNLOADING OR INSTALLATION OF THIS
+SOFTWARE. THE SOFTWARE IS PROTECTED BY COPYRIGHT LAWS AND INTERNATIONAL
+COPYRIGHT, AS WELL AS OTHER INTELLECTUAL PROPERTY LAWS AND TREATIES. THE
+SOFTWARE IS LICENSED, NOT SOLD.
+
+THIS LICENSE AGREEMENT DESCRIBES YOUR RIGHTS WITH RESPECT TO THE SOFTWARE
+AND ITS COMPONENTS.
+
+We, Radian Enterprise Systems Limited, grant You a non-exclusive, non-transferable license to use
+this Software on the following terms:
+
+1. OWNERSHIP, LICENSE GRANT
+
+By accepting this license grant, the Licensee doesn't become the holder of any other
+intellectual property rights in the licensed Software. Title to and ownership of the
+intellectual property rights in the licensed Software, all copies thereof, and all
+documentation related thereto, shall remain at all times with the Licensor. The
+Licensee agrees to take all steps which are reasonably necessary to protect the
+Licensor's ownership rights to the Licensed Programs in the conduct of the Licensee's
+licensed commercial activity with the Licensed Program, and will not take any action
+to jeopardize, limit or interfere in any manner with such rights. 
+
+This is a license agreement and not an agreement for sale. We reserve ownership
+of all intellectual property rights inherent in the Software, which include, but
+are not limited to, all copyright, patent rights, all rights in relation to
+registered and unregistered trademarks (including service marks), confidential
+information (including trade secrets and know-how) and all rights other than
+those expressly granted by this Agreement.
+
+   a. Developer License:
+      We grant to You a non-transferable and non-exclusive license for
+      one (1) single developer to install and use the Software on unlimited workstations
+      used exclusively by the developer within Your organization and to install  
+      and use the Software in connection with unlimited domains and sub-domains on
+      unlimited servers.
+
+   a. Team License:
+      We grant to You a non-transferable and non-exclusive license for
+      up to five (5) developers to install and use the Software on unlimited workstations
+      used exclusively by the developer within Your organization and to install  
+      and use the Software in connection with unlimited domains and sub-domains on
+      unlimited servers.
+
+   b. Enterprise License:
+      Subject to the payment of the subscription fee required for a Commercial Enterprise
+      License, We grant to You a non-transferable and non-exclusive license for
+      up to twenty five (25) developers to install and use the Software on unlimited
+      workstations used exclusively by developers within Your organization and to
+      install and use the Software in connection with unlimited domains and sub-
+      domains on unlimited servers.
+
+2. PERMITTED USES, SOURCE CODE, MODIFICATIONS
+
+Under no circumstances may the source code be deleted or any modifications 
+to the "Builder Page Module". Use of the Software is allowed within the interface 
+supplied by the BuilderEngine CMS. While You retain all rights to any
+original work authored by You as part of the "CSS Dashboard Interface" Modifications, 
+We continue to own all copyright and other intellectual property rights in the Software.
+
+3. PROHIBITED USES
+
+You may not, without prior written consent of Radian Enterprise Systems Limited, redistribute
+the Software or Modifications other than including its parts or as a whole
+into Your own product, which must have substantially different functionality
+than the Software or Modifications and must not allow any third party to use
+the included parts of the Software or Modifications for software
+development purposes. You are explicitly not allowed to redistribute the
+Software or Modifications as part of any product that can be described as a
+development toolkit or library and which is intended for use by software
+developers and not end-users. You are not allowed to redistribute any part of
+the Software documentation.
+
+You may not: a) use any part of the Software or Modifications or Your
+knowledge of the Software to create a product with the same or substantially
+the same functionality as the Software; b) transfer, rent, lease, or
+sublicense the Software or Modifications; c) change or remove the copyright
+notice from any of the files included into the original Software or
+Modifications.
+
+UNDER NO CIRCUMSTANCES MAY THE SOURCE CODE BE USED AS THE BASIS FOR
+CREATING A PRODUCT THAT CONTAINS THE SAME, OR SUBSTANTIALLY THE SAME,
+FUNCTIONALITY AS THE SOFTWARE.
+
+4. DISTRIBUTION AND ROYALTIES
+
+This agreement entitles You to the royalty free distribution of Software in
+any BuilderEngine CMS Install, which do not violate the restrictions set forth in 
+section 3 of this agreement.  You must not remove, obscure or interfere with any 
+copyright, acknowledgment, attribution, trademark, warning or disclaimer statement 
+affixed to, incorporated in or otherwise applied in connection with the Software.
+
+Client-side elements of the Software are licensed royalty-free. The license
+fee covers the use of client side elements in design time. No additional
+license fees must be paid to distribute applications, frameworks, or elements
+developed using the Software.
+
+Server-side elements of the Software are licensed for one (1) deployment. The
+license fee covers the use of server-side elements of the Software for the
+purposes of design and development.  No additional license fees must be paid
+to deploy applications, frameworks, or elements developed using the Software.
+
+5. TERMINATION
+
+This Agreement and Your right to use the Software or Modifications will
+terminate immediately without notice if You fail to comply with the terms and
+conditions of this Agreement. Upon termination, You agree to destroy the
+Software or Modifications, including all accompanying documents.
+
+6. LIMITED WARRANTY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, RADIAN ENTERPRISE SYSTEMS LIMITED AND ITS
+SUPPLIERS DISCLAIM ALL WARRANTIES AND CONDITIONS, EITHER EXPRESS OR IMPLIED,
+INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT, WITH REGARD
+TO THE SOFTWARE. THIS LIMITED WARRANTY GIVES YOU SPECIFIC LEGAL RIGHTS.
+YOU MAY HAVE OTHERS, WHICH VARY BY PROVINCE/JURISDICTION.
+
+You acknowledge that it is not technically practicable to guarantee
+the Software to be error-free, and You agree that if any errors are found to
+exist in the Software they shall not constitute a breach of this Agreement.
+
+7. LIMITATION OF LIABILITIES
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL RADIAN ENTERPRISE SYSTEMS LIMITED 
+OR ITS SUPPLIERS BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES
+FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS
+INFORMATION OR ANY OTHER PECUNIARY LAW) ARISING OUT OF THE USE OF OR
+INABILITY TO USE THE SOFTWARE, EVEN IF RADIAN ENTERPRISE SYSTEMS LIMITED HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES. IN ANY CASE, RADIAN ENTERPRISE SYSTEMS LIMITED'S ENTIRE LIABILITY
+UNDER ANY PROVISION OF THIS LICENSE AGREEMENT SHALL BE LIMITED TO THE GREATER
+OF THE AMOUNT ACTUALLY PAID BY THE LICENSEE FOR THE SOFTWARE OR FIVE ($5.00)
+DOLLARS (USD).
+
+8. GOVERNING LAW
+This Agreement shall be governed and constructed in accordance with the laws of the
+Republic of Ireland and the laws of Ireland applicable therein. If any
+provision of this Agreement or the application thereof shall be invalid or
+unenforceable, the remainder of this Agreement shall be unaffected thereby, and each
+remaining term or provision of this Agreement shall be valid and be enforced to the
+fullest extent of the law. 
+
+9. MISCELLANEOUS
+
+The license granted herein applies only to the version of the Software
+downloaded or installed in connection with the terms of this Agreement. Any
+previous or subsequent license granted to You for use of the Software shall
+be governed by the terms and conditions of the agreement entered in
+connection with downloading or installation of that version of the Software.
+
+While redistributing the Software or Modifications thereof, You may choose
+to offer acceptance of support, warranty, indemnity, or other liability
+obligations and/or rights consistent with this Agreement. However, in
+accepting such obligations, You may act only on Your own behalf and on Your
+sole responsibility, not on our behalf, and only if You agree to indemnify,
+defend, and hold Us harmless for any liability incurred by, or claims
+asserted against, Us by reason of Your accepting any such warranty or
+additional liability.
+
+You acknowledge that these terms are complete and exclusive. No oral or
+written information given by Us or on our behalf shall create a warranty
+or collateral contract, or in any way increase the scope of this warranty
+in any way, and You may not rely on any such advice.
+
+If any provision in this Agreement shall be determined to be invalid, such
+provision shall be deemed omitted; the remainder of this Agreement shall stand.

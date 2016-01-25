@@ -1,0 +1,7 @@
+[18-Nov-2014 16:17:43 Europe/Sofia] PHP Fatal error:  Class 'Module_Controller' not found in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/controllers/api.php on line 3
+[18-Nov-2014 16:17:53 Europe/Sofia] PHP Fatal error:  Class 'Module_Controller' not found in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/controllers/admin.php on line 3
+[18-Nov-2014 16:17:58 Europe/Sofia] PHP Fatal error:  Class 'Module_Controller' not found in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/controllers/paymentgateway.php on line 3
+[18-Nov-2014 16:18:08 Europe/Sofia] PHP Fatal error:  Class 'Module_Controller' not found in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/controllers/paymentgateway.php on line 3
+[18-Nov-2014 16:18:16 Europe/Sofia] PHP Fatal error:  Class 'Module_Controller' not found in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/controllers/paymentgateway.php on line 3
+[18-Nov-2014 16:18:39 Europe/Sofia] PHP Fatal error:  Class 'Module_Controller' not found in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/controllers/builderpayment.php on line 3
+[18-Nov-2014 16:19:04 Europe/Sofia] PHP Fatal error:  Class 'Module_Controller' not found in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/controllers/paymentgateway.php on line 3

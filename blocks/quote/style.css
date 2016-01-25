@@ -1,0 +1,119 @@
+/*!
+ * BuilderEngine Block Theme (http://builderengine.com)
+ * Quote
+ */
+
+
+/* -------------------------------
+    General Styles
+------------------------------- */
+
+.blockcontent-quote .content-title {
+    text-align: center;
+    position: relative;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    margin-top: 0;
+}
+.blockcontent-quote .content-title:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 40px;
+    background: #242a30;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -20px;
+}
+.blockcontent-quote .content-desc {
+    text-align: center;
+    margin-bottom: 60px;
+    color: #242a30;
+}
+.blockcontent-quote {
+    padding: 60px 15px 75px;
+}
+.blockcontent-quote.has-bg {
+    padding-bottom: 60px;
+    overflow: hidden;
+    position: relative;
+	margin-top: -20px;
+	background: #323232;
+}
+.blockcontent-quote.has-bg .content-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+	overflow: hidden;
+}
+.blockcontent-quote.has-bg .content-bg img {
+    max-width: 100%;
+}
+.blockcontent-quote.has-bg .content-title:after {
+    background: #fff;
+}
+.blockcontent-quote.has-bg .content-bg:before {
+    content: '';
+    background: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.blockcontent-quote.has-bg .container {
+    position: relative;
+}
+.blockcontent-quote.has-bg .container .content-title {
+    color: #fff;
+}
+.blockcontent-quote.has-bg .container .content-desc {
+    color: rgba(255,255,255,0.6);
+}
+.blockcontent-quote.has-bg h1,
+.blockcontent-quote.has-bg h2,
+.blockcontent-quote.has-bg h3,
+.blockcontent-quote.has-bg h4,
+.blockcontent-quote.has-bg h5,
+.blockcontent-quote.has-bg h6 {
+    color: #fff;
+	font-weight: 500;
+}
+
+.bg-green {
+    background: #00acac;
+}
+.text-theme, a {
+    color: #00acac;
+}
+
+
+/* -------------------------------
+    Block Quote Settings
+------------------------------- */
+
+.quote {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 300;
+    color: #fff;
+    color: rgba(255,255,255,0.9);
+}
+.quote .fa-quote-left,
+.quote .fa-quote-right {
+    color: #fff;
+    font-size: 14px;
+    position: relative;
+    top: -14px;
+}
+.quote small {
+    display: block;
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 20px;
+}
+
+

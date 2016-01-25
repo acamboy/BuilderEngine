@@ -1,0 +1,81 @@
+/*!
+ * BuilderEngine Block Theme (http://builderengine.com)
+ * Milestones
+ */
+
+
+/* -------------------------------
+    General Styles
+------------------------------- */
+
+.milestone {
+    text-align: center;
+}
+.milestone-col + .milestone-col {
+    border-left: 1px solid rgba(255,255,255,0.2);
+}
+.milestone .number {
+    font-size: 42px;
+    color: #fff;
+    font-weight: 300;
+}
+.milestone .title {
+    color: #8F8E8E;
+}
+
+.blockcontent-milestones {
+    padding: 60px 15px 75px;
+}
+.blockcontent-milestones.has-bg {
+    padding-bottom: 60px;
+   /*overflow: hidden;*/  /* - won`t work in firefox */
+    position: relative;
+	margin-top: -20px;
+	background: #242424;
+}
+.blockcontent-milestones.has-bg .content-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+	overflow: hidden;
+}
+.blockcontent-milestones.has-bg .content-bg img {
+    max-width: 100%;
+}
+.blockcontent-milestones.has-bg .content-title:after {
+    background: #fff;
+}
+.blockcontent-milestones.has-bg .content-bg:before {
+    content: '';
+    background: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.blockcontent-milestones.has-bg .container {
+    position: relative;
+}
+.blockcontent-milestones.has-bg .container .content-title {
+    color: #fff;
+}
+.blockcontent-milestones.has-bg .container .content-desc {
+    color: rgba(255,255,255,0.6);
+}
+.blockcontent-milestones.has-bg h1,
+.blockcontent-milestones.has-bg h2,
+.blockcontent-milestones.has-bg h3,
+.blockcontent-milestones.has-bg h4,
+.blockcontent-milestones.has-bg h5,
+.blockcontent-milestones.has-bg h6 {
+    color: #fff;
+}
+.contentAnimated {
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}

@@ -1,0 +1,6 @@
+[18-Nov-2014 16:27:06 Europe/Sofia] PHP Fatal error:  Call to undefined function home_url() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/ipn/103.php on line 5
+[18-Nov-2014 16:27:09 Europe/Sofia] PHP Fatal error:  Call to undefined function home_url() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/ipn/default_error.php on line 4
+[18-Nov-2014 16:27:15 Europe/Sofia] PHP Fatal error:  Call to undefined function home_url() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/ipn/00.php on line 5
+[18-Nov-2014 16:27:17 Europe/Sofia] PHP Fatal error:  Call to undefined function home_url() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/ipn/101.php on line 5
+[18-Nov-2014 16:27:22 Europe/Sofia] PHP Fatal error:  Call to undefined function home_url() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/ipn/205.php on line 5
+[18-Nov-2014 16:27:27 Europe/Sofia] PHP Fatal error:  Using $this when not in object context in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/ipn/result.php on line 8

@@ -1,0 +1,47 @@
+/*!
+ * BuilderEngine Themes (http://builderengine.com)
+ */
+
+.btn.btn-theme {
+    background: #ff5b57;
+    border-color: #ff5b57;
+    color: #fff;
+}
+.btn.btn-theme:hover,
+.btn.btn-theme:focus {
+    background: #cc4946;
+    border-color: #cc4946;
+}
+.header.navbar .navbar-nav > li.active > a, 
+.header.navbar .navbar-nav > li > a:hover, 
+.header.navbar .navbar-nav > li > a:focus,
+.header.navbar.navbar-default .navbar-nav > li.active > a, 
+.header.navbar.navbar-default .navbar-nav > li > a:hover, 
+.header.navbar.navbar-default .navbar-nav > li > a:focus,
+.header.navbar.navbar-transparent .navbar-nav > li.active > a, 
+.header.navbar.navbar-transparent .navbar-nav > li > a:hover, 
+.header.navbar.navbar-transparent .navbar-nav > li > a:focus,
+.header.navbar.navbar-inverse .navbar-nav > li.active > a, 
+.header.navbar.navbar-inverse .navbar-nav > li > a:hover, 
+.header.navbar.navbar-inverse .navbar-nav > li > a:focus,
+.header.navbar.navbar-transparent.navbar-small .navbar-nav > li.active > a,
+.header.navbar.navbar-transparent.navbar-small .navbar-nav > li > a:hover,
+.header.navbar.navbar-transparent.navbar-small .navbar-nav > li > a:focus,
+.text-theme,
+.navbar-nav .dropdown-menu > li.active > a,
+.navbar-nav .dropdown-menu > li > a:hover,
+.navbar-nav .dropdown-menu > li > a:focus,
+a {
+    color: #ff5b57;
+}
+a:hover,
+a:focus {
+    color: #cc4946;
+}
+.pace-progress {
+    background: #cc4946;
+}
+.pace .pace-activity {
+    border-top-color: #ff5b57;
+    border-left-color: #ff5b57;
+}

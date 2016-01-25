@@ -1,0 +1,94 @@
+/*!
+ * BuilderEngine Themes (http://builderengine.com)
+ * Blog Post
+ */
+
+
+/* -------------------------------
+    Blog Post / General Styles
+------------------------------- */
+
+/* Blog Post Small Setting */
+
+.blogPostBtn{
+	padding: 6px 12px;
+}
+.space18 { 
+font-size:18px !important; 
+line-height:17px !important; 
+}	
+.space16 {
+    font-size: 16px !important;
+    line-height: 20px !important;
+	color: #7D7F80;
+}
+
+.label a, .label a:hover, a.label, a.label:hover {
+    color: #fff;
+}
+
+.blogimage-fullwidth {
+    width: 100%;
+}
+
+#blog header.blog-post {
+    margin-bottom: 30px;
+}
+#blog header.blog-post a{
+    text-decoration: none;
+}
+#blog header.blog-post h1:hover{
+    color: #5D656C;
+}
+
+big {
+font-size: 14px;
+}
+
+#blog p {
+    padding: 5px 0;
+    word-wrap: break-word;
+}
+
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 85%;
+    font-weight: 700;
+    line-height: 2;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+
+#blog header.blog-post h1 {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 50px;
+    text-transform: none;
+}
+
+/** Blog Masonry
+ **************************************************************** **/
+#blog .masonry-item {
+	margin: 2% 2% 0 0;
+	padding: 20px;
+	position: relative;
+	float: left; min-height: 1px;
+	background-color: #F8F8F8;
+	width:100%; overflow:hidden;
+
+	-webkit-border-radius: 6px;
+	   -moz-border-radius: 6px;
+			border-radius: 6px;
+}
+	#blog .masonry-item  .item {
+		background:none !important;
+		margin-bottom:0 !important;
+		padding-bottom:0 !important;
+	}
+#blog .masonry-search {
+	width:97.9%;
+}

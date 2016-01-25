@@ -1,0 +1,118 @@
+/*!
+ * BuilderEngine Block Theme (http://builderengine.com)
+ * Action Bar
+ */
+
+
+/* -------------------------------
+    General Styles
+------------------------------- */
+
+.blockcontent-action .content-title {
+    text-align: center;
+    position: relative;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    margin-top: 0;
+}
+.blockcontent-action .content-title:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 40px;
+    background: #242a30;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -20px;
+}
+.blockcontent-action .content-desc {
+    text-align: center;
+    margin-bottom: 60px;
+    color: #242a30;
+}
+.blockcontent-action {
+    padding: 60px 15px 75px;
+}
+.blockcontent-action.has-bg {
+    padding-bottom: 60px;
+    overflow: hidden;
+    position: relative;
+	margin-top: -20px;
+	background: #202020;
+}
+.blockcontent-action.has-bg .content-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+	overflow: hidden;
+}
+.blockcontent-action.has-bg .content-bg img {
+    max-width: 100%;
+}
+.blockcontent-action.has-bg .content-title:after {
+    background: #fff;
+}
+.blockcontent-action.has-bg .content-bg:before {
+    content: '';
+    background: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.blockcontent-action.has-bg .container {
+    position: relative;
+}
+.blockcontent-action.has-bg .container .content-title {
+    color: #fff;
+}
+.blockcontent-action.has-bg .container .content-desc {
+    color: rgba(255,255,255,0.6);
+}
+.blockcontent-action.has-bg h1,
+.blockcontent-action.has-bg h2,
+.blockcontent-action.has-bg h3,
+.blockcontent-action.has-bg h4,
+.blockcontent-action.has-bg h5,
+.blockcontent-action.has-bg h6 {
+    color: #fff;
+	font-weight: 500;
+}
+
+.bg-green {
+    background: #00acac;
+}
+.text-theme, a {
+    color: #00acac;
+}
+
+
+/* -------------------------------
+    #Action-Box Section Settings
+------------------------------- */
+#action_box{
+	margin:0 35px;
+}
+.action-box h3 {
+    margin-bottom: 5px;
+    margin-top: 3px;
+}
+.action-box p {
+	color: #E3E3E3;
+}
+.action-box .icon-large {
+    font-size: 48px;
+    float: left;
+    margin-right: 20px;
+    line-height: 50px;
+    width: 50px;
+    text-align: center;
+}
+.action-box .btn {
+    margin-top: -3px;
+}
+

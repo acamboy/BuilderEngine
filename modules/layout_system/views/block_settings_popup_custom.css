@@ -1,0 +1,30 @@
+
+
+body {
+color: #333;
+background-color: #2D353C !important;
+}
+
+label {
+color: #fff !important;
+}
+
+a {
+color: #FFFFFF !important;
+}
+
+.nav>li>a {
+padding: 10px 20px !important;
+}
+
+.nav-tabs {
+margin-bottom: 20px !important;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+color: #555 !important;
+}
+
+.nav-tabs > li > a:hover {
+  color: #555 !important;
+}

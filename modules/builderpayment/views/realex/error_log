@@ -1,0 +1,5 @@
+[18-Nov-2014 16:22:23 Europe/Sofia] PHP Fatal error:  Call to undefined function get_theme_path() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/settings.php on line 2
+[18-Nov-2014 16:22:35 Europe/Sofia] PHP Fatal error:  Call to undefined function home_url() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/realex_ipn.php on line 126
+[18-Nov-2014 16:22:54 Europe/Sofia] PHP Fatal error:  Call to undefined function add_action() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/realex_redirect.php on line 2
+[24-Nov-2014 21:37:18 Europe/Sofia] PHP Fatal error:  Call to undefined function home_url() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/realex_ipn.php on line 126
+[29-Nov-2014 10:27:35 Europe/Sofia] PHP Fatal error:  Call to undefined function home_url() in /home/bgbu1pzz/public_html/devcms/modules/builderpayment/views/realex/realex_ipn.php on line 126

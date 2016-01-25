@@ -1,0 +1,190 @@
+/*!
+ * BuilderEngine Block Theme (http://builderengine.com)
+ * Testimonials
+ */
+
+
+/* -------------------------------
+    General Styles
+------------------------------- */
+
+/* -------------------------------
+    Block Testimonial Settings
+------------------------------- */
+
+.testimonials {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.testimonials .item {
+    padding-top: 15px;
+}
+.testimonials .carousel-indicators {
+    bottom: -25px;
+}
+.testimonials blockquote {
+    border: none;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+.testimonials blockquote .fa-quote-left,
+.testimonials blockquote .fa-quote-right {
+    font-size: 28px;
+    position: absolute;
+    margin-left: 15px;
+    margin-top: 15px;
+    color: #8F8E8E;
+}
+.testimonials blockquote .fa-quote-left {
+    margin-left: -43px;
+    margin-top: -15px;
+}
+.testimonials .name {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+.testimonials .name span {
+    margin-left: 5px;
+}
+.testimonials .carousel-indicators li {
+    background: rgba(255,255,255,0.4);
+    border: none;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+}
+.testimonials .carousel-indicators li:hover,
+.testimonials .carousel-indicators li:focus {
+    background: rgba(255,255,255,0.7);
+}
+.testimonials .carousel-indicators li.active {
+    background: #fff;
+}
+.testimonialscarousel-indicators li,
+.carousel-indicators li.active {
+    width: 12px;
+    height: 12px;
+    margin: 1px 3px;
+}
+
+.carousel .carousel-caption h1,
+.carousel .carousel-caption h2,
+.carousel .carousel-caption h3,
+.carousel .carousel-caption h4,
+.carousel .carousel-caption h5,
+.carousel .carousel-caption h6 {
+    color: #fff;
+}
+.carousel .carousel-control .fa {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-top: -15px;
+    text-align: center;
+    line-height: 30px;
+    margin-left: -15px;
+}
+.carousel .carousel-control.left .fa {
+    left: 50%;
+}
+.carousel .carousel-control.right .fa {
+    right: 50%;
+    margin-left: 0;
+    margin-right: -15px;
+}
+
+
+.blockcontent-testimonials .content-title {
+    text-align: center;
+    position: relative;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    margin-top: 0;
+}
+.blockcontent-testimonials .content-title:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 40px;
+    background: #242a30;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -20px;
+}
+.blockcontent-testimonials .content-desc {
+    text-align: center;
+    margin-bottom: 60px;
+    color: #242a30;
+}
+.blockcontent-testimonials {
+    padding: 60px 15px 75px;
+}
+.blockcontent-testimonials.has-bg {
+    padding-bottom: 60px;
+    overflow: hidden;
+    position: relative;
+	margin-top: -20px;
+	background: #424242;
+}
+.blockcontent-testimonials.has-bg .content-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+	overflow: hidden;
+}
+.blockcontent-testimonials.has-bg .content-bg img {
+    max-width: 100%;
+}
+.blockcontent-testimonials.has-bg .content-title:after {
+    background: #fff;
+}
+.blockcontent-testimonials.has-bg .content-bg:before {
+    content: '';
+    background: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.blockcontent-testimonials.has-bg .container {
+    position: relative;
+}
+.blockcontent-testimonials.has-bg .container .content-title {
+    color: #fff;
+}
+.blockcontent-testimonials.has-bg .container .content-desc {
+    color: rgba(255,255,255,0.6);
+}
+.blockcontent-testimonials.has-bg h1,
+.blockcontent-testimonials.has-bg h2,
+.blockcontent-testimonials.has-bg h3,
+.blockcontent-testimonials.has-bg h4,
+.blockcontent-testimonials.has-bg h5,
+.blockcontent-testimonials.has-bg h6 {
+    color: #fff;
+	font-weight: 500;
+}
+.contentAnimated {
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.bg-green {
+    background: #00acac;
+}
+.text-theme, a {
+    color: #00acac;
+}
