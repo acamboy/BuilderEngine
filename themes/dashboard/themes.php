@@ -65,7 +65,7 @@
 															<?php foreach($colors as $color):?>
 																<?php if($color != '.' && $color != '..'):?>
 																	<?php $color_name = str_replace('.css', '', $color);?>
-																	<option value="<?=$color_name?>" <?if($BuilderEngine->get_option('theme_color_pattern') == $color_name) echo 'selected';?>><?=ucfirst($color_name)?></option>
+																	<option value="<?=$color_name?>" <?php if($BuilderEngine->get_option('theme_color_pattern') == $color_name) echo 'selected';?>><?=ucfirst($color_name)?></option>
 																<?php endif;?>
 															<?php endforeach;?>
 															<?php
