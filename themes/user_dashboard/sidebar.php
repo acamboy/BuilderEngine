@@ -34,7 +34,7 @@
             <i class="fa fa-user"></i>
             <span>My Account Details</span>
         </a>
-        <ul class="sub-menu" <?php if(isset($current_page) && ($current_page == 'users' || $current_page == 'groups')) echo 'style="display:block"';?>>
+        <ul class="sub-menu" <?php if(isset($current_page) && ($current_page == 'account' || $current_page == 'groups')) echo 'style="display:block"';?>>
             <li><a <?=href("user", "main/edit/{$this->user->get_id()}")?> >Edit Account</a></li>
             <li><a <?=href("user", "main/groups")?> >View User Group</a></li>
         </ul>
@@ -77,13 +77,13 @@
                 $groups[] = $group[0];
             }
         ?>
-       <ul class="sub-menu" <?php if(isset($current_page) && ($current_page == 'users' || $current_page == 'groups')) echo 'style="display:block"';?>>
+       <ul class="sub-menu" <?php if(isset($current_page) && $current_page == 'blog') echo 'style="display:block"';?>>
             <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     Blog Posts
                 </a>
-                <ul class="sub-menu" <?php if(isset($current_page) && $current_page == 'groups') echo 'style="display:block"';?>>
+                <ul class="sub-menu" <?php if(isset($current_child_page) && $current_child_page == 'posts') echo 'style="display:block"';?>>
                     <?php //if(get_option('user_created_posts') == 'yes'): ?>
                     <?php if($user_created_posts): ?>
                         <li><a <?php echo href("user", "blog/add_post/add")?>>Add New Post</a></li>
@@ -96,7 +96,7 @@
                     <b class="caret pull-right"></b>
                     Blog Categories
                 </a>
-                <ul class="sub-menu" <?php if(isset($current_page) && $current_page == 'groups') echo 'style="display:block"';?>>
+                <ul class="sub-menu" <?php if(isset($current_child_page) && $current_child_page == 'categories') echo 'style="display:block"';?>>
                     <?php //if(get_option('user_created_categories') == 'yes'): ?>
                     <?php if($user_created_categories): ?>
                         <li><a <?php echo href("user", "blog/add_category/add")?>>Add New Category</a></li>

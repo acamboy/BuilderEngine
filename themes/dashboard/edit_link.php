@@ -35,25 +35,37 @@
                                 <input type="hidden" name="tags" value="<?php echo $link->tags?>">
 
                                 <div class="form-group">
-									<label class="control-label col-md-4 col-sm-4" for="fullname">Name:</label>
+									<label class="control-label col-md-4 col-sm-4" for="fullname">
+										<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Link Name"></i>
+										Name:
+									</label>
 									<div class="col-md-6 col-sm-6">
 										<input class="form-control" type="text" id="linkname" name="name" placeholder="Link Name To Show" data-parsley-required="true" value="<?php echo $link->name?>" required />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-4 col-sm-4" for="fullname">Link Target:</label>
+									<label class="control-label col-md-4 col-sm-4" for="fullname">
+										<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Link URL"></i>
+										Link Target:
+									</label>
 									<div class="col-md-6 col-sm-6">
 										<input class="form-control" type="text" id="linktarget" name="target" placeholder="Enter the URL Link of Page or External URL" data-parsley-required="true" value="<?php echo $link->target?>" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-4 col-sm-4" for="fullname">Link Meta Title:</label>
+									<label class="control-label col-md-4 col-sm-4" for="fullname">
+										<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Tooltip information"></i>
+										Link Meta Title:
+									</label>
 									<div class="col-md-6 col-sm-6">
 										<input class="form-control" type="text" id="linkmeta" name="title" placeholder="Leave blank if none." data-parsley-required="true"  value='<?php echo $link->title?>'/>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-4 col-sm-4" for="website">Groups (Accounts) Access Allowed:</label>
+									<label class="control-label col-md-4 col-sm-4" for="website">
+										<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Only members of groups selected will see new link"></i>
+										Group Access Policy:
+									</label>
 									<div class="form-group">
 									<div class="col-md-6 col-sm-6">
                                         <ul id="link-groups-select">
@@ -65,7 +77,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-4 col-sm-4" for="website">Parent (Drop-Down Link Creation):</label>
+									<label class="control-label col-md-4 col-sm-4" for="website">
+										<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Parent Link (if applicable)"></i>
+										Parent (Drop-Down Link Creation):
+									</label>
 									<div class="form-group">
 									<div class="col-md-3 col-sm-3">
                                        <select class="form-control" id="select-required" name="parent" data-parsley-required="true">
@@ -78,7 +93,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-4 col-sm-4" for="website">Position Order:</label>
+									<label class="control-label col-md-4 col-sm-4" for="website">
+										<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Navbar or Drop-Down Menu Position"></i>
+										Position Order:
+									</label>
 									<div class="form-group">
 									<div class="col-md-3 col-sm-3">
                                        <input class="form-control" value="<?php echo $link->order?>" type="text" id="alphanum" name="order"  data-type="alphanum" placeholder="1 = First, 2 = Second, 3 = Third, etc."  data-parsley-required="true" />

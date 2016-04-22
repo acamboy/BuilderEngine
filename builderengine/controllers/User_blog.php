@@ -87,9 +87,12 @@ class User_blog extends BE_Controller
                     $_POST['groups_allowed'] = implode(',',$this->users->get_user_group_name($this->user->get_id()));
 					if(isset($_FILES['image']) && $_FILES['image']['size'] > 0){
 						$_POST['image'] = base_url().'files/users/'.$image_name;
+					}elseif(isset($_POST['image1'])){
+						$_POST['image'] = $_POST['image1'];
 					}else{
-						$_POST['image'] = base_url().'builderengine/public/img/photo_placeholder.png';
+						$_POST['image'] = $post->image;
 					}
+					
 					if(isset($_FILES['img']) && !empty($_FILES['img']['tmp_name']))
 					{
 						$file_name = $_FILES['img']['name'];
@@ -104,7 +107,7 @@ class User_blog extends BE_Controller
 							
 						move_uploaded_file($file_tmp,"files/".$file_name);
 						$file_name = base_url().'files/'.$_FILES['img']['name'];
-						$img = '<img width="100" height="100" src="'.$file_name.'" >';
+						$img = '<img class="img-responsive" src="'.$file_name.'" >';
 					}
 					else
 						$img ='';
@@ -114,6 +117,8 @@ class User_blog extends BE_Controller
                     $post->create($_POST);
                     redirect('/user/blog/posts', 'location');
                 }
+				$data['current_page'] = 'blog';
+				$data['current_child_page'] = 'posts';				
                 $this->show->set_user_backend();
                 $this->show->user_backend('add_post',$data);
             }else{
@@ -129,6 +134,8 @@ class User_blog extends BE_Controller
             $post = new Post(-1);
             $data['objects'] = $post->get();
             $data['id_user'] = $this->user->get_id();
+			$data['current_page'] = 'blog';
+			$data['current_child_page'] = 'posts';
             $this->show->set_user_backend();
             $this->show->user_backend('show_post_objects',$data);
         }
@@ -180,12 +187,16 @@ class User_blog extends BE_Controller
                     $_POST['user_id'] = $this->user->get_id();
 					if(isset($_FILES['image']) && $_FILES['image']['size'] > 0){
 						$_POST['image'] = base_url().'files/users/'.$image_name;
+					}elseif(isset($_POST['image1'])){
+						$_POST['image'] = $_POST['image1'];
 					}else{
-						$_POST['image'] = base_url().'builderengine/public/img/photo_placeholder.png';
+						$_POST['image'] = $category->image;
 					}
                     $category->create($_POST);
                     redirect('/user/blog/categories', 'location');
                 }
+				$data['current_page'] = 'blog';
+				$data['current_child_page'] = 'categories';
                 $this->show->set_user_backend();
                 $this->show->user_backend('add_category',$data);
             }else{
@@ -201,6 +212,8 @@ class User_blog extends BE_Controller
             $category = new Category(-1);
             $data['objects'] = $category->get();
             $data['id_user'] = $this->user->get_id();
+			$data['current_page'] = 'blog';
+			$data['current_child_page'] = 'categories';
             $this->show->set_user_backend();
             $this->show->user_backend('show_category_objects',$data);
         }

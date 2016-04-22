@@ -74,7 +74,7 @@
                     </div>
                     <div class="tab-pane" id="settings">
                         <?php
-							$this->admin_select('scroll_rate',array('0.5' => 'Default', '0.2' => '0.2', '0.4' => '0.4', '0.6' => '0.6', '0.8' =>'0.8', '1' => '1'),'Scroll depth rate: ');
+							$this->admin_select('scroll_rate',array('1.0' => 'Default', '0.2' => '0.2', '0.4' => '0.4', '0.6' => '0.6', '0.8' =>'0.8', '1' => '1'),'Scroll depth rate: ');
                         ?>
                     </div>
                     <div class="tab-pane" id="title">
@@ -178,6 +178,7 @@
 					<li role="presentation"><a href="#button" aria-controls="button" role="tab" data-toggle="tab">Button</a></li>
 					<li role="presentation"><a href="#imgs" aria-controls="imgs" role="tab" data-toggle="tab">Image</a></li>
                     <li role="presentation"><a href="#background" aria-controls="background" role="tab" data-toggle="tab">Background Image</a></li>
+                    <li role="presentation"><a href="#customcss" aria-controls="customcss" role="tab" data-toggle="tab">Custom CSS</a></li>
                 </ul>
 				
                 <div class="tab-content">
@@ -263,6 +264,14 @@
 							});						
 						</script>
 					</div>
+					<div role="tabpanel" class="tab-pane fade" id="customcss">
+                        <?php
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                        ?>
+                    </div>
                 </div>
             </div>
             <?php
@@ -271,7 +280,11 @@
 		public function generate_content()
 		{	
 			global $scroll_rate;
-			$scroll_rate = $this->block->data('scroll_rate');
+			$current_scroll_rate = $this->block->data('scroll_rate');
+			if(empty($current_scroll_rate))
+			    $scroll_rate = 1;
+			else
+			    $scroll_rate = $this->block->data('scroll_rate');
 			$this->block->force_data_modification();
 			$this->block->set_data('scroll_rate', $scroll_rate, true);
 			$this->block->save();
@@ -292,6 +305,14 @@
 		
 		public function output_content()
 		{
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+			$style_arr['text'] = ';'.$custom_css;
+			$this->block->set_data("style", $style_arr);
+
 			$scroll_rate = $this->block->data('scroll_rate');
 			$title = $this->block->data('title');
             $image = $this->block->data('image');
@@ -400,7 +421,7 @@
 					font-size: '.$text1_font_size.' !important;
                     font-weight: '.$text1_font_weight.' !important;
 					background-color: '.$text1_background_color.' !important;
-					padding-left:10px;
+					padding:10px;
                 "';
             $text2_style = 
                 'style="
@@ -408,7 +429,7 @@
 					font-size: '.$text2_font_size.' !important;
                     font-weight: '.$text2_font_weight.' !important;
 					background-color: '.$text2_background_color.' !important;
-					padding-left:10px;
+					padding:10px;
                 "';
             $text3_style = 
                 'style="
@@ -416,7 +437,7 @@
 					font-size: '.$text3_font_size.' !important;
                     font-weight: '.$text3_font_weight.' !important;
 					background-color: '.$text3_background_color.' !important;
-					padding-left:10px;
+					padding:10px;
                 "';
             $button_style = 
                 'style="
@@ -433,7 +454,7 @@
 				$background_style = 
 									'style="
 						background: url('.base_url().'blocks/simple_parallax_scroller/images/parallax.jpg) repeat; !important;
-						background-size:cover;
+						background-size:100% 100%;";
 				"';
 				$img = '<img id="simage'.$this->block->get_id().'" class="img-responsive pull-right" style="width:450px; height:350px; position: absolute;right: 50px;top: 50px;" src="'.base_url().'blocks/simple_parallax_scroller/images/image2.png"/>';
 			}
@@ -442,7 +463,7 @@
 				$background_style = 
 					'style="
 						background: url('.$background_image.') repeat; !important;
-						background-size:cover;
+						background-size:100% 100%;";
 				"';
 				if($default_image == 'no')
 					$img = '';
@@ -453,19 +474,20 @@
 			$output ='
 					<link href="'.base_url('builderengine/public/animations/css/animate.min.css').'" rel="stylesheet">
 					<link type="text/css" rel="stylesheet" href="'.base_url('blocks/simple_parallax_scroller/css/style.css').'">				
-				<section class="section-one">
+				<section class="section-one" id="parallax-scroller-'.$this->block->get_id().'">
 					<div class="prlx-1" '.$background_style.'></div>
 					
 						<h2 id="stitle'.$this->block->get_id().'" '.$title_style.'>'.$title.'</h2>
 						
 						<p id="stext1'.$this->block->get_id().'" class="text1" '.$text1_style.'>'.$text1.'</p>
-						<p id="stext2'.$this->block->get_id().'" class="text2" '.$text2_style.'>'.$text2.'</p>
+						<p id="stext2'.$this->block->get_id().'" class="text2" '.$text2_style.'>'.$text2.'</p><br/><br/>
 						<p id="stext3'.$this->block->get_id().'" class="text3" '.$text3_style.'>'.$text3.'</p>
 						<a id="sbutton'.$this->block->get_id().'" class="btn btn-large btn-danger btn-main" '.$button_style.' href="'.$button_url.'" target="_blank" >Tell Me More</a>
 						'.$img.'
 				</section>
-			';	
-			return $output;		
+			';
+
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), "parallax-scroller-".$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
 		}
     }
 ?>

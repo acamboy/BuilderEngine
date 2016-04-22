@@ -56,6 +56,7 @@ class User_settings extends BE_Controller
                 $data['avatar'] = intval($user_setting[0]->allow_avatar);
             else
                 $data['avatar'] = 0;
+            $data['current_page'] = 'settings';
             $this->show->set_user_backend();
             $this->show->user_backend('settings',$data);
         }

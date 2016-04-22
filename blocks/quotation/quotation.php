@@ -1,165 +1,147 @@
 <?php
 class quotation_block_handler extends  block_handler{
-        function info()
-        {
-            $info['category_name'] = "Bootstrap";
-            $info['category_icon'] = "dsf";
+    function info()
+    {
+        $info['category_name'] = "Bootstrap";
+        $info['category_icon'] = "dsf";
 
-            $info['block_name'] = "Quotation";
-            $info['block_icon'] = "fa-envelope-o";
-            
-            return $info;
-        }
-        public function generate_admin()
-        {
-            $quote_author = $this->block->data('author');
-            $quote_quotation = $this->block->data('quotation');
-            $quote_from = $this->block->data('from');
-            
-            $this->admin_input('author','text', 'Author: ', $quote_author);
-            $this->admin_input('quotation','text', 'Quotation: ', $quote_quotation);
-            $this->admin_input('from','text', 'From: ', $quote_from);
-        }
-        public function generate_style()
-        {
-			$path = substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/index.php'));
-			include $path.'/builderengine/public/animations/animations.php';
+        $info['block_name'] = "Quotation";
+        $info['block_icon'] = "fa-envelope-o";
 
-            $quotation_font_color = $this->block->data('quotation_font_color');
-            $quotation_font_weight = $this->block->data('quotation_font_weight');
-            $quotation_font_size = $this->block->data('quotation_font_size');
+        return $info;
+    }
+    public function generate_admin()
+    {
+    }
+    public function generate_style($active_menu = '')
+    {
+        include $_SERVER['DOCUMENT_ROOT'].'/builderengine/public/animations/animations.php';
 
-            $author_font_color = $this->block->data('author_font_color');
-            $author_font_weight = $this->block->data('author_font_weight');
-            $author_font_size = $this->block->data('author_font_size');
+        $background_active = $this->block->data('background_active');
+        $background_color = $this->block->data('background_color');
+        $background_image = $this->block->data('background_image');
 
-            $from_font_color = $this->block->data('from_font_color');
-            $from_font_weight = $this->block->data('from_font_weight');
-            $from_font_size = $this->block->data('from_font_size');
+        $text_align = $this->block->data('text_align');
+        $text_color = $this->block->data('text_color');
+        $custom_css = $this->block->data('custom_css');
+        $custom_classes = $this->block->data('custom_classes');
 
-			$animation_type = $this->block->data('animation_type');	  
-		    $animation_duration = $this->block->data('animation_duration');
-		    $animation_event = $this->block->data('animation_event');
-		    $animation_delay = $this->block->data('animation_delay');
+        $active_options = array("color" => "Color", "image" => "Image");
+        $text_options = array("left" => "Left", "center" => "Center", "right" => "Right");
 
-            ?>
-            <div role="tabpanel">
+        $animation_type = $this->block->data('animation_type');
+        $animation_duration = $this->block->data('animation_duration');
+        ?>
+        <div role="tabpanel">
 
-                <ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
-                    <li role="presentation" class="active"><a href="#quotation" aria-controls="quotation" role="tab" data-toggle="tab">Quotation</a></li>
-                    <li role="presentation"><a href="#author" aria-controls="author" role="tab" data-toggle="tab">Author</a></li>
-                    <li role="presentation"><a href="#from" aria-controls="from" role="tab" data-toggle="tab">From</a></li>
-					<li role="presentation"><a href="#animation" aria-controls="animation" role="tab" data-toggle="tab">Animation</a></li>
-                </ul>
+            <ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
+                <li role="presentation" class="<?if($active_menu == 'style' || $active_menu == '') echo 'active'?>"><a href="#title" aria-controls="text" role="tab" data-toggle="tab">Background Styles</a></li>
+                <li role="presentation" class="<?if($active_menu == 'custom' || $active_menu == '') echo 'active'?>"><a href="#text" aria-controls="profession" role="tab" data-toggle="tab">Custom CSS</a></li>
+                <li role="presentation" class="<?if($active_menu == 'animation' || $active_menu == '') echo 'active'?>"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
+            </ul>
 
-                <div class="tab-content">
-                     <div role="tabpanel" class="tab-pane fade in active" id="quotation">
-                        <?php
-                        $this->admin_input('quotation_font_color','text', 'Font color: ', $quotation_font_color);
-                        $this->admin_input('quotation_font_weight','text', 'Font weight: ', $quotation_font_weight);
-                        $this->admin_input('quotation_font_size','text', 'Font size: ', $quotation_font_size);
-                        ?>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="author">
-                        <?php
-                        $this->admin_input('author_font_color','text', 'Font color: ', $author_font_color);
-                        $this->admin_input('author_font_weight','text', 'Font weight: ', $author_font_weight);
-                        $this->admin_input('author_font_size','text', 'Font size: ', $author_font_size);
-                        ?>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="from">
-                        <?php
-                        $this->admin_input('from_font_color','text', 'Font color: ', $from_font_color);
-                        $this->admin_input('from_font_weight','text', 'Font weight: ', $from_font_weight);
-                        $this->admin_input('from_font_size','text', 'Font size: ', $from_font_size);
-                        ?>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="animation">
-                        <?php
-						$this->admin_select('animation_type', $types,'Animation type: ',$animation_type);
-						$this->admin_select('animation_duration', $durations,'Animation duration: ',$animation_duration);
-						$this->admin_select('animation_event', $events,'Animation Start: ',$animation_event);
-						$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
-                        ?>
-                    </div>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'style' || $active_menu == '') echo 'in active'?>" id="title">
+                    <?php
+                    $this->admin_select('background_active', $active_options, 'Active background: ', $background_active);
+                    $this->admin_input('background_color','text', 'Background color: ', $background_color);
+                    $this->admin_file('background_image','Background image: ', $background_image);
+                    $this->admin_select('text_align', $text_options, 'Text align: ', $text_align);
+                    $this->admin_input('text_color','text', 'Text Color: ', $text_color);
+                    ?>
                 </div>
-
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'custom') echo 'in active'?>" id="text">
+                    <?php
+                    $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                    $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                    ?>
+                </div>
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'animation') echo 'in active'?>" id="animations">
+                    <?php
+                    $this->admin_select('animation_type', $types,'Animation: ', $animation_type);
+                    $this->admin_select('animation_duration', $durations,'Animation state: ', $animation_duration);
+                    ?>
+                </div>
             </div>
-            <?php
-        }
-        public function generate_content()
+
+        </div>
+        <?php
+    }
+    public function load_generic_styling()
+    {
+        $background_active = $this->block->data('background_active');
+        $background_color = $this->block->data('background_color');
+        $background_image = $this->block->data('background_image');
+
+        $text_align = $this->block->data('text_align');
+        $text_color = $this->block->data('text_color');
+        $custom_css = $this->block->data('custom_css');
+
+        $animation_type = $this->block->data('animation_type');
+        $animation_duration = $this->block->data('animation_duration');
+
+        $this->block->force_data_modification();
+        $this->block->add_css_class('animated '.$animation_duration.' '.$animation_type);
+
+        $style_arr = $this->block->data("style");
+        if($background_active == 'color')
+            $style_arr['background-color'] = $background_color;
+        else
+            $style_arr['background-image'] = $background_image;
+        $style_arr['text-align'] = $text_align;
+        $style_arr['color'] = $text_color;
+        $style_arr['text'] = ';'.$custom_css;
+        $this->block->set_data("style", $style_arr);
+    }
+    public function set_initial_values_if_empty()
+    {
+        $content = $this->block->data('content');
+
+        if(!is_array($content) || empty($content))
         {
-            $quote_author = $this->block->data('author');
-            $quote_quotation = $this->block->data('quotation');
-            $quote_from = $this->block->data('from');
+            $content = array();
+            $content[0] = new stdClass();
+            $content[0]->quotation = 'To Be Or Not To Be.Click on me to edit.';
+            $content[0]->from = 'BuilderEngine.Click on me to edit.';
+            $content[0]->author = 'John Doe.Click on me to edit.';
 
-            // style
-            $quotation_font_color = $this->block->data('quotation_font_color');
-            $quotation_font_weight = $this->block->data('quotation_font_weight');
-            $quotation_font_size = $this->block->data('quotation_font_size');
-
-            $author_font_color = $this->block->data('author_font_color');
-            $author_font_weight = $this->block->data('author_font_weight');
-            $author_font_size = $this->block->data('author_font_size');
-
-            $from_font_color = $this->block->data('from_font_color');
-            $from_font_weight = $this->block->data('from_font_weight');
-            $from_font_size = $this->block->data('from_font_size');
-
-			$animation_type = $this->block->data('animation_type');	  
-		    $animation_duration = $this->block->data('animation_duration');
-		    $animation_event = $this->block->data('animation_event');
-		    $animation_delay = $this->block->data('animation_delay');
-
-			$settings[0][0] = 'quotation'.$this->block->get_id();
-			$settings[0][1] = $animation_event;
-			$settings[0][2] = $animation_duration.' '.$animation_delay.' '.$animation_type;
-			add_action("be_foot", generate_animation_events($settings));
-
-            $text_style = 
-                'style="
-                    color: '.$quotation_font_color.' !important;
-                    font-weight: '.$quotation_font_weight.' !important;
-                    font-size: '.$quotation_font_size.' !important;
-                "';
-            $author_style = 
-                'style="
-                    color: '.$author_font_color.' !important;
-                    font-weight: '.$author_font_weight.' !important;
-                    font-size: '.$author_font_size.' !important;
-                    display: inline;
-                "';
-            $from_style = 
-                'style="
-                    color: '.$from_font_color.' !important;
-                    font-weight: '.$from_font_weight.' !important;
-                    font-size: '.$from_font_size.' !important;
-                    display: inline;
-                "';
-				
-			if($quote_author == '')
-            	$quote_author = 'John Doe';
-			if($quote_quotation == '')
-            	$quote_quotation = 'To Be Or Not To Be';
-			if($quote_from == '')
-            	$quote_from = 'BuilderEngine';
-
-            $output = '
-			<link href="'.base_url('builderengine/public/animations/css/animate.min.css').'" rel="stylesheet" />
-                <blockquote id="quotation'.$this->block->get_id().'">
-                    <p '.$text_style.'>"'.$quote_quotation.'"</p>
-                    <small>
-                        <span '.$author_style.'>'.$quote_author.'</span>
-                        <cite title="Source Title">
-                            <span '.$from_style.'>&nbsp;&nbsp;'.$quote_from.'</span>
-                        </cite>
-                    </small>
-                </blockquote>
-            ';
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
+            $this->block->set_data('content', $content, true);
         }
     }
+    public function generate_content()
+    {
+        global $active_controller;
+        $CI = &get_instance();
+        $CI->load->module('layout_system');
+
+        $this->set_initial_values_if_empty();
+        $content = $this->block->data('content');
+        $single_element = '';
+
+        //generic animations
+        $this->load_generic_styling();
+        //
+
+        $output = '';
+        foreach($content as $key => $element)
+        {
+            $element = (object)$element;
+            $output .= '
+				<div id="quotation-container-'.$this->block->get_id().'">
+					<blockquote>
+						<p field_name="content-'.$key.'-quotation" class="designer-editable" id="quotation-quote-'.$this->block->get_id().'">"'.$element->quotation.'"</p>
+						<small>
+							<span field_name="content-'.$key.'-author" class="designer-editable" id="quotation-author-'.$this->block->get_id().'">'.$element->author.'</span>
+							<cite title="Source Title">
+								<span field_name="content-'.$key.'-from" class="designer-editable" id="quotation-from-'.$this->block->get_id().'">&nbsp;&nbsp;'.$element->from.'</span>
+							</cite>
+						</small>
+					</blockquote>
+				</div>
+			';
+        }
+
+        return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'quotation-container-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), $single_element, $this->block->get_name(), 'style');
+    }
+}
 ?>

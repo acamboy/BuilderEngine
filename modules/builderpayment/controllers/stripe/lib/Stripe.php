@@ -10,7 +10,7 @@ if (!function_exists('json_decode')) {
   throw new Exception('Stripe needs the JSON PHP extension.');
 }
 if (!function_exists('mb_detect_encoding')) {
-  throw new Exception('Stripe needs the Multibyte String PHP extension.');
+  throw new Exception('Stripe needs the Multibyte String PHP extension.To enable it,please contact your hosting provider.');
 }
 
 // Stripe singleton

@@ -57,6 +57,10 @@
 						$this->admin_select('animation_duration', $durations,'Animation duration: ',$animation_duration);
 						$this->admin_select('animation_event', $events,'Animation Start: ',$animation_event);
 						$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
                         ?>
                     </div>
                 </div>
@@ -65,6 +69,14 @@
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
             $sections_font_color = $this->block->data('sections_font_color');
             $sections_font_weight = $this->block->data('sections_font_weight');
             $sections_font_size = $this->block->data('sections_font_size');
@@ -132,15 +144,13 @@
 
                     foreach($available_tags as $tag){
                         $output .= '
-                            <a class="label label-default light tagsblock" href="'.base_url('blog/search/'.$tag).'" '.$section_link_style.'><i class="fa fa-tags"></i> '.$tag.'</a>';
+                            <a class="label label-default light tagsblock" href="'.base_url('blog/search/'.stripslashes($tag)).'" '.$section_link_style.'><i class="fa fa-tags"></i> '.stripslashes($tag).'</a>';
                     }
             $output .= '
                         <div class="clearfix"></div>
                    </div> </div>';
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
+
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), '', $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

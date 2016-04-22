@@ -87,7 +87,8 @@
 		                                    <span>Add image...</span>
 		                                    <input id="f" type="file" name="background_img" rel="file_manager" file_value="<?=$builderengine->get_option("background_img")?>">
 		                                </span>
-											<?php if(!empty($builderengine->get_option("background_img"))):?>
+											<?php $background_img = $builderengine->get_option("background_img");?>
+											<?php if(!empty($background_img)):?>
 												<button type="submit" id="background_img_btn" class="btn btn-primary btn-danger btn-xs" style="margin-left:-85px;margin-top:50px;"><i class="fa fa-times"></i> Remove</button>
 												<input type="hidden" id="background_img" name="background_img" value="">
 											<?php endif;?>								
@@ -101,7 +102,8 @@
 		                                    <span>Add image...</span>
 		                                    <input id="d" type="file" name="logo_img" rel="file_manager" file_value="<?=$builderengine->get_option("logo_img")?>">
 		                                </span>
-											<?php if(!empty($builderengine->get_option("logo_img"))):?>
+											<?php $logo_img = $builderengine->get_option("logo_img");?>
+											<?php if(!empty($logo_img)):?>
 												<button type="submit" id="logo_img_btn" class="btn btn-primary btn-danger btn-xs" style="margin-left:-85px;margin-top:50px;"><i class="fa fa-times"></i> Remove</button>
 												<input type="hidden" id="logo_img" name="logo_img" value="">
 											<?php endif;?>										

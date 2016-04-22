@@ -80,10 +80,9 @@ class generic_block_handler extends  block_handler{
     {
 
     }
-    public function generate_style()
+    public function generate_style($active_menu = '')
     {
-		$path = substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/index.php'));
-		include $path.'/builderengine/public/animations/animations.php';
+		include $_SERVER['DOCUMENT_ROOT'].'/builderengine/public/animations/animations.php';
 		
         $background_active = $this->block->data('background_active');
         $background_color = $this->block->data('background_color');
@@ -92,6 +91,7 @@ class generic_block_handler extends  block_handler{
         $text_align = $this->block->data('text_align');
         $text_color = $this->block->data('text_color');
         $custom_css = $this->block->data('custom_css');
+        $custom_classes = $this->block->data('custom_classes');
 
         $active_options = array("color" => "Color", "image" => "Image");
         $text_options = array("left" => "Left", "center" => "Center", "right" => "Right");
@@ -102,32 +102,28 @@ class generic_block_handler extends  block_handler{
             <div role="tabpanel">
 
                 <ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
-                    <li role="presentation" class="active"><a href="#title" aria-controls="text" role="tab" data-toggle="tab">Background Styles</a></li>
-                    <li role="presentation"><a href="#text" aria-controls="profession" role="tab" data-toggle="tab">Custom CSS</a></li>
-					<li role="presentation"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
+                    <li role="presentation" class="<?if($active_menu == 'style' || $active_menu == '') echo 'active'?>"><a href="#title" aria-controls="text" role="tab" data-toggle="tab">Background Styles</a></li>
+                    <li role="presentation" class="<?if($active_menu == 'custom' || $active_menu == '') echo 'active'?>"><a href="#text" aria-controls="profession" role="tab" data-toggle="tab">Custom CSS</a></li>
+					<li role="presentation" class="<?if($active_menu == 'animation' || $active_menu == '') echo 'active'?>"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="title">
+                    <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'style' || $active_menu == '') echo 'in active'?>" id="title">
                         <?php
                             $this->admin_select('background_active', $active_options, 'Active background: ', $background_active);
                             $this->admin_input('background_color','text', 'Background color: ', $background_color);
-                            $this->admin_file('background_image','Background image: ', $background_image,'generic'.$this->block->get_id(),true);
-                        ?>
-						<script>
-							$("#generic<?=$this->block->get_id()?>").click(function(e){
-							   e.preventDefault();
-							});						
-						</script>						
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="text">
-                        <?php
-                            $this->admin_select('text_align', $text_options, 'Active background: ', $text_align);
+                            $this->admin_file('background_image','Background image: ', $background_image);
+                            $this->admin_select('text_align', $text_options, 'Text align: ', $text_align);
                             $this->admin_input('text_color','text', 'Text Color: ', $text_color);
-                            $this->admin_textarea('custom_css','Custom CSS: ', $custom_css);
                         ?>
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="animations">
+                    <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'custom') echo 'in active'?>" id="text">
+                        <?php
+                            $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                            $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                        ?>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'animation') echo 'in active'?>" id="animations">
                         <?php
 						$this->admin_select('animation_type', $types,'Animation: ', $animation_type);
 						$this->admin_select('animation_duration', $durations,'Animation state: ', $animation_duration);
@@ -140,6 +136,10 @@ class generic_block_handler extends  block_handler{
     }
     public function generate_content()
     {
+        global $active_controller;
+        $CI = &get_instance();
+        $CI->load->module('layout_system');
+
        $background_active = $this->block->data('background_active');
        $background_color = $this->block->data('background_color');
        $background_image = $this->block->data('background_image');
@@ -164,9 +164,12 @@ class generic_block_handler extends  block_handler{
        $style_arr['text'] = ';'.$custom_css;
        $this->block->set_data("style", $style_arr);
 	   
-	   $output = $this->block->data('content');
+	    $output = '
+	    <div block-editor="ckeditor" block-name="'.$this->block->get_name().'">'
+	        .$this->block->data('content').'
+        </div>';
 
-        return $output;
+        return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'generic-block-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'style');
     }
 }
 ?>

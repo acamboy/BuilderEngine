@@ -25,6 +25,7 @@
                                 <th>Post URL slug</th>
                                 <th>Category</th>
 								<th>Groups</th>
+								<th>Comments</th>
 								<th>Post Date</th>
 								<th>Actions</th>
                             </tr>
@@ -33,17 +34,27 @@
                            <?php foreach($objects as $post):?>
                             <tr class="odd gradeX">
 							
-                                <td><?=$post->title;?></td>
+                                <td><?=stripslashes($post->title);?></td>
                                 <td><?=$post->slug;?></td>
 								
 								<?php $categories = new Category;?>
 								<?php foreach($categories->get() as $category):?>
 								<?php if($category->id == $post->category_id):?>
-                                <td><?=$category->name;?></td>
+                                <td><?=stripslashes($category->name);?></td>
 								<?php endif?>
 								<?php endforeach?>
 
 								<td><?=$post->groups_allowed?></td>
+								<td>
+									<?php 
+										if($post->comments_allowed == 'yes')
+											echo 'Enabled';
+										if($post->comments_allowed == 'no')
+											echo 'Disabled,showing existing';
+										if($post->comments_allowed == 'hide')
+											echo 'Disabled,Hidden';
+									?>								
+								</td>
                                 <td><?=date('d.m.Y',$post->time_created)?></td>
 								
 								<td>

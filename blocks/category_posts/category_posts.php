@@ -26,8 +26,13 @@
                 );
 
             $option = array(
-                "yes" => "Yes",
-                "no" => "No"
+                "az" => "Alphabetical from A to Z",
+                "za" => "Alphabetical from Z to A",
+				"latest" => "Latest posts",
+				"oldest" => "Oldest posts",
+				"updated" => "Updated posts",
+				"most_visited" => "Most visited",
+				"less_visited" => "Less visited"
                 );
             
             $category_option = array(
@@ -36,7 +41,7 @@
             $categores = new Category();
             $all_category = $categores->get();
             foreach ($all_category->all as $key => $value) {
-                $category_option[$value->id] = $value->name;
+                $category_option[$value->id] = stripslashes($value->name);
             }
 
             $this->admin_select('post_count', $count, 'Post Count: ', $post_count);
@@ -69,6 +74,10 @@
 						$this->admin_select('sections_animation_duration', $durations,'Animation duration: ',$sections_animation_duration);
 						$this->admin_select('sections_animation_event', $events,'Animation Start: ',$sections_animation_event);
 						$this->admin_select('sections_animation_delay', $delays,'Animation Delay: ',$sections_animation_delay);
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
                         ?>
                     </div>
                 </div>
@@ -77,10 +86,16 @@
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
 
-            $CI = & get_instance();
             $CI->load->model('visits');
             $sequence = $CI->visits->populyar_post_by_visits();
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
 
             $sections_font_color = $this->block->data('sections_font_color');
             $sections_font_weight = $this->block->data('sections_font_weight');
@@ -134,9 +149,21 @@
                 }
             }
 
-            if($alphabetical_order == 'yes')
+            if($alphabetical_order == 'az')
                 ksort($sequence);
-
+            if($alphabetical_order == 'za')
+				krsort($sequence);
+            if($alphabetical_order == 'oldest')
+				$recent_posts = $all_posts->order_by('time_created','asc');
+            if($alphabetical_order == 'latest')
+				rsort($sequence);
+            if($alphabetical_order == 'updated')
+				$recent_posts = $all_posts->order_by('time_created','desc');
+            if($alphabetical_order == 'most_visited')
+				arsort($sequence);
+            if($alphabetical_order == 'less_visited')
+				asort($sequence);
+				
             $output = '<div class="row">
                 <div '.$section_style.' class="masonry-list">';
 
@@ -153,7 +180,7 @@
                                 <li class="masonry-item-blog-category-post"  '.$section_style.'>
                                     <div class="item" id="category'.$this->block->get_id().'">
                                         <div class="item-title blog-header-small">
-                                            <h2><a '.$section_link_style.' href="'.base_url('/blog/post').'/'.$post->slug.'"> '.$post->title.'</a></h2>  
+                                            <h2><a '.$section_link_style.' href="'.base_url('/blog/post').'/'.$post->slug.'"> '.stripslashes($post->title).'</a></h2>  
 											<small class="space14">';
                                                 $post_comments = array();
                                                 $CI = & get_instance();
@@ -192,10 +219,8 @@
             }
             $output .= '
                 </div></div>';
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
+
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), '', $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

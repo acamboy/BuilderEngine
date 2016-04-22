@@ -24,6 +24,7 @@
                                 <th>Category Name</th>
                                 <th>Parent Category</th>
 								<th>Groups</th>
+								<th>Date Created</th>
                                 <?php if($condition) : ?>
 								    <th>Actions</th>
                                 <?php endif; ?>
@@ -32,16 +33,21 @@
                         <tbody>
                           <?php foreach($objects as $object):?>
                             <tr class="odd gradeX">
-                                <td><?=$object->name;?></td>
+                                <td><?=stripslashes($object->name);?></td>
 								<?php if($object->parent_id == 0):?>
                                 <td>No Parent</td>
 								<?php else:?>
 								<?php $categories = new Category;?>
 								<?php foreach($categories->where('id',$object->parent_id)->get() as $category): ?>
-								<td><?=$category->name?></td>
+								<td><?=stripslashes($category->name)?></td>
                                 <?php endforeach?>
 								<?php endif?>
 								<td><?=$object->groups_allowed?></td>
+								<?php if($object->time_created):?>
+								<td><?=date('d.m.Y',$object->time_created)?></td>
+								<?php else:?>
+								<td></td>
+								<?php endif;?>
                                 <?php if($condition) : ?>
     								<td> 
     							        <div class="btn-group-vertical">

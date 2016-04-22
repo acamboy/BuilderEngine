@@ -67,9 +67,21 @@
 			$this->admin_select('animation_duration', $durations,'Animation duration: ',$animation_duration);
 			$this->admin_select('animation_event', $events,'Animation Start: ',$animation_event);
 			$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
+			$custom_css = $this->block->data('custom_css');
+			$custom_classes = $this->block->data('custom_classes');
+			$this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+			$this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
         }
         public function generate_content()
         {
+			global $active_controller;
+			$CI = &get_instance();
+			$CI->load->module('layout_system');
+
+			$custom_css = $this->block->data('custom_css');
+			$style_arr['text'] = ';'.$custom_css;
+			$this->block->set_data("style", $style_arr);
+
 			$animation_type = $this->block->data('animation_type');	  
 		    $animation_duration = $this->block->data('animation_duration');
 		    $animation_event = $this->block->data('animation_event');
@@ -107,11 +119,8 @@
 									$output .='</tr>';
 								}
 			$output .= '</table>';
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
-            
+
+			return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'dyntable'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

@@ -30,7 +30,7 @@ class action_bar_block_handler extends  block_handler{
 		{
 			$path = substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/index.php'));
 			include $path.'/builderengine/public/animations/animations.php';
-			
+
             $title_font_color = $this->block->data('title_font_color');
             $title_font_weight = $this->block->data('title_font_weight');
             $title_font_size = $this->block->data('title_font_size');
@@ -73,6 +73,7 @@ class action_bar_block_handler extends  block_handler{
                     <li role="presentation"><a href="#subtitle" aria-controls="subtitle" role="tab" data-toggle="tab">Subtitle</a></li>
 					<li role="presentation"><a href="#button" aria-controls="button" role="tab" data-toggle="tab">Button</a></li>					
                     <li role="presentation"><a href="#background" aria-controls="background" role="tab" data-toggle="tab">Background</a></li>
+					<li role="presentation"><a href="#customcss" aria-controls="customcss" role="tab" data-toggle="tab">Custom CSS</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -129,6 +130,14 @@ class action_bar_block_handler extends  block_handler{
 							});						
 						</script>
                     </div>
+					<div role="tabpanel" class="tab-pane fade" id="customcss">
+						<?php
+						$custom_css = $this->block->data('custom_css');
+						$custom_classes = $this->block->data('custom_classes');
+						$this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+						$this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+						?>
+					</div>
                 </div>
 
             </div>
@@ -136,6 +145,14 @@ class action_bar_block_handler extends  block_handler{
                 }
 		public function generate_content()
 		{
+			global $active_controller;
+			$CI = &get_instance();
+			$CI->load->module('layout_system');
+
+			$custom_css = $this->block->data('custom_css');
+			$style_arr['text'] = ';'.$custom_css;
+			$this->block->set_data("style", $style_arr);
+
 			$title = $this->block->data('title');
             $text = $this->block->data('text');
             $button_text = $this->block->data('button_text');
@@ -248,7 +265,7 @@ class action_bar_block_handler extends  block_handler{
 			<link href="'.base_url('blocks/action_bar/style.css').'" rel="stylesheet">
 			<link href="'.base_url('builderengine/public/animations/css/animate.min.css').'" rel="stylesheet" />
 			<div id="action-box" class="blockcontent-action has-bg custom-content" data-scrollview="true" style="padding-left:15px;padding-right:15px;'.$background_style.'">
-	            <div class="content-bg">
+	            <div class="content-bg" id="action-container-'.$this->block->get_id().'">
 	                
 	            </div>
 	            <div data-animation="true" data-animation-type="fadeInRight">
@@ -271,7 +288,7 @@ class action_bar_block_handler extends  block_handler{
 	        </div>
             ';
 
-	        return $output;
+			return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'action-container-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
 		}
 		public function generate_admin_menus()
 		{

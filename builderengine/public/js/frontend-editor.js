@@ -115,7 +115,6 @@ function initializeCustomEditorClickEvent()
       var attr = $(this).attr('block-editor');
       if (typeof attr === 'undefined' || attr === false) 
         return;
-
       if(attr == 'custom')
       {
         $(this).unbind("click.custom_block_admin");
@@ -130,6 +129,51 @@ function initializeCustomEditorClickEvent()
 
     }
   );
+    // Blocks 2.0 ck editor
+    CKEDITOR.disableAutoInline = true;
+
+    $('.designer-editable').dblclick(function() {
+        $(this).attr('contenteditable', true);
+        CKEDITOR.dtd.$editable.span = 1;
+        CKEDITOR.dtd.$editable.a = 1;
+        CKEDITOR.inline( $(this).attr("id"), {
+            on: {
+                instanceReady: function() {
+                    this.focus();
+                },
+                blur: function() {
+                    var el = this.element;
+                    el.removeAttribute( 'contenteditable' );
+                    this.destroy();
+                }
+            }
+        });
+    });
+    //$(document).on('mouseup','.be-column-block', function(event) {
+    //    var currentBlockName = $(this).attr('name');
+    //    if (event.which == 3) {
+    //        content = $(this).closest(".block").find(".block-children").first();
+    //        block_type = 'generic';
+    //        data_class = 'asd';
+    //
+    //        $.post(site_root+"/layout_system/ajax/add_block/" + currentBlockName + "/" + block_type,
+    //        {
+    //            page_path: page_path,
+    //            data_class: data_class
+    //        },
+    //
+    //        function(data) {
+    //            notifyChange();
+    //            $parentBlock = content.prepend(data);
+    //
+    //            $childBlock = $parentBlock.find('.block.be-content-block').first();
+    //            $childBlock.find('.block-content').attr("contenteditable", "true");
+    //            $("#edit-button").parent().addClass("active");
+    //            editModeRefresh();
+    //            refresh_editor();
+    //        });
+    //    }
+    //});
 }
 function initializeStyleEditorClickEvent()
 {
@@ -192,6 +236,7 @@ function editModeEnable()
 {
   runMod = true;
   console.log('editModeEnable()');
+  startAlignmentCheck();
   initializeCustomEditorClickEvent();
   enableResize();
   $("[block-editor='ckeditor']").each(
@@ -708,3 +753,50 @@ function deleteBlockModeDisable()
      });
  
 }
+    function startAlignmentCheck(){
+        setInterval(function(){
+            $('.new-block-clarification').each(function(i, obj) {
+                correctSliderProblem($(obj));
+                if($(obj).closest('.block-controls').width() < 550)
+                    lowerWidthOfClarification($(obj));
+                if($(obj).closest('.block-controls').width() < 470)
+                    lowerWidthOfClarification2($(obj));
+                if($(obj).closest('.block-controls').width() < 400)
+                    lowerWidthOfClarificationFurther($(obj));
+                if($(obj).closest('.block-controls').width() < 310)
+                    hideClarification($(obj));
+                if($(obj).closest('.block-controls').width() < 110){
+                    hideClarification($(obj));
+                    compressControls($(obj));
+                }
+            });
+        }, 2000);
+    }
+    function correctSliderProblem(obj){
+        if(obj.parent().is('a')){
+            obj.closest('.block-controls-inner').prepend(obj);
+        }
+    }
+    function lowerWidthOfClarification(obj){
+        obj.css('width', '350px');
+        obj.css('margin-left', '10%');
+    }
+    function lowerWidthOfClarification2(obj){
+        obj.css('width', '280px');
+        obj.css('margin-left', '10%');
+    }
+    function lowerWidthOfClarificationFurther(obj){
+        obj.css('width', '220px');
+        obj.css('margin-left', '10%');
+    }
+    function hideClarification(obj){
+        obj.css('width', '0px');
+        obj.css('margin-left', '10%');
+        obj.css('opacity', '0');
+    }
+    function compressControls(obj){
+        obj.parent().find('.btn-danger').css('margin-right', '0px');
+        obj.parent().find('.btn-danger').css('font-size', '10px');
+        obj.parent().find('.btn-warning').css('font-size', '10px');
+        obj.parent().find('.btn-white').css('font-size', '10px');
+    }

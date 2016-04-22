@@ -39,6 +39,8 @@
             
             $data['view'] = $this->get_view($object_type,  $object_id);
             $data['title'] = ucfirst($object_type);
+			$data['current_page'] = 'blog';
+			$data['current_child_page'] = $object_type;
             $this->load->view('backend/modify_object', $data);
         }
 
@@ -95,6 +97,8 @@
 
             $data['objects'] = $this->get_object($object_type, '', true);
             $data['condition'] = $condition;
+			$data['current_page'] = 'blog';
+			$data['current_child_page'] = $object_type;
             $this->load->view('backend/show_'.$object_type.'_objects', $data);
         }
         // [MenuItem ("Blog/Settings/General Settings")]
@@ -112,7 +116,9 @@
                 $this->BuilderEngine->set_option('be_blog_access_groups', $this->input->post('access_groups', true));
                 //$this->BuilderEngine->set_option('be_blog_default_module', $_POST['default_module']);
             }
-            $this->load->view('backend/blog_settings'); 
+			$data['current_page'] = 'blog';
+			$data['current_child_page'] = 'blog_settings';
+            $this->load->view('backend/blog_settings',$data); 
         }
 
         public function show_report($id){

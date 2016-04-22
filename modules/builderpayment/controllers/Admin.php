@@ -43,7 +43,11 @@
         // [MenuItem("Payments/Stripe")]
 		public function stripe_settings()
 		{
-			echo Modules::Run("builderpayment/stripegateway/admin");
+			if (!extension_loaded('mbstring')) {
+				$data['info'] = '<i class="fa fa-exclamation-triangle"></i> Stripe needs the Multibyte String PHP extension.To enable it,you must contact your hosting provider.';
+				$this->load->view('builderpayment/stripe/stripe_info', $data);
+			}else
+				echo Modules::Run("builderpayment/stripegateway/admin");
 		}
         
         // [MenuItem("Payments/Authorize.net")]

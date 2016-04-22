@@ -11,17 +11,23 @@
     <div class="panel-body panel-form">
         <form class="form-horizontal form-bordered" data-parsley-validate="true" method="post" enctype="multipart/form-data" name="category">
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="categoryname">Category Title:</label>
+				<label class="control-label col-md-4 col-sm-4" for="categoryname">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Category Name"></i>
+					Category Title:
+				</label>
 				<div class="col-md-8 col-sm-8">
-					<input class="form-control" type="text" id="categoryname" name="name" value="<?=$object->name?>" data-parsley-required="true" />
+					<input class="form-control" type="text" id="categoryname" name="name" value="<?=stripslashes($object->name)?>" data-parsley-required="true" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="categoryimage">Category Image:</label>
+				<label class="control-label col-md-4 col-sm-4" for="categoryimage">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Category Image"></i>
+					Category Image:
+				</label>
 				<div class="col-md-6 col-sm-6">
 			<span class="btn btn-success fileinput-button">
                 <i class="fa fa-plus"></i>
-                <span>Edit Image</span>
+                <span><?=$page?> Image</span>
 				<style>
 					.file_preview {
 						max-height: 100px;
@@ -42,19 +48,22 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="categoryselection">Parent Category:</label>
+				<label class="control-label col-md-4 col-sm-4" for="categoryselection">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Parent Category (if applicable)"></i>
+					Parent Category:
+				</label>
 				<div class="col-md-8 col-sm-8">								
 					<select class="form-control" id="parent_id" name="parent_id" data-parsley-required="true">
 						<option value="0">No Parent</option>						
 	                    <?php $categories = new Category();?>
 	                    <?php if($page == 'add'):?>
 		                    <?php foreach ($categories->get() as $parent_category):?>
-			                    <option value="<?=$parent_category->id?>"><?=$parent_category->name?></option>
+			                    <option value="<?=$parent_category->id?>"><?=stripslashes($parent_category->name)?></option>
 						<?php endforeach;?>
 						<?php else:?>
 							<?php foreach ($categories->get() as $parent_category):?>
 								<?php if($parent_category->id != $object->id):?>
-			                        <option value="<?=$parent_category->id?>" <?php if($object->parent_id == $parent_category->id) echo 'selected';?>><?=$parent_category->name?></option>
+			                        <option value="<?=$parent_category->id?>" <?php if($object->parent_id == $parent_category->id) echo 'selected';?>><?=stripslashes($parent_category->name)?></option>
 			                    <?php endif?> 
 						<?php endforeach;?>
 						<?php endif;?>
@@ -62,7 +71,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="website">Groups (Accounts) Access Allowed:</label>
+				<label class="control-label col-md-4 col-sm-4" for="website">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Only members of groups selected will see this category"></i>
+					Group Access Policy:
+				</label>
 				<div class="form-group">
 					<div class="col-md-8 col-sm-8">
 	                    <ul id="access-groups">

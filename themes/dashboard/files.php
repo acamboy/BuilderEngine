@@ -190,7 +190,7 @@ $(document).ready(function () {
                 return (match && match.length > 1) ? match[1] : '' ;
             }
 
-            $().ready(function() {
+            $(document).ready(function() {
                 var funcNum = getUrlParam('CKEditorFuncNum');
 
                 var elf = $('#elfinder').elfinder({

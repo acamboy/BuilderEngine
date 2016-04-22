@@ -59,6 +59,7 @@ class navbar_block_handler extends  block_handler{
                     <li role="presentation" class="active"><a href="#sections" aria-controls="sections" role="tab" data-toggle="tab">Links</a></li>
                     <li role="presentation"><a href="#subsections" aria-controls="subsections" role="tab" data-toggle="tab">Dropdown links</a></li>
 					<li role="presentation"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
+                    <li role="presentation"><a href="#customcss" aria-controls="customcss" role="tab" data-toggle="tab">Custom CSS</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -86,6 +87,14 @@ class navbar_block_handler extends  block_handler{
 						$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
                         ?>
                     </div>
+                    <div role="tabpanel" class="tab-pane fade" id="customcss">
+                        <?php
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                        ?>
+                    </div>
                 </div>
 
             </div>
@@ -93,6 +102,14 @@ class navbar_block_handler extends  block_handler{
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
             // style
             $sections_font_color = $this->block->data('sections_font_color');
             $sections_font_weight = $this->block->data('sections_font_weight');
@@ -109,7 +126,7 @@ class navbar_block_handler extends  block_handler{
 		    $animation_event = $this->block->data('animation_event');
 		    $animation_delay = $this->block->data('animation_delay');
 
-			$settings[0][0] = 'header-navbar'.$this->block->get_id();
+			$settings[0][0] = 'header-navbar-'.$this->block->get_id();
 			$settings[0][1] = $animation_event;
 			$settings[0][2] = $animation_duration.' '.$animation_delay.' '.$animation_type;
 			add_action("be_foot", generate_animation_events($settings));
@@ -146,7 +163,7 @@ class navbar_block_handler extends  block_handler{
                     </button>
                 </div>
                 <div class="collapse navbar-collapse" id="header-navbar" style="background-color: transparent !important;">
-                    <ul '.$section_style.' class="nav navbar-nav navbar-right" id="header-navbar'.$this->block->get_id().'">';
+                    <ul '.$section_style.' class="nav navbar-nav navbar-right" id="header-navbar-'.$this->block->get_id().'">';
                     foreach(get_links() as $link)
                     {
                         $output .= '
@@ -154,7 +171,7 @@ class navbar_block_handler extends  block_handler{
                         if(count($link->childs) > 0)
                         {
                             $output .= '
-                            <a '.$section_link_style.' href="'.$link->target.'" class="dropdown-toggle" data-toggle="dropdown">
+                            <a '.$section_link_style.' href="'.$link->target.'" title="'.$link->title.'" class="dropdown-toggle" data-toggle="dropdown">
                                 '.$link->name.'
                                 <b class="caret"></b>                           
                             </a>
@@ -162,13 +179,13 @@ class navbar_block_handler extends  block_handler{
                             foreach($link->childs as $sub_link)
                             {
                                 $output .= '
-                                <li><a '.$subsection_link_style.' href="'.base_url($sub_link->target).'">'.$sub_link->name.'</a></li>';
+                                <li><a '.$subsection_link_style.' href="'.$sub_link->target.'" title="'.$link->title.'">'.$sub_link->name.'</a></li>';
                             }
                             $output .=
                             '</ul>';
                         }
                         else
-                            $output .= '<a '.$section_link_style.' href="'.base_url($link->target).'">'.$link->name.'</a>';
+                            $output .= '<a '.$section_link_style.' href="'.$link->target.'" title="'.$link->title.'">'.$link->name.'</a>';
                         $output .= '
                         </li>';
                     }
@@ -176,11 +193,7 @@ class navbar_block_handler extends  block_handler{
                     </ul>
                 </div>';
 
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
-            
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'navbar-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

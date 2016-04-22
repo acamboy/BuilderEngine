@@ -166,12 +166,12 @@ class Admin_ajax extends BE_Controller {
                 if($this->builderengine->get_option('sign_up_verification') == 'admin')
                 {
                     $this->load->model('options');
-                    $_POST['groups'] = $this->options->get_option_by_name('default_registration_group')->value .',Members';
+                    $_POST['groups'] = $this->options->get_option_by_name('default_registration_group')->value;
                     $new_user = $this->users->register_user($this->input->post());
                     echo 'register with admin';
                 }elseif ($this->builderengine->get_option('sign_up_verification') == 'email') {
                     $this->load->model('options');
-                    $_POST['groups'] = $this->options->get_option_by_name('default_registration_group')->value .',Members';
+                    $_POST['groups'] = $this->options->get_option_by_name('default_registration_group')->value;
                     $new_user = $this->users->register_user($this->input->post());
                     $this->user->notify('success', "User created successfully!");
                     $this->users->send_registration_email($this->input->post('email'),$new_user);
@@ -409,6 +409,57 @@ class Admin_ajax extends BE_Controller {
 
         echo json_encode($response);
     }
+
+	public function send_email()
+	{
+		if($_POST){
+			if($_POST['emailActive'] == 'yes'){
+				$to = $_POST['emailDestination'];
+				$subject = $_POST['emailTitle'];
+				
+				if($_POST['captchaActive'] == 'yes'){
+					if($this->session->userdata('captcha'.$_POST['cap']) == $_POST['captcha']){
+						unset($_POST['captchaActive']);
+						unset($_POST['emailActive']);
+						unset($_POST['cap']);
+						unset($_POST['emailDestination']);
+						unset($_POST['emailTitle']);
+						unset($_POST['captcha']);
+						
+						$data['fields'] = $_POST;
+						//$headers = "From: " . "\r\n";
+						$headers = "MIME-Version: 1.0\r\n";
+						$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";					
+						$message = $this->load->view('contact_form_block_email_template',$data,true);					
+						mail($to,$subject,$message,$headers);
+						//$this->session->unset_userdata('captcha'.$_POST['cap']);
+						echo 'true';
+					}else{
+						echo 'false';
+					}
+				}
+				else{
+					unset($_POST['captchaActive']);
+					unset($_POST['emailActive']);
+					unset($_POST['cap']);
+					unset($_POST['emailDestination']);
+					unset($_POST['emailTitle']);
+					unset($_POST['captcha']);
+
+					$data['fields'] = $_POST;
+					//$headers = "From: " . "\r\n";
+					$headers = "MIME-Version: 1.0\r\n";
+					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";					
+					$message = $this->load->view('contact_form_block_email_template',$data,true);					
+					mail($to,$subject,$message,$headers);
+					//$this->session->unset_userdata('captcha'.$_POST['cap']);
+					echo 'true';
+				}
+			}else{
+				echo 'false';
+			}
+		}
+	}
 }
 
 /* End of file welcome.php */

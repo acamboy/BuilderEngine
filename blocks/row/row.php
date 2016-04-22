@@ -7,7 +7,7 @@ class row_block_handler extends  block_handler{
 
 			$info['block_name'] = "Row";
 			$info['block_icon'] = "fa-envelope-o";
-			
+
 			return $info;
 		}
 		public function admin_option_toggle_test_toggle($toggled)
@@ -36,14 +36,14 @@ class row_block_handler extends  block_handler{
                 $this->block->add_css_class('minimized-section');
             else
                 $this->block->remove_css_class('minimized-section');
-            
+
             $this->block->save();
         }
 
         public function register_admin_options()
         {
             $this->add_class_toggle_option('test_toggle', '<i class="fa fa-arrows-h" rel="tooltip" data-placement="top" title="Boxed / Full Width"></i>', 'inverse', false);
-            
+
         }
 		public function generate_admin()
 		{
@@ -59,17 +59,20 @@ class row_block_handler extends  block_handler{
 
             $this->admin_select('background_active', $active_options, 'Active background: ', $background_active);
             $this->admin_input('background_color','text', 'Background color: ', $background_color);
-            $this->admin_file('background_image','Background image: ', $background_image,'row'.$this->block->get_id(),true);
-		?>
-			<script>
-				$("#row<?=$this->block->get_id()?>").click(function(e){
-				   e.preventDefault();
-				});						
-			</script>
-		<?php
+            $this->admin_file('background_image','Background image: ', $background_image, 'row'.$this->block->get_id(),true);
+            ?>
+            <script>
+                $("#row<?=$this->block->get_id()?>").click(function(e){
+                    e.preventDefault();
+                });
+            </script>
+            <?php
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
             // $output = '<div class="block-move-controls"><span rel="tooltip" data-placement="top" title="" data-original-title="Move"><i class="fa fa-arrows"></i></span></div>';
             // return $output;
             /*$background_active = $this->block->data('background_active');
@@ -103,7 +106,8 @@ class row_block_handler extends  block_handler{
                 $output .= '
                 });
             </script>';
-            return $output;
+
+            return $output.$CI->layout_system->load_section_script($this->block->get_id(), $CI->BuilderEngine->get_page_path(), 'row', $this->block->get_name());
         }
 	}
 ?>

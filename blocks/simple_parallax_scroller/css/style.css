@@ -56,23 +56,23 @@ strong{
 	top:200px;
 	width:700px;
 	margin: 10px auto;
-	font: 18px helvetica, sans-serif; line-height: 18px;
+	font: 18px helvetica, sans-serif; line-height: 22px;
 	padding-left:10px;
 }
 .text3{
 	color:#fff;
 	position:absolute;
 	left:50px;
-	top:250px;
+	top:290px;
 	width:700px;
 	margin: 10px auto;
-	font: 14px helvetica, sans-serif; line-height: 18px;
+	font: 14px helvetica, sans-serif; line-height: 22px;
 	padding-left:10px;
 }
 .btn-main{
 	position:absolute;
 	left:60px;
-	top:330px;
+	top:380px;
 	padding:15px 25px;
 	font-size:18px; 
 }

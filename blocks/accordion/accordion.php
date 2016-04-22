@@ -1,315 +1,176 @@
 <?php
 class accordion_block_handler extends  block_handler{
-      function info()
-      {
-          $info['category_name'] = "Bootstrap";
-          $info['category_icon'] = "dsf";
+    function info()
+    {
+        $info['category_name'] = "Bootstrap";
+        $info['category_icon'] = "dsf";
 
-          $info['block_name'] = "Accordion";
-          $info['block_icon'] = "fa-envelope-o";
-      
-          return $info;
-      }
-      public function generate_admin()
-      {
-      $titles = $this->block->data('titles');
-      $texts = $this->block->data('texts');
+        $info['block_name'] = "Accordion";
+        $info['block_icon'] = "fa-envelope-o";
 
-      if(!is_array($titles) || empty($titles))
-      {
-          $titles[0] = "Title of the first accordion";
-          $texts[0] = "This is a sample text for the first collapsible group.";
-		  $titles[1] = "Title of the 2nd accordion";
-          $texts[1] = "This is a sample text for the 2nd collapsible group.";
-		  $titles[2] = "Title of the 3rd accordion";
-          $texts[2] = "This is a sample text for the 3rd collapsible group.";
-		  $titles[3] = "Title of the 4th accordion";
-          $texts[3] = "This is a sample text for the 4th collapsible group.";
-      }
-      $num_slides = count($texts);
-      end($texts);
-      $last_key = key($texts) + 1;
-      reset($texts);
-      ?>
-
-      <script>
-          var num_slides = <?=$num_slides?>;
-          var new_slide_number = <?=$last_key?>;
-          <?php if($num_slides == 0): ?>
-            var num_slides = 1;
-          <?php endif;?>
-          $(document).ready(function (){
-              $("#myTab a").click(function (e) {
-                  e.preventDefault();
-                  $(this).tab("show");
-              });
-              $(".delete-slide").bind("click.delete_slide",function (e) {
-                  slide = $(this).attr('slide');
-                  $("#slide-section-" + slide).remove();
-                  $("#slide-section-tab-" + slide).remove();
-              });
-              $("#add-slide").click(function (e) {
-                  num_slides++;
-                  $("#slide-section-tabs").append('<li id="slide-section-tab-' + num_slides +'"><a href="#slide-section-' + num_slides + '" data-toggle="tab">Item ' + num_slides + '</a></li>');
-                  $("#slide-sections").append('\
-                        <div class="tab-pane" id="slide-section-' + num_slides + '">\
-                          \
-                        </div>\
-                            ');
-                  e.preventDefault();
-                  html = $("#slide-section-template").html();
-                  $("#slide-section-" + num_slides).html(html);
-                  $('#slides a:last').tab('show');
-                  $('#slide-section-' + num_slides).find('.delete-slide').attr('slide', num_slides);
-                  $('#slide-section-' + num_slides).find('[name="test_title"]').attr('name', 'titles[' + (new_slide_number) + ']');
-                  $('#slide-section-' + num_slides).find('[name="test_text"]').attr('name', 'texts[' + (new_slide_number) + ']');
-                  $(".delete-slide").unbind("click.delete_slide");
-                  $(".delete-slide").bind("click.delete_slide",function (e) {
-                      slide = $(this).attr('slide');
-                      $("#slide-section-" + slide).remove();
-                      $("#slide-section-tab-" + slide).remove();
-                      $('#slides a:first').tab('show');
-                  });
-                  new_slide_number++;
-              });
-          });
-      </script>
-      <ul class="nav nav-tabs" id="slide-section-tabs" style="margin-left:-15px">
-          <li style="height: 42px;"><span style="height: 100%;padding-top: 10px;" id="add-slide" class="btn btn-primary">Add Accordion</span></li>
-          <?$i = 1;?>
-          <?php foreach($texts as $key => $text):?>
-              <li class="<?php if($i == 1) echo 'active'?>" id="slide-section-tab-<?=$i?>"><a href="#slide-section-<?=$i?>" data-toggle="tab">Item <?=$i?></a></li>
-              <?$i++;?>
-          <?php endforeach; ?>
-          <?php if($num_slides == 0): ?>
-              <li class="active"><a href="#slide-section-1" data-toggle="tab">Item 1</a></li>
-			   <li class="active"><a href="#slide-section-2" data-toggle="tab">Item 2</a></li>
-			    <li class="active"><a href="#slide-section-3" data-toggle="tab">Item 3</a></li>
-				 <li class="active"><a href="#slide-section-4" data-toggle="tab">Item 4</a></li>
-          <?php endif;?>
-      </ul>
-      <div class="tab-content" id="slide-sections">
-          <!-- Template for creation -->
-          <div class="tab-pane" id="slide-section-template">
-              <?php
-              $this->admin_input('test_title','text','Title: ', '');
-              $this->admin_textarea('test_text','Text: ', '');
-              ?>
-              <div class="form-group">
-                  <span class="btn btn-danger delete-slide" slide="template">Delete Item</span>
-              </div>
-          </div>
-          <!-- /Template for creation -->
-          <?$i = 1;?>
-          <?php foreach($texts as $key => $text):?>
-              <div class="tab-pane <?php if($i == 1) echo 'active'?>" id="slide-section-<?=$i?>">
-                  <?php
-                  $this->admin_input('titles['.$key.']','text','Title: ', $titles[$key]);
-                  $this->admin_textarea('texts['.$key.']','Text: ', $texts[$key]);
-                  ?>
-                  <div class="form-group">
-                      <span class="btn btn-danger delete-slide" slide="<?=$i?>">Delete Item</span>
-                  </div>
-              </div>
-              <?$i++;?>
-          <?php endforeach; ?>
-
-
-          <?php if($num_slides == 0): ?>
-              <div class="tab-pane active" id="slide-section-1">
-                  <?php
-                  $this->admin_input('titles[0]','text','Title: ');
-                  $this->admin_textarea('texts[0]','Text: ');
-				  $this->admin_input('titles[1]','text','Title: ');
-                  $this->admin_textarea('texts[1]','Text: ');
-				  $this->admin_input('titles[2]','text','Title: ');
-                  $this->admin_textarea('texts[2]','Text: ');
-				  $this->admin_input('titles[3]','text','Title: ');
-                  $this->admin_textarea('texts[3]','Text: ');
-                  ?>
-              </div>
-          <?php endif;?>
-      </div>
-  <?php
-        }
-      public function generate_style()
-      {
-			$path = substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/index.php'));
-			include $path.'/builderengine/public/animations/animations.php';
-		  
-          $title_font_color = $this->block->data('title_font_color');
-          $title_font_weight = $this->block->data('title_font_weight');
-          $title_font_size = $this->block->data('title_font_size');
-          $title_background = $this->block->data('title_background');
- 		  $title_animation_type = $this->block->data('title_animation_type');	  
-		  $title_animation_duration = $this->block->data('title_animation_duration');
-		  $title_animation_event = $this->block->data('title_animation_event');
-		  $title_animation_delay = $this->block->data('title_animation_delay');
-			
-          $text_font_color = $this->block->data('text_font_color');
-          $text_font_weight = $this->block->data('text_font_weight');
-          $text_font_size = $this->block->data('text_font_size');
-		  $text_background = $this->block->data('text_background');
- 		  $text_animation_type = $this->block->data('text_animation_type');	  
-		  $text_animation_duration = $this->block->data('text_animation_duration');
-		  $text_animation_event = $this->block->data('text_animation_event');
-		  $text_animation_delay = $this->block->data('text_animation_delay');
-
-          $section_border_color = $this->block->data('section_border_color');
-          ?>
-          <div role="tabpanel">
-
-              <ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
-                  <li role="presentation" class="active"><a href="#title" aria-controls="text" role="tab" data-toggle="tab">Title</a></li>
-                  <li role="presentation"><a href="#text" aria-controls="profession" role="tab" data-toggle="tab">Text</a></li>
-                  <li role="presentation"><a href="#background" aria-controls="profession" role="tab" data-toggle="tab">Background</a></li>
-              </ul>
-
-              <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane fade in active" id="title">
-                      <?php
-                      $this->admin_input('title_font_color','text', 'Font color: ', $title_font_color);
-                      $this->admin_input('title_font_weight','text', 'Font weight: ', $title_font_weight);
-                      $this->admin_input('title_font_size','text', 'Font size: ', $title_font_size);
-					  $this->admin_select('title_animation_type', $types,'Animation type: ',$title_animation_type);
-					  $this->admin_select('title_animation_duration', $durations,'Animation duration: ',$title_animation_duration);
-					  $this->admin_select('title_animation_event', $events,'Animation Start: ',$title_animation_event);
-					  $this->admin_select('title_animation_delay', $delays,'Animation Delay: ',$title_animation_delay);					  
-                      ?>
-                  </div>
-                  <div role="tabpanel" class="tab-pane fade" id="text">
-                      <?php
-                      $this->admin_input('text_font_color','text', 'Font color: ', $text_font_color);
-                      $this->admin_input('text_font_weight','text', 'Font weight: ', $text_font_weight);
-                      $this->admin_input('text_font_size','text', 'Font size: ', $text_font_size);
-					  $this->admin_select('text_animation_type', $types,'Animation type: ',$text_animation_type);
-					  $this->admin_select('text_animation_duration', $durations,'Animation duration: ',$text_animation_duration);
-					  $this->admin_select('text_animation_event', $events,'Animation Start: ',$text_animation_event);	
-					  $this->admin_select('text_animation_delay', $delays,'Animation Delay: ',$text_animation_delay);					  
-                      ?>
-                  </div>
-                  <div role="tabpanel" class="tab-pane fade" id="background">
-                      <?php
-                      $this->admin_input('title_background','text', 'Title background color: ', $title_background);
-                      $this->admin_input('text_background','text', 'Text background color: ', $text_background);
-                      $this->admin_input('section_border_color','text', 'Section border color: ', $section_border_color);
-                      ?>
-                  </div>
-              </div>
-
-          </div>
-      <?php
+        return $info;
     }
-      public function generate_content()
-      {
-          $titles = $this->block->data('titles');
-          $texts = $this->block->data('texts');
+    public function generate_admin()
+    {
+    }
+    public function generate_style($active_menu = '')
+    {
+        include $_SERVER['DOCUMENT_ROOT'].'/builderengine/public/animations/animations.php';
 
-          if(!is_array($titles) || empty($titles))
-          {
-              $titles[0] = "Title of the first accordion";
-              $texts[0] = "This is a sample text for the first collapsible group.";
-			  
-			  $titles[1] = "Title of the 2nd accordion";
-              $texts[1] = "This is a sample text for the 2nd collapsible group.";
-			  
-			  $titles[2] = "Title of the 3rd accordion";
-              $texts[2] = "This is a sample text for the 3rd collapsible group.";
-			  
-			  $titles[3] = "Title of the 4th accordion";
-              $texts[3] = "This is a sample text for the 4th collapsible group.";
-          }
+        $background_active = $this->block->data('background_active');
+        $background_color = $this->block->data('background_color');
+        $background_image = $this->block->data('background_image');
 
-          //style
-          $title_font_color = $this->block->data('title_font_color');
-          $title_font_weight = $this->block->data('title_font_weight');
-          $title_font_size = $this->block->data('title_font_size');
- 		  $title_animation_type = $this->block->data('title_animation_type');	  
-		  $title_animation_duration = $this->block->data('title_animation_duration');
-		  $title_animation_event = $this->block->data('title_animation_event');
-		  $title_animation_delay = $this->block->data('title_animation_delay');
-		  
-          $text_font_color = $this->block->data('text_font_color');
-          $text_font_weight = $this->block->data('text_font_weight');
-          $text_font_size = $this->block->data('text_font_size');
- 		  $text_animation_type = $this->block->data('text_animation_type');	  
-		  $text_animation_duration = $this->block->data('text_animation_duration');
-		  $text_animation_event = $this->block->data('text_animation_event');
-		  $text_animation_delay = $this->block->data('text_animation_delay');
-		  
-          $title_background = $this->block->data('title_background');
-          $text_background = $this->block->data('text_background');
-          $section_border_color = $this->block->data('section_border_color');
+        $text_align = $this->block->data('text_align');
+        $text_color = $this->block->data('text_color');
+        $custom_css = $this->block->data('custom_css');
+        $custom_classes = $this->block->data('custom_classes');
 
-          $num_slides = count($titles);
-		  $settings = array();
+        $active_options = array("color" => "Color", "image" => "Image");
+        $text_options = array("left" => "Left", "center" => "Center", "right" => "Right");
 
-			for($i = 0; $i < $num_slides; $i++)
-			{
-				$title_settings[0] = 'title'.$this->block->get_id().$i;
-				$title_settings[1] = $this->block->data('title_animation_event');
-				$title_settings[2] =$this->block->data('title_animation_duration').' '.$this->block->data('title_animation_delay').' '.$this->block->data('title_animation_type');
-				array_push($settings,$title_settings);
-				$text_settings[0] = 'text'.$this->block->get_id().$i;
-				$text_settings[1] = $this->block->data('text_animation_event');
-				$text_settings[2] =$this->block->data('text_animation_duration').' '.$this->block->data('text_animation_delay').' '.$this->block->data('text_animation_type');
-				array_push($settings,$text_settings);
-			}
+        $animation_type = $this->block->data('animation_type');
+        $animation_duration = $this->block->data('animation_duration');
+        ?>
+        <div role="tabpanel">
 
-		  add_action("be_foot", generate_animation_events($settings));
+            <ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
+                <li role="presentation" class="<?if($active_menu == 'style' || $active_menu == '') echo 'active'?>"><a href="#title" aria-controls="text" role="tab" data-toggle="tab">Background Styles</a></li>
+                <li role="presentation" class="<?if($active_menu == 'custom' || $active_menu == '') echo 'active'?>"><a href="#text" aria-controls="profession" role="tab" data-toggle="tab">Custom CSS</a></li>
+                <li role="presentation" class="<?if($active_menu == 'animation' || $active_menu == '') echo 'active'?>"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
+            </ul>
 
-          $title_style =
-              'style="
-                    color: '.$title_font_color.' !important;
-                    font-weight: '.$title_font_weight.' !important;
-                    font-size: '.$title_font_size.' !important;
-                "';
-          $text_style =
-              'style="
-                    color: '.$text_font_color.' !important;
-                    font-weight: '.$text_font_weight.' !important;
-                    font-size: '.$text_font_size.' !important;
-                    background-color: '.$text_background.' !important;
-                    border-color: '.$section_border_color.' !important;
-                "';
-          $section_style =
-              'style="
-                    border-color: '.$section_border_color.' !important;
-                "';
-          $heading_style =
-              'style="
-                    background-color: '.$title_background.' !important;
-                "';
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'style' || $active_menu == '') echo 'in active'?>" id="title">
+                    <?php
+                    $this->admin_select('background_active', $active_options, 'Active background: ', $background_active);
+                    $this->admin_input('background_color','text', 'Background color: ', $background_color);
+                    $this->admin_file('background_image','Background image: ', $background_image);
+                    $this->admin_select('text_align', $text_options, 'Text align: ', $text_align);
+                    $this->admin_input('text_color','text', 'Text Color: ', $text_color);
+                    ?>
+                </div>
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'custom') echo 'in active'?>" id="text">
+                    <?php
+                    $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                    $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                    ?>
+                </div>
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'animation') echo 'in active'?>" id="animations">
+                    <?php
+                    $this->admin_select('animation_type', $types,'Animation: ', $animation_type);
+                    $this->admin_select('animation_duration', $durations,'Animation state: ', $animation_duration);
+                    ?>
+                </div>
+            </div>
 
-          $output = '
+        </div>
+        <?php
+    }
+    public function load_generic_styling()
+    {
+        $background_active = $this->block->data('background_active');
+        $background_color = $this->block->data('background_color');
+        $background_image = $this->block->data('background_image');
+
+        $text_align = $this->block->data('text_align');
+        $text_color = $this->block->data('text_color');
+        $custom_css = $this->block->data('custom_css');
+
+        $animation_type = $this->block->data('animation_type');
+        $animation_duration = $this->block->data('animation_duration');
+
+        $this->block->force_data_modification();
+        $this->block->add_css_class('animated '.$animation_duration.' '.$animation_type);
+
+        $style_arr = $this->block->data("style");
+        if($background_active == 'color')
+            $style_arr['background-color'] = $background_color;
+        else
+            $style_arr['background-image'] = $background_image;
+        $style_arr['text-align'] = $text_align;
+        $style_arr['color'] = $text_color;
+        $style_arr['text'] = ';'.$custom_css;
+        $this->block->set_data("style", $style_arr);
+    }
+    public function set_initial_values_if_empty()
+    {
+        $content = $this->block->data('content');
+
+        if(!is_array($content) || empty($content))
+        {
+            $content = array();
+            $content[0]['title'] = "Title of the first accordion";
+            $content[0]['text'] = "This is a sample text for the first collapsible group.";
+
+            $content[1]['title'] = "Title of the 2nd accordion";
+            $content[1]['text'] = "This is a sample text for the 2nd collapsible group.";
+
+            $content[2]['title'] = "Title of the 3rd accordion";
+            $content[2]['text'] = "This is a sample text for the 3rd collapsible group.";
+
+            $content[3]['title'] = "Title of the 4th accordion";
+            $content[3]['text'] = "This is a sample text for the 4th collapsible group.";
+
+            $this->block->set_data('content', $content, true);
+        }
+    }
+    public function generate_content()
+    {
+        global $active_controller;
+        $CI = &get_instance();
+        $CI->load->module('layout_system');
+
+        $this->set_initial_values_if_empty();
+        $content = $this->block->data('content');
+        $single_element = '<div class="panel panel-default" id="key_to_replace-'.$this->block->get_id().'"> <div class="panel-heading" role="tab" id="remove-1-key_to_replace"> <h4 class="panel-title" id="remove-2-panel-title-key_to_replace"> <a role="button" class="designer-editable" data-toggle="collapse" href="#remove-1-collapse-key_to_replace" field_name="content-key_to_replace-title" id="title'.$this->block->get_id().'key_to_replace" aria-expanded="true" aria-controls="collapseOne"> Title of the new accordion </a> </h4> </div> <div id="remove-1-collapse-key_to_replace" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"> <div id="remove-2-panel-body-key_to_replace" class="panel-body"> <p field_name="content-key_to_replace-text" class="designer-editable" id="text'.$this->block->get_id().'key_to_replace"> Text of the new accordion. Click on me to edit. </p> </div> </div> </div>';
+
+        //generic animations
+        $this->load_generic_styling();
+        //
+
+        $output = '
 		  <link href="'.base_url('builderengine/public/animations/css/animate.min.css').'" rel="stylesheet" />
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">';
-          $i = 1;
-          foreach($texts as $key => $text)
-          {
-              $output .= '
-                <div class="panel panel-default" '.$section_style.'>
-                    <div class="panel-heading" role="tab" id="headingOne" '.$heading_style.'>
-                        <h4 class="panel-title" id="title'.$this->block->get_id().''.$i.'">
-                            <i class="fa fa-info" style="margin-right: 5px; color: #96979d;"> </i> <a data-toggle="collapse" data-parent="#accordion" href="#collapse-'.$i.'" aria-expanded="false" aria-controls="collapseOne" '.$title_style.'>
-                                '.$titles[$key].'
+          <div class="panel-group" id="accordion-'.$this->block->get_id().'" role="tablist" aria-multiselectable="true">';
+
+        $i = 1;
+        foreach($content as $key => $element)
+        {
+            $element = (object)$element;
+            if(!isset($element->title))
+                $element->title = "New Title";
+            if(!isset($element->text))
+                $element->text = "Text of the new accordion. Click on me to edit.";
+            $output .= '
+                <div class="panel panel-default" id="remove-0-'.$key.'-'.$this->block->get_id().'">
+                    <div class="panel-heading" role="tab" id="remove-1-'.$key.'">
+                        <h4 class="panel-title" id="remove-2-panel-title-'.$key.'">
+                            <a role="button" class="designer-editable';
+            if($i == 1)
+                $output .= 'collapsed';
+            $output .= '" data-toggle="collapse" href="#remove-1-collapse-'.$key.'" field_name="content-'.$key.'-title" id="title'.$this->block->get_id().''.$key.'" aria-expanded="true" aria-controls="collapseOne">
+                                '.$element->title.'
                             </a>
                         </h4>
                     </div>
-                    <div id="collapse-'.$i.'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body" '.$text_style.'>
-                            <p class="" id="text'.$this->block->get_id().''.$i.'" >'.$texts[$key].'</p>
+                    <div id="remove-1-collapse-'.$key.'" class="panel-collapse collapse ';
+            if($i == 1)
+                $output .= 'in';
+            $output .= '" role="tabpanel" aria-labelledby="headingOne">
+                        <div id="remove-2-panel-body-'.$key.'" class="panel-body">
+                            <p field_name="content-'.$key.'-text" class="designer-editable" id="text'.$this->block->get_id().''.$key.'" >'.$element->text.'</p>
                         </div>
                     </div>
                 </div>
               ';
-              $i++;
-          }
-          $output .= '
+            $i++;
+        }
+
+        $output .= '
           </div>
         ';
 
-        return $output;
-      }
-  }
+        return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'accordion-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), $single_element, $this->block->get_name(), 'advanced');
+    }
+}
 ?>

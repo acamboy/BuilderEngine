@@ -12,183 +12,134 @@ class unordered_list_block_handler extends  block_handler{
         }
         public function generate_admin()
         {
-		  $texts = $this->block->data('texts');
-
-		  if(!is_array($texts) || empty($texts))
-		  {
-			$texts[0] = "Lorem ipsum dolor sit amet.";
-			$texts[1] = "Consectetur adipiscing elit.";
-			$texts[2] = "Integer molestie lorem at massa.";
-			$texts[3] = "Facilisis in pretium nisl aliquet.";
-		  }
-          $num_slides = count($texts);
-          end($texts);
-          $last_key = key($texts) + 1;
-          reset($texts);
-          ?>
-
-		  <script>
-			  var num_slides = <?=$num_slides?>;
-              var new_slide_number = <?=$last_key?>;
-			  <?php if($num_slides == 0): ?>
-			  var num_slides = 1;
-			  <?php endif;?>
-			  $(document).ready(function (){
-				  $("#myTab a").click(function (e) {
-					  e.preventDefault();
-					  $(this).tab("show");
-				  });
-				  $(".delete-slide").bind("click.delete_slide",function (e) {
-					  slide = $(this).attr('slide');
-					  $("#slide-section-" + slide).remove();
-					  $("#slide-section-tab-" + slide).remove();
-				  });
-				  $("#add-slide").click(function (e) {
-					  num_slides++;
-					  $("#slide-section-tabs").append('<li id="slide-section-tab-' + num_slides +'"><a href="#slide-section-' + num_slides + '" data-toggle="tab">Item ' + num_slides + '</a></li>');
-					  $("#slide-sections").append('\
-							<div class="tab-pane" id="slide-section-' + num_slides + '">\
-							  \
-							</div>\
-								');
-					  e.preventDefault();
-					  html = $("#slide-section-template").html();
-					  $("#slide-section-" + num_slides).html(html);
-					  $('#slides a:last').tab('show');
-					  $('#slide-section-' + num_slides).find('.delete-slide').attr('slide', num_slides);
-					  $('#slide-section-' + num_slides).find('[name="test"]').attr('name', 'texts[' + (new_slide_number) + ']');
-					  $(".delete-slide").unbind("click.delete_slide");
-					  $(".delete-slide").bind("click.delete_slide",function (e) {
-						  slide = $(this).attr('slide');
-						  $("#slide-section-" + slide).remove();
-						  $("#slide-section-tab-" + slide).remove();
-						  $('#slides a:first').tab('show');
-					  });
-                      new_slide_number++;
-				  });
-			  });
-		  </script>
-		  <ul class="nav nav-tabs" id="slide-section-tabs" style="margin-left:-15px">
-			  <li style="height: 42px;"><span style="height: 100%;padding-top: 10px;" id="add-slide" class="btn btn-primary">Add List Item</span></li>
-              <?$i = 1;?>
-              <?php foreach($texts as $key => $text):?>
-                  <li class="<?php if($i == 1) echo 'active'?>" id="slide-section-tab-<?=$i?>"><a href="#slide-section-<?=$i?>" data-toggle="tab">Item <?=$i?></a></li>
-                  <?$i++;?>
-              <?php endforeach; ?>
-			  <?php if($num_slides == 0): ?>
-				  <li class="active"><a href="#slide-section-1" data-toggle="tab">List Item 1</a></li>
-				   <li class="active"><a href="#slide-section-2" data-toggle="tab">List Item 2</a></li>
-					<li class="active"><a href="#slide-section-3" data-toggle="tab">List Item 3</a></li>
-					 <li class="active"><a href="#slide-section-4" data-toggle="tab">List Item 4</a></li>
-			  <?php endif;?>
-		  </ul>
-		  <div class="tab-content" id="slide-sections">
-              <!-- Template for creation -->
-              <div class="tab-pane" id="slide-section-template">
-                  <?php
-                  $this->admin_textarea('test','Text: ', '');
-                  ?>
-                  <div class="form-group">
-                      <span class="btn btn-danger delete-slide" slide="template">Delete Item</span>
-                  </div>
-              </div>
-              <!-- /Template for creation -->
-              <?$i = 1;?>
-              <?php foreach($texts as $key => $text):?>
-				  <div class="tab-pane <?php if($i == 1) echo 'active'?>" id="slide-section-<?=$i?>">
-					  <?php
-					  $this->admin_textarea('texts['.$key.']','Text: ', $text);
-					  ?>
-					  <div class="form-group">
-						  <span class="btn btn-danger delete-slide" slide="<?=$i?>">Delete Item</span>
-					  </div>
-				  </div>
-                  <?$i++;?>
-              <?php endforeach; ?>
-
-
-			  <?php if($num_slides == 0): ?>
-				  <div class="tab-pane active" id="slide-section-1">
-					  <?php
-					  $this->admin_textarea('texts[0]','Text: ');
-					  $this->admin_textarea('texts[1]','Text: ');
-					  $this->admin_textarea('texts[2]','Text: ');
-					  $this->admin_textarea('texts[3]','Text: ');
-					  ?>
-				  </div>
-			  <?php endif;?>
-		  </div>
-		 <?php
         }
-        public function generate_style()
-        {
-			$path = substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/index.php'));
-			include $path.'/builderengine/public/animations/animations.php';
+	public function generate_style($active_menu = '')
+	{
+		include $_SERVER['DOCUMENT_ROOT'].'/builderengine/public/animations/animations.php';
 
-            $text_font_color = $this->block->data('text_font_color');
-            $text_font_weight = $this->block->data('text_font_weight');
-            $text_font_size = $this->block->data('text_font_size');
-			$animation_type = $this->block->data('animation_type');	  
-		    $animation_duration = $this->block->data('animation_duration');
-		    $animation_event = $this->block->data('animation_event');
-		    $animation_delay = $this->block->data('animation_delay');
+		$background_active = $this->block->data('background_active');
+		$background_color = $this->block->data('background_color');
+		$background_image = $this->block->data('background_image');
 
-            $this->admin_input('text_font_color','text', 'Font color: ', $text_font_color);
-            $this->admin_input('text_font_weight','text', 'Font weight: ', $text_font_weight);
-            $this->admin_input('text_font_size','text', 'Font size: ', $text_font_size);
-			$this->admin_select('animation_type', $types,'Animation type: ',$animation_type);
-			$this->admin_select('animation_duration', $durations,'Animation duration: ',$animation_duration);
-			$this->admin_select('animation_event', $events,'Animation Start: ',$animation_event);
-			$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
-        }
+		$text_align = $this->block->data('text_align');
+		$text_color = $this->block->data('text_color');
+		$custom_css = $this->block->data('custom_css');
+		$custom_classes = $this->block->data('custom_classes');
+
+		$active_options = array("color" => "Color", "image" => "Image");
+		$text_options = array("left" => "Left", "center" => "Center", "right" => "Right");
+
+		$animation_type = $this->block->data('animation_type');
+		$animation_duration = $this->block->data('animation_duration');
+		?>
+		<div role="tabpanel">
+
+			<ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
+				<li role="presentation" class="<?if($active_menu == 'style' || $active_menu == '') echo 'active'?>"><a href="#title" aria-controls="text" role="tab" data-toggle="tab">Background Styles</a></li>
+				<li role="presentation" class="<?if($active_menu == 'custom' || $active_menu == '') echo 'active'?>"><a href="#text" aria-controls="profession" role="tab" data-toggle="tab">Custom CSS</a></li>
+				<li role="presentation" class="<?if($active_menu == 'animation' || $active_menu == '') echo 'active'?>"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade <?if($active_menu == 'style' || $active_menu == '') echo 'in active'?>" id="title">
+					<?php
+					$this->admin_select('background_active', $active_options, 'Active background: ', $background_active);
+					$this->admin_input('background_color','text', 'Background color: ', $background_color);
+					$this->admin_file('background_image','Background image: ', $background_image);
+					$this->admin_select('text_align', $text_options, 'Text align: ', $text_align);
+					$this->admin_input('text_color','text', 'Text Color: ', $text_color);
+					?>
+				</div>
+				<div role="tabpanel" class="tab-pane fade <?if($active_menu == 'custom') echo 'in active'?>" id="text">
+					<?php
+					$this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+					$this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+					?>
+				</div>
+				<div role="tabpanel" class="tab-pane fade <?if($active_menu == 'animation') echo 'in active'?>" id="animations">
+					<?php
+					$this->admin_select('animation_type', $types,'Animation: ', $animation_type);
+					$this->admin_select('animation_duration', $durations,'Animation state: ', $animation_duration);
+					?>
+				</div>
+			</div>
+
+		</div>
+		<?php
+	}
+	public function load_generic_styling()
+	{
+		$background_active = $this->block->data('background_active');
+		$background_color = $this->block->data('background_color');
+		$background_image = $this->block->data('background_image');
+
+		$text_align = $this->block->data('text_align');
+		$text_color = $this->block->data('text_color');
+		$custom_css = $this->block->data('custom_css');
+
+		$animation_type = $this->block->data('animation_type');
+		$animation_duration = $this->block->data('animation_duration');
+
+		$this->block->force_data_modification();
+		$this->block->add_css_class('animated '.$animation_duration.' '.$animation_type);
+
+		$style_arr = $this->block->data("style");
+		if($background_active == 'color')
+			$style_arr['background-color'] = $background_color;
+		else
+			$style_arr['background-image'] = $background_image;
+		$style_arr['text-align'] = $text_align;
+		$style_arr['color'] = $text_color;
+		$style_arr['text'] = ';'.$custom_css;
+		$this->block->set_data("style", $style_arr);
+	}
+		public function set_initial_values_if_empty()
+		{
+			$content = $this->block->data('content');
+
+			if(!is_array($content) || empty($content))
+			{
+				$content = array();
+				$content[0]['text'] = "Lorem ipsum dolor sit amet.";
+				$content[1]['text'] = "Consectetur adipiscing elit.";
+				$content[2]['text'] = "Integer molestie lorem at massa.";
+				$content[3]['text'] = "Facilisis in pretium nisl aliquet.";
+
+				$this->block->set_data('content', $content, true);
+			}
+		}
         public function generate_content()
         {
-			$texts = $this->block->data('texts');
-			  if(!is_array($texts) || empty($texts))
-			  {
-				  $texts[0] = "Lorem ipsum dolor sit amet.";
-				  $texts[1] = "Consectetur adipiscing elit.";
-				  $texts[2] = "Integer molestie lorem at massa.";
-				  $texts[3] = "Facilisis in pretium nisl aliquet.";
-			  }
+			global $active_controller;
+			$CI = &get_instance();
+			$CI->load->module('layout_system');
 
-            $text_font_color = $this->block->data('text_font_color');
-            $text_font_weight = $this->block->data('text_font_weight');
-            $text_font_size = $this->block->data('text_font_size');
-			$animation_type = $this->block->data('animation_type');	  
-		    $animation_duration = $this->block->data('animation_duration');
-		    $animation_event = $this->block->data('animation_event');
-		    $animation_delay = $this->block->data('animation_delay');
+			$this->set_initial_values_if_empty();
+			$content = $this->block->data('content');
+			$single_element = '<li class="designer-editable" id="remove-0-key_to_replace-'.$this->block->get_id().'" field_name="content-key_to_replace-text">Sample text</li>';
 
-			$num_slides = count($texts);
+			//generic animations
+			$this->load_generic_styling();
+			//
 
-			$settings[0][0] = 'unordered'.$this->block->get_id();
-			$settings[0][1] = $animation_event;
-			$settings[0][2] = $animation_duration.' '.$animation_delay.' '.$animation_type;
-			add_action("be_foot", generate_animation_events($settings));
-            $text_style = 
-                'style="
-                    color: '.$text_font_color.' !important;
-                    font-weight: '.$text_font_weight.' !important;
-                    font-size: '.$text_font_size.' !important;
-                "';
-
-            $output = '
+			$output = '
 			<link href="'.base_url('builderengine/public/animations/css/animate.min.css').'" rel="stylesheet" />
-                <ul id="unordered'.$this->block->get_id().'">';
-                    foreach($texts as $text)
-					{
-						$output .='<li '.$text_style.'>'.$text.'</li>';
-					}
-				$output .='
+				<ul id="unordered-list-'.$this->block->get_id().'" >';
+
+			foreach($content as $key => $element)
+			{
+				$element = (object)$element;
+				if(!isset($element->text))
+					$element->text = "Sample text";
+				$output .= '
+				<li class="designer-editable" id="remove-0-'.$key.'-'.$this->block->get_id().'" field_name="content-'.$key.'-text">'.$element->text.'</li>';
+			}
+
+			$output .='
                 </ul>
             ';
 
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
-            
-        }
+			return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'unordered-list-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), $single_element, $this->block->get_name(), 'advanced');
+		}
     }
 ?>

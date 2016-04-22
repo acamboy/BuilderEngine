@@ -241,6 +241,7 @@ global $flexslider_js_settings;
                 <ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
 					<li role="presentation" class="active"><a href="#title" aria-controls="title" role="tab" data-toggle="tab">Title</a></li>
                     <li role="presentation"><a href="#text" aria-controls="text1" role="tab" data-toggle="tab">Text</a></li>
+                    <li role="presentation"><a href="#customcss" aria-controls="customcss" role="tab" data-toggle="tab">Custom CSS</a></li>
                 </ul>
 				
                 <div class="tab-content">
@@ -262,6 +263,14 @@ global $flexslider_js_settings;
 					    $this->admin_select('text_animation_duration', $durations,'Animation duration: ',$text_animation_duration);
 					    $this->admin_select('text_animation_event', $events,'Animation Start: ',$text_animation_event);
 					    $this->admin_select('text_animation_delay', $delays,'Animation Delay: ',$text_animation_delay);
+                        ?>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="customcss">
+                        <?php
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
                         ?>
                     </div>
                 </div>
@@ -308,6 +317,14 @@ global $flexslider_js_settings;
 
         function output_flexslider()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
             $direction = $this->block->data('flexslider_settings_direction');
             if(!$direction)
             {
@@ -413,7 +430,8 @@ global $flexslider_js_settings;
             </div>
 
             ";
-            return $output;
+
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), "flexslider-{$this->block->name}", $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

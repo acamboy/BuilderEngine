@@ -5,12 +5,16 @@
 
 		<header id="page-title">
 			<div class="container">
-				<h1><?=$category->name?></h1>
+				<h1><?=stripslashes($category->name)?></h1>
 
 				<ul class="breadcrumb">
 					<li><a href="<?=base_url()?>">Home</a></li>
-					<li><a href="<?=base_url()?>blog/all_posts">Blog</a></li>					
-					<li class="active"> <?=$category->name?></li>
+					<li><a href="<?=base_url()?>blog/all_posts">Blog</a></li>
+					<?php if($category->parent_id > 0):?>
+					<?php $parent_cat = new Category($category->parent_id);?>
+					<li><a href="<?=base_url('blog/category/'.$parent_cat->id)?>"><?=stripslashes($parent_cat->name)?></a></li>
+					<?php endif;?>
+					<li class="active"> <?=stripslashes($category->name)?></li>
 				</ul>
 			</div>
 		</header>
@@ -25,7 +29,7 @@
 							<div class="item">
 
 								<div class="item-title">
-									<h2><a href="/blog/post/<?=$post->slug?>"> <?=$post->title?></a></h2>
+									<h2><a href="/blog/post/<?=$post->slug?>"> <?=stripslashes($post->title)?></a></h2>
 								    <a href="#" class="label label-default light"><i>Post by:</i> <?=$user->username;?></a> <br/>
 					         <?php    							      $post_comments=array();
 							      $comments = new Comment;
@@ -111,7 +115,7 @@
 					<div class="widget">
 						<h3>BLOG SEARCH</h3>
 						<form method="get" action="<?=base_url('/blog/search')?>" class="input-group">
-							<input type="text" class="form-control" name="keyword" placeholder="search..." />
+							<input type="text" class="form-control" style="height:46px;" name="keyword" placeholder="search..." />
 							<span class="input-group-btn">
 								<button class="btn btn-primary"><i class="fa fa-search"></i></button>
 							</span>
@@ -130,17 +134,17 @@
 						    <?php if($parent_category->parent_id == 0):?>
 
 						      <?php if($parent_category->has_children()):?>
-						        <li id="parent<?=$i?>"><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-plus-circle"></i><?=$parent_category->name?></a></li>
+						        <li id="parent<?=$i?>"><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-plus-circle"></i><?=stripslashes($parent_category->name)?></a></li>
 						          <ul class="child<?=$i?> nav nav-list" style="display: none; margin-left: 10%">
-						                <li><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-th-large"></i>All Posts: <?=$parent_category->name?></a></li>
+						                <li><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-th-large"></i>All Posts: <?=stripslashes($parent_category->name)?></a></li>
 						            <?php foreach($categories as $category):?>
 						              <?php if($category->parent_id == $parent_category->id):?>
-						                <li><a href="<?=base_url('blog/category/'.$category->id)?>"><i class="fa fa-arrow-circle-o-right"></i><?=$category->name?></a></li>
+						                <li><a href="<?=base_url('blog/category/'.$category->id)?>"><i class="fa fa-arrow-circle-o-right"></i><?=stripslashes($category->name)?></a></li>
 						              <?php endif;?>
 						            <?php endforeach;?>
 						          </ul>
 						      <?php else:?>
-						        <li><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-arrow-circle-o-right"></i><?=$parent_category->name?></a></li>
+						        <li><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-arrow-circle-o-right"></i><?=stripslashes($parent_category->name)?></a></li>
 						      <?php endif;?>
 
 						    <?php endif;?>
@@ -166,7 +170,7 @@
 						});
 
 						function createCallback( i ){
-						  return function(){
+						  return function(event){
 						    event.preventDefault();
 						      if($(".child" + i).hasClass('visible-li'))
 						        $(".child" + i).removeClass('visible-li');
@@ -192,7 +196,7 @@
 						?>
 						<?php foreach ($recent_posts->get() as $recent_post):?>
 					        <?php if($j <= $recent_post_limit):?>
-							    <li><a href="<?=base_url()?>blog/post/<?=$recent_post->slug?>"><i class="fa fa-sign-out"></i> <?=$recent_post->title?></a> <small> <?=date('d.M.Y / h:i',$recent_post->time_created)?></small></li>
+							    <li><a href="<?=base_url()?>blog/post/<?=$recent_post->slug?>"><i class="fa fa-sign-out"></i> <?=stripslashes($recent_post->title)?></a> <small> <?=date('d.M.Y / h:i',$recent_post->time_created)?></small></li>
 							<?php $j++?>
 							<?php else:?>
                             <?php endif?>							
@@ -221,7 +225,7 @@
                             $available_tags = array_slice($available_tags,0,$set_limit);
                             ?>
                             <?php foreach($available_tags as $tag):?>
-                                <a class="label label-default light" href="<?=base_url('blog/search/'.$tag)?>"><i class="fa fa-tags"></i> <?=$tag?></a>
+                                <a class="label label-default light" href="<?=base_url('blog/search/'.stripslashes($tag))?>"><i class="fa fa-tags"></i> <?=stripslashes($tag)?></a>
                             <?php endforeach?>
                             <div class="clearfix"></div>
                         </div>

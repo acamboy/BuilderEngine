@@ -53,10 +53,11 @@
 									<label class="control-label col-md-4 col-sm-4" for="website">Default Group Access Allowed for Website:</label>
 									<div class="form-group">
 									<div class="col-md-8 col-sm-8">
-                                        <ul id="jquery-tagIt-default">
-                                            <li>Guests</li>
-                                            <li>Members</li>
-											<li>Administrators</li>
+                                        <ul id="jquery">
+										<?php $default_groups = explode(',',$default_website_access_groups);?>
+										<?php foreach($default_groups as $default_group):?>
+											<li value="<?=$default_group?>"><?=$default_group?></li>
+										<?php endforeach;?>
 										</div>
 									</div>
 								</div>
@@ -226,3 +227,14 @@
 	</div>
 	<!-- end page container -->
 <?php echo get_footer()?>
+<?php $groups = new Group;?>
+<script>
+    $(document).ready(function (){
+	    $('#jquery').tagit({
+	        fieldName: "default_website_access_group",
+	        singleField: true,
+	        showAutocompleteOnFocus: true,
+	        availableTags: [ <?php foreach ($groups->get() as $group): ?>"<?php echo $group->name?>", <?php endforeach;?>]
+	    });
+	});
+</script>

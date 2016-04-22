@@ -51,25 +51,38 @@ $(document).ready(function (){
             <form class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?=$page->id?>">
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="title">Page Title:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="title">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page Name"></i>
+						Page Title:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <input class="form-control" type="text" id="title" name="title" placeholder="Page Name / Title" value="<?=$page->title?>"/>
+						<?=(isset($_GET['error']))?'<span class="label label-danger">Page title <strong>"'.$_GET['error'].'"</strong> already exists !':''?>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="slug">URL Slug:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="slug">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page URL Slug"></i>
+						URL Slug:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <input class="form-control" type="text" id="slug" name="slug" placeholder="URL Address Link" value="<?=$page->slug?>"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="pagemeta">Page Meta Description:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="pagemeta">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page SEO Description"></i>
+						Page Meta Description:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <input class="form-control" type="text" id="pagemeta" name="meta_desc" placeholder="SEO Page Description" value="<?=$page->meta_desc?>" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="pagemetakeywords">Page Meta Keywords:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="pagemetakeywords">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page SEO Keywords"></i>
+						Page Meta Keywords:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <input class="form-control" type="text" id="pagemetakeywords" name="meta_keywords" placeholder="SEO Page Keywords" value="<?=$page->meta_keywords?>" />
                     </div> 
@@ -90,7 +103,10 @@ $(document).ready(function (){
                 </div>
 				*/?>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="pagemetakeywords">SEO Restrictions:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="pagemetakeywords">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="SEO Restrictions"></i>
+						SEO Restrictions:
+					</label>
                     <div class="col-md-8 col-sm-8">
                         <label class="checkbox-inline">
                             <input type="checkbox" name="seo_index" value="" <?php echo ($page->seo_index=='noindex,')?'checked="checked"':'';?>/>
@@ -119,7 +135,10 @@ $(document).ready(function (){
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="website">Groups (Accounts) Access Allowed:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="website">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Only members of groups selected will see this webpage"></i>
+						Group Access Policy:
+					</label>
                     <div class="form-group">
                     <div class="col-md-6 col-sm-6">
                         <ul id="access-groups">

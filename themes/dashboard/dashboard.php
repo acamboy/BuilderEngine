@@ -22,7 +22,7 @@
                         <h4 class="alert-heading"><i class="icon24 i-info"></i>Update available!</h4>
                         <p>We have an update for your website. Updates provide you with new features and security improvements. <br>We recommend you to always keep your website up to date.</p>
                         <p>
-                            <a class="btn btn-success" href="/admin/update/index">Update your website</a>
+                            <a class="btn btn-success" href="<?=base_url('admin/update/index')?>">Update your website</a>
                         </p>
                     </div>
                 </div>
@@ -162,14 +162,14 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td>28 / 10 / 2015</td>
+											<td>22 / 02 / 2016</td>
 											<td class="hidden-sm">
 												<a href="#">
 													<img src="<?=base_url('/themes/dashboard/assets/img/builderengine-icon.png')?>" alt="BuilderEngine"  />
 												</a>
 											</td>
 											<td>
-												<h6><a href="#">Version 3.1.2</a></h6>
+												<h6><a href="#">Version <?=$this->BuilderEngine->get_option('version');?></a></h6>
 											</td>
 											<td><a href="http://www.builderengine.org">BuilderEngine</a></td>
 										</tr>

@@ -138,14 +138,16 @@ class Admin_user extends BE_Controller {
 		$this->db->where('group_id', $id);
 		$this->db->delete('link_groups_users');
 		
+		$member_group = $this->users->get_group_id_by_name('Members');
 		$users = new User();
 		foreach($users->get() as $user)
 		{
-			if(empty($this->users->get_user_group_ids($user->id)))
+			$user_groups = $this->users->get_user_group_ids($user->id);
+			if(empty($user_groups))
 			{
                 $data = array(
                     "user_id" => $user->id,
-                    "group_id"=> $this->users->get_group_id_by_name('Members')
+                    "group_id"=> $member_group,
                 );
                 $this->db->insert("link_groups_users", $data);				
 			}
@@ -153,13 +155,11 @@ class Admin_user extends BE_Controller {
 
 		$this->load->model('pages');
 		$pages = $this->db->get('pages');
-		foreach($pages->result() as $page)
-		{
+		foreach($pages->result() as $page){
 			$page_groups = explode(',',$page->groups);
 			$group_to_delete = $this->users->get_group_by_id($id);
 			$groups = '';
-			foreach($page_groups as $page_group)
-			{
+			foreach($page_groups as $page_group){
 				if($page_group == $group_to_delete->name)
 					unset($page_group);
 				else
@@ -171,13 +171,37 @@ class Admin_user extends BE_Controller {
 			$this->db->update('pages',$update);
 		}
 		
+		$permission = new Group_permission();
+		$permission = $permission->where('group_id',$id)->get();
+		if($permission->group_id > 0)
+			$permission->delete();
+		
+		$this->db->where('group_id',$id);
+		$this->db->delete('link_permissions');
+		
 		$default_group = $this->BuilderEngine->get_option('default_registration_group');
 
 		if($default_group == $group_to_delete->name)
 			$this->BuilderEngine->set_option('default_registration_group','Members');
 			
-        $this->db->delete('user_groups', array('id' => $id));	
-        redirect('/admin/user/groups/', 'location');
+        $this->db->delete('user_groups', array('id' => $id));
+		
+		$default_website_access_groups = explode(',',$this->BuilderEngine->get_option('default_website_access_group'));
+		$blog_access_groups = explode(',',$this->BuilderEngine->get_option('be_blog_access_groups'));
+		$allgroups = new Group();
+		$allgroups = $allgroups->get();
+		$group_names = array();
+		foreach($allgroups as $allgroup){
+			array_push($group_names,$allgroup->name);
+		}
+		$result = array_diff($default_website_access_groups,$group_names);
+		$result_blog = array_diff($blog_access_groups,$group_names);
+		$dwag = str_replace($result,'',$this->BuilderEngine->get_option('default_website_access_group'));
+		$this->BuilderEngine->set_option('default_website_access_group',$dwag);
+		$bag = str_replace($result_blog,'',$this->BuilderEngine->get_option('be_blog_access_groups'));
+		$this->BuilderEngine->set_option('be_blog_access_groups',$bag);
+
+        redirect('/admin/user/groups/','location');
     }
     public function edit($user_id)
     { 

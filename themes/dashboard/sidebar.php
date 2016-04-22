@@ -174,7 +174,7 @@
                     <i class="fa fa-cube"></i>
                     <span><?php echo $module?></span>
                 </a>
-                <ul class="sub-menu">
+                <ul class="sub-menu" <?php if(isset($current_page) && $current_page == 'blog' && $module == 'Blog') echo 'style="display:block"';?>>
                     <?php foreach( $links[$key] as $sub_key => $link):
 
                         ?>
@@ -190,7 +190,12 @@
                                     <?php echo $sub_key?>
                                 </a>
                                 <?php if(is_array($links[$key][$sub_key])): ?>
-                                    <ul class="sub-menu">
+                                    <ul class="sub-menu" <?php if(	 isset($current_page) && $current_page == 'blog' && (
+																	(isset($current_child_page) && $sub_key == 'Posts' && $current_child_page == 'post') || 
+																	(isset($current_child_page) && $sub_key == 'Categories' && $current_child_page == 'category') ||
+																	(isset($current_child_page) && $sub_key == 'Reports' && $current_child_page == 'comment_report') ||
+																	(isset($current_child_page) && $sub_key == 'Settings' && $current_child_page == 'blog_settings'))
+																) echo 'style="display:block"';?>>
                                         <?php foreach($links[$key][$sub_key] as $sub_sub_key => $link): ?>
                                             <li>
                                                 <a href="<?php echo $link?>">

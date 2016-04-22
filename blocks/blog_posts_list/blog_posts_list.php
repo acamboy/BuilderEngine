@@ -41,7 +41,7 @@
             $categores = new Category();
             $all_category = $categores->get();
             foreach ($all_category->all as $key => $value) {
-                $category_option[$value->id] = $value->name;
+                $category_option[$value->id] = stripslashes($value->name);
             }
 
             $this->admin_select('post_count', $count, 'Post Count: ', $post_count);
@@ -72,7 +72,11 @@
 						$this->admin_select('sections_animation_type', $types,'Animation type: ',$sections_animation_type);
 						$this->admin_select('sections_animation_duration', $durations,'Animation duration: ',$sections_animation_duration);
 						$this->admin_select('sections_animation_event', $events,'Animation Start: ',$sections_animation_event);
-						$this->admin_select('sections_animation_delay', $delays,'Animation Delay: ',$sections_animation_delay);					
+						$this->admin_select('sections_animation_delay', $delays,'Animation Delay: ',$sections_animation_delay);
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
                         ?>
                     </div>
                 </div>
@@ -81,10 +85,16 @@
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
 
-            $CI = & get_instance();
             $CI->load->model('visits');
             $sequence = $CI->visits->populyar_post_by_visits();
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
 
             $sections_font_color = $this->block->data('sections_font_color');
             $sections_font_weight = $this->block->data('sections_font_weight');
@@ -142,16 +152,16 @@
             if($alphabetical_order == 'za')//ok
 				krsort($sequence);
             if($alphabetical_order == 'oldest')
-				$recent_posts = $all_posts->order_by('time_created','asc');
+				$recent_posts = $all_posts->order_by('time_created','asc')->get();
             if($alphabetical_order == 'latest')//ok
 				rsort($sequence);
             if($alphabetical_order == 'updated')
-				$recent_posts = $all_posts->order_by('time_created','desc');
+				$recent_posts = $all_posts->order_by('time_created','desc')->get();
             if($alphabetical_order == 'most_visited')//ok
 				arsort($sequence);
             if($alphabetical_order == 'less_visited')//ok
 				asort($sequence);
-				
+
             $output = '
                     <link href="'.base_url('blocks/blog_posts_list/style.css').'" rel="stylesheet">
 					<div class="widgetbloglist" id="blog_list">
@@ -159,28 +169,41 @@
                         <h4>BLOG POSTS</h4>
                         <ul class="nav nav-list">';
                         $j=1;
-                        foreach ($sequence as $key => $value) {
+						if($alphabetical_order != 'oldest'){
+							foreach ($sequence as $key => $value) {
+								foreach ($recent_posts as $recent_post){
+									if($key == $recent_post->slug)
+										if($j <= $recent_post_limit){
+											$output .= '
+												<li>
+													<a '.$section_link_style.' href="'.base_url().'blog/post/'.$recent_post->slug.'">
+														<i class="fa fa-sign-out"></i>  
+													'.stripslashes($recent_post->title).'</a>
+													<small>'.date('d.M.Y / h:i',$recent_post->time_created).'</small>
+												</li>';
+											$j++;
+										}
+								}
+							}
+						}else{
                             foreach ($recent_posts as $recent_post){
-                                if($key == $recent_post->slug)
                                     if($j <= $recent_post_limit){
                                         $output .= '
                                             <li>
                                                 <a '.$section_link_style.' href="'.base_url().'blog/post/'.$recent_post->slug.'">
                                                     <i class="fa fa-sign-out"></i>  
-                                                '.$recent_post->title.'</a>
+                                                '.stripslashes($recent_post->title).'</a>
                                                 <small>'.date('d.M.Y / h:i',$recent_post->time_created).'</small>
                                             </li>';
                                         $j++;
                                     }
-                            }
-                        }
+                            }							
+						}
             $output .= '
                         </ul>
                   </div>   </div>';
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
+
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), '', $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

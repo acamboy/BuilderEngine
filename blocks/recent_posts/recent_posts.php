@@ -19,7 +19,8 @@
                 "2" => "2",
                 "3" => "3",
                 "4" => "4",
-                "5" => "5"
+                "5" => "5",
+				"all" => "All",
                 );
             $this->admin_select('post_count', $count, 'Post Count: ', $post_count);
         }
@@ -49,6 +50,10 @@
 						$this->admin_select('animation_duration', $durations,'Animation duration: ',$animation_duration);
 						$this->admin_select('animation_event', $events,'Animation Start: ',$animation_event);
 						$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
                         ?>
                     </div>
                 </div>
@@ -57,6 +62,14 @@
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
             $sections_font_color = $this->block->data('sections_font_color');
             $sections_font_weight = $this->block->data('sections_font_weight');
             $sections_font_size = $this->block->data('sections_font_size');
@@ -87,6 +100,7 @@
             $CI = & get_instance();
             $CI->load->model('post');
             $all_posts = new Post();
+			$all = $all_posts->count();
             $BuilderEngine = new BuilderEngine();
             $recent_posts = $all_posts->order_by('time_created','desc');
             $recent_post_limit = $BuilderEngine->get_option('be_blog_num_recent_posts_displayed');
@@ -94,6 +108,8 @@
                 $recent_post_limit = 5;
             }
             if(isset($post_count)){
+				if($post_count == 'all')
+					$post_count = $all;
                 $recent_post_limit = $post_count;
             }
             $j=1;
@@ -111,7 +127,7 @@
                                     <li>
                                         <a '.$section_link_style.' href="'.base_url().'blog/post/'.$recent_post->slug.'">
                                             <i class="fa fa-sign-out"></i> 
-                                        '.$recent_post->title.'</a>
+                                        '.stripslashes($recent_post->title).'</a>
                                         <small '.$section_color.'>'.date('d.M.Y / h:i',$recent_post->time_created).'</small>
                                     </li>';
                                 $j++;
@@ -120,10 +136,8 @@
             $output .= '
                         </ul>
                    </div> </div>';
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
+
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), '', $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

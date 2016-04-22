@@ -1,86 +1,137 @@
 <?php
 class title_block_handler extends  block_handler{
-        function info()
+    function info()
+    {
+        $info['category_name'] = "Bootstrap";
+        $info['category_icon'] = "dsf";
+
+        $info['block_name'] = "Title";
+        $info['block_icon'] = "fa-envelope-o";
+
+        return $info;
+    }
+    public function generate_admin()
+    {
+    }
+    public function generate_style($active_menu = '')
+    {
+        include $_SERVER['DOCUMENT_ROOT'].'/builderengine/public/animations/animations.php';
+
+        $background_active = $this->block->data('background_active');
+        $background_color = $this->block->data('background_color');
+        $background_image = $this->block->data('background_image');
+
+        $text_align = $this->block->data('text_align');
+        $text_color = $this->block->data('text_color');
+        $custom_css = $this->block->data('custom_css');
+        $custom_classes = $this->block->data('custom_classes');
+
+        $active_options = array("color" => "Color", "image" => "Image");
+        $text_options = array("left" => "Left", "center" => "Center", "right" => "Right");
+
+        $animation_type = $this->block->data('animation_type');
+        $animation_duration = $this->block->data('animation_duration');
+        ?>
+        <div role="tabpanel">
+
+            <ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
+                <li role="presentation" class="<?if($active_menu == 'style' || $active_menu == '') echo 'active'?>"><a href="#title" aria-controls="text" role="tab" data-toggle="tab">Background Styles</a></li>
+                <li role="presentation" class="<?if($active_menu == 'custom' || $active_menu == '') echo 'active'?>"><a href="#text" aria-controls="profession" role="tab" data-toggle="tab">Custom CSS</a></li>
+                <li role="presentation" class="<?if($active_menu == 'animation' || $active_menu == '') echo 'active'?>"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'style' || $active_menu == '') echo 'in active'?>" id="title">
+                    <?php
+                    $this->admin_select('background_active', $active_options, 'Active background: ', $background_active);
+                    $this->admin_input('background_color','text', 'Background color: ', $background_color);
+                    $this->admin_file('background_image','Background image: ', $background_image);
+                    $this->admin_select('text_align', $text_options, 'Text align: ', $text_align);
+                    $this->admin_input('text_color','text', 'Text Color: ', $text_color);
+                    ?>
+                </div>
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'custom') echo 'in active'?>" id="text">
+                    <?php
+                    $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                    $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                    ?>
+                </div>
+                <div role="tabpanel" class="tab-pane fade <?if($active_menu == 'animation') echo 'in active'?>" id="animations">
+                    <?php
+                    $this->admin_select('animation_type', $types,'Animation: ', $animation_type);
+                    $this->admin_select('animation_duration', $durations,'Animation state: ', $animation_duration);
+                    ?>
+                </div>
+            </div>
+
+        </div>
+        <?php
+    }
+    public function load_generic_styling()
+    {
+        $background_active = $this->block->data('background_active');
+        $background_color = $this->block->data('background_color');
+        $background_image = $this->block->data('background_image');
+
+        $text_align = $this->block->data('text_align');
+        $text_color = $this->block->data('text_color');
+        $custom_css = $this->block->data('custom_css');
+
+        $animation_type = $this->block->data('animation_type');
+        $animation_duration = $this->block->data('animation_duration');
+
+        $this->block->force_data_modification();
+        $this->block->add_css_class('animated '.$animation_duration.' '.$animation_type);
+
+        $style_arr = $this->block->data("style");
+        if($background_active == 'color')
+            $style_arr['background-color'] = $background_color;
+        else
+            $style_arr['background-image'] = $background_image;
+        $style_arr['text-align'] = $text_align;
+        $style_arr['color'] = $text_color;
+        $style_arr['text'] = ';'.$custom_css;
+        $this->block->set_data("style", $style_arr);
+    }
+    public function set_initial_values_if_empty()
+    {
+        $content = $this->block->data('content');
+
+        if(!is_array($content) || empty($content))
         {
-            $info['category_name'] = "Bootstrap";
-            $info['category_icon'] = "dsf";
+            $content = array();
+            $content[0] = new stdClass();
+            $content[0]->title = "This is some demo title. Click on me to edit.";
 
-            $info['block_name'] = "Title";
-            $info['block_icon'] = "fa-envelope-o";
-            
-            return $info;
-        }
-        public function generate_admin()
-        {
-			$headings = array(
-				'h1' => 'Heading 1',
-				'h2' => 'Heading 2',
-				'h3' => 'Heading 3',
-				'h4' => 'Heading 4',
-				'h5' => 'Heading 5',
-				'h6' => 'Heading 6',
-			);
-			$title_text = $this->block->data('title');
-			$title_size = $this->block->data('title_size');
-			$this->admin_select('title_size', $headings ,'Title size:', $title_size);
-			$this->admin_input('title','text', 'Title text: ', $title_text);
-        }
-        public function generate_style()
-        {
-			$path = substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/index.php'));
-			include $path.'/builderengine/public/animations/animations.php';
-
-            $text_font_color = $this->block->data('text_font_color');
-            $text_font_weight = $this->block->data('text_font_weight');
-            $text_font_size = $this->block->data('text_font_size');
-			$animation_type = $this->block->data('animation_type');	  
-		    $animation_duration = $this->block->data('animation_duration');
-		    $animation_event = $this->block->data('animation_event');
-		    $animation_delay = $this->block->data('animation_delay');
-
-            $this->admin_input('text_font_color','text', 'Font color: ', $text_font_color);
-            $this->admin_input('text_font_weight','text', 'Font weight: ', $text_font_weight);
-            $this->admin_input('text_font_size','text', 'Font size: ', $text_font_size);
-			$this->admin_select('animation_type', $types,'Animation type: ',$animation_type);
-			$this->admin_select('animation_duration', $durations,'Animation duration: ',$animation_duration);
-			$this->admin_select('animation_event', $events,'Animation Start: ',$animation_event);
-			$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
-        }
-        public function generate_content()
-        {
-			$title_text = $this->block->data('title');
-			$title_size = $this->block->data('title_size');
-            // style
-            $text_font_color = $this->block->data('text_font_color');
-            $text_font_weight = $this->block->data('text_font_weight');
-            $text_font_size = $this->block->data('text_font_size');
-
-			$animation_type = $this->block->data('animation_type');	  
-		    $animation_duration = $this->block->data('animation_duration');
-		    $animation_event = $this->block->data('animation_event');
-		    $animation_delay = $this->block->data('animation_delay');
-			$settings[0][0] = 'titleb'.$this->block->get_id();
-			$settings[0][1] = $animation_event;
-			$settings[0][2] = $animation_duration.' '.$animation_delay.' '.$animation_type;
-			add_action("be_foot", generate_animation_events($settings));
-			
-            $text_style = 
-                'style="
-                    color: '.$text_font_color.' !important;
-                    font-weight: '.$text_font_weight.' !important;
-                    font-size: '.$text_font_size.' !important;
-                "';
-
-            $output = '
-				<link href="'.base_url('builderengine/public/animations/css/animate.min.css').'" rel="stylesheet" />
-                <'.$title_size.' id="titleb'.$this->block->get_id().'" '.$text_style.'>' .$title_text.'</'.$title_size.'>
-            ';
-
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
-            
+            $this->block->set_data('content', $content, true);
         }
     }
+    public function generate_content()
+    {
+        global $active_controller;
+        $CI = &get_instance();
+        $CI->load->module('layout_system');
+
+        $this->set_initial_values_if_empty();
+        $content = $this->block->data('content');
+        $single_element = '';
+
+        //generic animations
+        $this->load_generic_styling();
+        //
+
+        $output = '';
+        foreach($content as $key => $element)
+        {
+            $element = (object)$element;
+            $output .= '
+				<div id="title-container-'.$this->block->get_id().'">
+					<h3 field_name="content-'.$key.'-title" class="designer-editable" id="title-'.$this->block->get_id().'">'.$element->title.'</h3>
+				</div>
+			';
+        }
+
+        return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'title-container-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), $single_element, $this->block->get_name(), 'style');
+    }
+}
 ?>

@@ -39,19 +39,28 @@
     <div class="panel-body panel-form">
         <form class="form-horizontal form-bordered" data-parsley-validate="true" method="post" enctype="multipart/form-data" name="post">
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="title">Blog Title:</label>
+				<label class="control-label col-md-4 col-sm-4" for="title">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Blog Post Name"></i>
+					Blog Title:
+				</label>
 				<div class="col-md-8 col-sm-8">
-					<input class="form-control" type="text" id="title" name="title" value="<?=$object->title?>" data-parsley-required="true" required />
+					<input class="form-control" type="text" id="title" name="title" value="<?=stripslashes($object->title)?>" data-parsley-required="true" required />
 				</div>
 			</div>
             <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4" for="slug">URL Slug:</label>
+                <label class="control-label col-md-4 col-sm-4" for="slug">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Blog Post URL Slug"></i>
+					URL Slug:
+				</label>
                 <div class="col-md-8 col-sm-8">
                     <input class="form-control" type="text" id="slug" name="slug" placeholder="URL Address Link" value="<?=$object->slug?>" required />
                 </div>
             </div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="blogimage">Blog Image:</label>
+				<label class="control-label col-md-4 col-sm-4" for="blogimage">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Blog Post Image"></i>
+					Blog Image:
+				</label>
 				<div class="col-md-6 col-sm-6">
 					<span class="btn btn-success fileinput-button">
                 <i class="fa fa-plus"></i>
@@ -76,48 +85,66 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="categoryselection">Category Selection:</label>
+				<label class="control-label col-md-4 col-sm-4" for="categoryselection">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Blog Category for Post (Mandatory)"></i>
+					Category Selection:
+				</label>
 				<div class="col-md-8 col-sm-8">								
 					<select class="form-control" id="select-required" name="category_id" data-parsley-required="true" required>
 						<option value="">Select Category</option>					 
                         <?php $categories = new Category();?>
 						<?php foreach($categories->get() as $category):?>
-							<option value="<?=$category->id?>" <?php if($category->id == $object->category_id) echo 'selected'?>><?=$category->name?></option>
+							<option value="<?=$category->id?>" <?php if($category->id == $object->category_id) echo 'selected'?>><?=stripslashes($category->name)?></option>
                         <?php endforeach?>
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="fullname">Allow Comments:</label>
+				<label class="control-label col-md-4 col-sm-4" for="fullname">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Allow Comments"></i>
+					Allow Comments:
+				</label>
 				<div class="col-md-6 col-sm-6">
 					<label class="radio-inline">
 						<?php if($object->comments_allowed == 'yes') 
 					    {  
 					    	$check1 = 'checked';  
-					    	$check2 = ''; 
+					    	$check2 = '';
+							$check3 = '';
 					    }
-					   	else
+					   	elseif($object->comments_allowed == 'no')
 					    {  
 					    	$check1 = ''; 
-					    	$check2 = 'checked';	
-					    } 					 
-						?>
+					    	$check2 = 'checked';
+							$check3 = '';
+					    }
+						else{
+					    	$check1 = ''; 
+					    	$check2 = '';
+							$check3 = 'checked';
+						}?>
                       	<input type="radio" name="comments_allowed" value="yes" <?=$check1?>/>Yes
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="comments_allowed" value="no" <?=$check2?>/>No Comments
+                        <input type="radio" name="comments_allowed" value="no" <?=$check2?>/>Disable,Show existing
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="comments_allowed" value="hide" <?=$check3?>/>Disable,Hide all
                     </label>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="website">Add Tags:</label>
+				<label class="control-label col-md-4 col-sm-4" for="website">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Tags for Blog Post Content"></i>
+					Add Tags:
+				</label>
 				<div class="form-group">
 					<div class="col-md-8 col-sm-8">
 	                    <ul id="tags" class="white">
 	                    	<?php if($page == 'Edit'):?>
 								<?php $tags = explode(',', $object->tags);?>
 								<?php foreach($tags as $tag):?>
-								 	<li><?=$tag?></li>
+								 	<li><?=stripslashes($tag)?></li>
 								<?php endforeach?>
 							<?php endif;?>
 	                    </ul>
@@ -125,7 +152,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="website">Groups (Accounts) Access Allowed:</label>
+				<label class="control-label col-md-4 col-sm-4" for="website">
+				<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Only members of groups selected will see this Post"></i>
+				Groups Access Policy:
+				</label>
 				<div class="form-group">
 					<div class="col-md-8 col-sm-8">
 	                    <ul id="access-groups">
@@ -133,7 +163,7 @@
 								<?php $groups = explode(',', $object->groups_allowed);?>
 								<?php foreach($groups as $group):?>
 								 	<li><?=$group?></li>
-								<?php endforeach?>
+								<?php endforeach ?>
 							<?php else:?>
 								<li>Guests</li>
                             	<li>Members</li>
@@ -143,7 +173,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-4 col-sm-4" for="blogname">Blog Content:</label>
+				<label class="control-label col-md-4 col-sm-4" for="blogname">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Blog Content"></i>
+					Blog Content:
+				</label>
 				<div class="col-md-8 col-sm-8">
 					<div class="panel-body panel-form">
 			        <textarea class="ckeditor" id="editor1" name="text" rows="20"><?=ChEditorfix($object->text)?></textarea>

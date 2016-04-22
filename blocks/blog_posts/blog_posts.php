@@ -20,7 +20,7 @@
             $posts = $CI->post;
             $all_posts = $posts->get();
             foreach ($all_posts->all as $key => $value) {
-                $posts_option[$value->id] = $value->title;
+                $posts_option[$value->id] = stripslashes($value->title);
             }
             $this->admin_select('post', $posts_option, 'Posts: ', $post);
         }
@@ -50,6 +50,10 @@
 						$this->admin_select('sections_animation_delay', $delays,'Animation Delay: ',$sections_animation_delay);
                         // $this->admin_input('sections_font_weight','text', 'Font weight: ', $sections_font_weight);
                         // $this->admin_input('sections_font_size','text', 'Font size: ', $sections_font_size);
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
                         ?>
                     </div>
                 </div>
@@ -58,6 +62,14 @@
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
             $post_id = $this->block->data('post');
             $sections_font_color = $this->block->data('sections_font_color');
             $sections_background_color = $this->block->data('sections_background_color');
@@ -98,7 +110,7 @@
 				<div class="left" id="blog">
 				<li class="masonry-item" '.$section_style.'>
                     <header class="blog-post">
-                       <a href="'.base_url('blog/post').'/'.$post->slug.'"> <h1 '.$section_link_style.'>Blog: '.$post->title.'</h1></a>
+                       <a href="'.base_url('blog/post').'/'.$post->slug.'"> <h1 '.$section_link_style.'>Blog: '.stripslashes($post->title).'</h1></a>
                         <small class="space18">';
                             $post_comments=array();
                             foreach($comments as $comment)
@@ -331,10 +343,8 @@
                     </div>
                 ';
             }
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
+
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), '', $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

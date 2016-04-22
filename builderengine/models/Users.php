@@ -124,7 +124,7 @@
                 $data['groups'] = "Members, Administrators, Frontend Editor, Frontend Manager";
  
             if(!isset($data['groups']) || $data['groups'] == "")
-                $data['groups'] = "Members";
+                $data['groups'] = $this->builderengine->get_option('default_registration_group');
 			
 			//if($this->builderengine->get_option('sign_up_verification') == 'email')
 			//	$this->send_registration_email($data['email'],$user);

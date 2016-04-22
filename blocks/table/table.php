@@ -102,6 +102,7 @@ class table_block_handler extends  block_handler{
                     <li role="presentation"><a href="#first_col" aria-controls="title" role="tab" data-toggle="tab">First column</a></li>
                     <li role="presentation"><a href="#contents" aria-controls="subtitle" role="tab" data-toggle="tab">Table contents</a></li>
 					<li role="presentation"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
+                    <li role="presentation"><a href="#customcss" aria-controls="customcss" role="tab" data-toggle="tab">Custom CSS</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -137,6 +138,14 @@ class table_block_handler extends  block_handler{
 						$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
                         ?>
                     </div>
+                    <div role="tabpanel" class="tab-pane fade" id="customcss">
+                        <?php
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                        ?>
+                    </div>
                 </div>
 
             </div>
@@ -144,6 +153,14 @@ class table_block_handler extends  block_handler{
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
 			$title_col_1 = $this->block->data('title_col_1');
 			$title_col_2 = $this->block->data('title_col_2');
 			$title_col_3 = $this->block->data('title_col_3');
@@ -159,7 +176,32 @@ class table_block_handler extends  block_handler{
 			$row3_col_1 = $this->block->data('row3_col_1');
 			$row3_col_2 = $this->block->data('row3_col_2');
 			$row3_col_3 = $this->block->data('row3_col_3');
-			
+
+            if(empty($title_col_1))
+                $title_col_1 = 'Text';
+            if(empty($title_col_2))
+                $title_col_2 = 'Text';
+            if(empty($title_col_3))
+                $title_col_3 = 'Text';
+            if(empty($row1_col_1))
+                $row1_col_1 = 'Text';
+            if(empty($row1_col_2))
+                $row1_col_2 = 'Text';
+            if(empty($row1_col_3))
+                $row1_col_3 = 'Text';
+            if(empty($row2_col_1))
+                $row2_col_1 = 'Text';
+            if(empty($row2_col_2))
+                $row2_col_2 = 'Text';
+            if(empty($row2_col_3))
+                $row2_col_3 = 'Text';
+            if(empty($row3_col_1))
+                $row3_col_1 = 'Text';
+            if(empty($row3_col_2))
+                $row3_col_2 = 'Text';
+            if(empty($row3_col_3))
+                $row3_col_3 = 'Text';
+
             // Style
             $first_row_font_color = $this->block->data('first_row_font_color');
             $first_row_font_weight = $this->block->data('first_row_font_weight');
@@ -242,11 +284,7 @@ class table_block_handler extends  block_handler{
                 </table>
             ';
 
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
-            
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'table'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

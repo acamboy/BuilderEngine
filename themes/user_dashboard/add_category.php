@@ -28,7 +28,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4" for="categoryname">Category Title:</label>
 						<div class="col-md-8 col-sm-8">
-							<input class="form-control" type="text" id="categoryname" name="name" value="<?=$object->name?>" data-parsley-required="true" />
+							<input class="form-control" type="text" id="categoryname" name="name" value="<?=stripslashes($object->name)?>" data-parsley-required="true" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -41,15 +41,18 @@
                                 </span>
 								<br/>
 								<div id="avat" class="alert" style="display: block;width:130px;margin-top:10px;margin-bottom:10px;"> 
-								<script>var input = "<input type=\"hidden\" name=\"image\" value=\"<?=base_url('builderengine/public/img/photo_placeholder.png')?>\">";</script>
+								<script>var input = "<input type=\"hidden\" name=\"image1\" value=\"<?=base_url('builderengine/public/img/photo_placeholder.png')?>\">";</script>
 									<a class="close" onclick="$('#avat').hide();$('#plc').append(input).show();('#uploadImage1').remove();">×</a> 
-									<?php if(!$object->image){$object->image = base_url().'builderengine/public/img/photo_placeholder.png';}?>
-									  <img id="uploadPreview1" src="<?=$object->image?>" width="80"/> 
+									<?php if($page =='Add') 
+										    $image = base_url('builderengine/public/img/photo_placeholder.png');
+										  else
+											$image = $object->image;
+									?>
+									<img id="uploadPreview1" src="<?=$image?>" width="80"/>
 								</div>
 								<div id="plc" class="alert" style="display: none;width:130px;margin-top:10px;margin-bottom:10px;"> 
 									<!--<a class="close" onclick="$('#plc').hide();$('#avat').show();">×</a> -->
-									  <img id="uploadPreview1" src="<?=base_url('builderengine/public/img/photo_placeholder.png')?>" width="80"/>
-									  
+									<img id="uploadPreview1" src="<?=base_url('builderengine/public/img/photo_placeholder.png')?>" width="80"/>
 								</div>
 						</div>
 					</div>
@@ -61,12 +64,12 @@
 				                    <?php $categories = new Category();?>
 				                    <?php if($page == 'Add'):?>
 					                    <?php foreach ($categories->get() as $parent_category):?>
-						                    <option value="<?=$parent_category->id?>"><?=$parent_category->name?></option>
+						                    <option value="<?=$parent_category->id?>"><?=stripslashes($parent_category->name)?></option>
 										<?php endforeach;?>
 									<?php else:?>
 										<?php foreach ($categories->get() as $parent_category):?>
 											<?php if($parent_category->id != $object->id):?>
-						                        <option value="<?=$parent_category->id?>" <?php if($object->parent_id == $parent_category->id) echo 'selected';?>><?=$parent_category->name?></option>
+						                        <option value="<?=$parent_category->id?>" <?php if($object->parent_id == $parent_category->id) echo 'selected';?>><?=stripslashes($parent_category->name)?></option>
 						                    <?php endif?> 
 										<?php endforeach;?>
 									<?php endif;?>

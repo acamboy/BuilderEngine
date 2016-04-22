@@ -213,6 +213,7 @@
                 <ul class="nav nav-tabs" role="tablist" style="margin-left: -20px;">
                     <li role="presentation" class="active"><a href="#text" aria-controls="text" role="tab" data-toggle="tab">Text</a></li>
                     <li role="presentation"><a href="#number" aria-controls="number" role="tab" data-toggle="tab">Number</a></li>
+                    <li role="presentation"><a href="#customcss" aria-controls="customcss" role="tab" data-toggle="tab">Custom CSS</a></li>
 				</ul>
 
                 <div class="tab-content">
@@ -238,6 +239,14 @@
 					    $this->admin_select('number_animation_delay', $delays,'Animation Delay: ',$number_animation_delay);
                         ?>
                     </div>
+                    <div role="tabpanel" class="tab-pane fade" id="customcss">
+                        <?php
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                        ?>
+                    </div>
 				</div>
 
             </div>
@@ -245,6 +254,14 @@
         }
 		public function generate_content()
 		{
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
 			$section_text = $this->block->data('section_text');
             $section_number = $this->block->data('section_number');
 
@@ -316,7 +333,7 @@
 	                
 	            </div>
 	            
-	            <div class="container">
+	            <div class="container" id="milestone-container-'.$this->block->get_id().'">
 	                <div class="row">';
                         $i = 1;
 	                	foreach($section_text as $key => $text)
@@ -346,7 +363,7 @@
 	            </div>
 	        </div>';
 
-	        return $output;
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'milestone-container-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
 		}
 		public function generate_admin_menus()
 		{

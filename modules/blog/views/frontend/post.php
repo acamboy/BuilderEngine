@@ -5,13 +5,17 @@
 		<header id="page-title">
 			<div class="container">
                 <?php $cat = $categories->where('id',$post->category_id)->get();?>
-                <h1><?=$cat->name?></h1>
+                <h1><?=stripslashes($cat->name)?></h1>
 
 				<ul class="breadcrumb">
 					<li><a href="<?=base_url()?>">Home</a></li>
-					<li><a href="<?=base_url()?>blog/all_posts">Blog</a></li>		
-					<li><a href="<?=base_url()?>blog/category/<?=$post->category_id?>"><?=$cat->name?></a></li>
-					<li class="active"><?=$post->title?></li>
+					<li><a href="<?=base_url()?>blog/all_posts">Blog</a></li>
+					<?php if($cat->parent_id > 0):?>
+					<?php $parent_cat = new Category($cat->parent_id);?>
+					<li><a href="<?=base_url('blog/category/'.$parent_cat->id)?>"><?=stripslashes($parent_cat->name)?></a></li>
+					<?php endif;?>					
+					<li><a href="<?=base_url()?>blog/category/<?=$post->category_id?>"><?=stripslashes($cat->name)?></a></li>
+					<li class="active"><?=stripslashes($post->title)?></li>
 				</ul>
 			</div>
 		</header>
@@ -20,7 +24,7 @@
 			<div class="row">
 				<div class="left col-md-9">
 					<header class="blog-post">
-						<h1><?=$post->title?></h1>
+						<h1><?=stripslashes($post->title)?></h1>
 						<small class="space18">
 					         <?php $post_comments=array();?>
                              <?php foreach($comments as $comment)
@@ -59,7 +63,7 @@
 	                        	<?php if($item->tags != ''): ?>
 							    	<?php $tags = explode(',',$item->tags); ?>
 								    <?php foreach($tags as $tag): ?>
-								        <a class="label label-default light" href="<?=base_url('blog/search/'.$tag)?>" ><i class="fa fa-tags"></i> <?=$tag?></a> 
+								        <a class="label label-default light" href="<?=base_url('blog/search/'.stripslashes($tag))?>" ><i class="fa fa-tags"></i> <?=stripslashes($tag)?></a> 
 									<?php endforeach; ?>
 								<?php else: ?>
 									-
@@ -71,8 +75,7 @@
 
 					<div class="divider"></div>
 
-                <?php $comments_alowed = 'no';foreach( $post->stored as $key => $val ){ if( $key == 'comments_allowed' && $val == 'yes'){ $comments_alowed = 'yes';}}?>
-                <?php if($comments_alowed == 'yes' && $this->BuilderEngine->get_option('be_blog_allow_comments') != 'no'):?>
+                <?php if($post->comments_allowed != 'hide' && $this->BuilderEngine->get_option('be_blog_allow_comments') == 'yes'):?>
 					<div id="comments">
 						<h4><?=$count?> <?=$pluralizer?></h4>
 
@@ -104,7 +107,7 @@
 								<h3 class="media-heading bold"><?=$comment->name;?></h3>
 								<small class="block"><?=date('d.M.Y - h:i',$comment->time_created)?></small>
 								<br/>
-								<?=$comment->text?>
+								<?=stripslashes($comment->text)?>
 							</div>
 
 							<div class="btn-group pull-right" role="group">
@@ -140,6 +143,7 @@
 						</div>
 						<?php $i++;?>
 					  	<?php endforeach?>
+						<?php if($this->BuilderEngine->get_option('be_blog_allow_comments') =='yes' && $post->comments_allowed != 'no'):?>
 					  	<?php if($this->BuilderEngine->get_option('be_blog_comments_private') == 'private'):?>
 					  		<?php if(!$user->is_guest()): ?>
 								<br/>
@@ -227,6 +231,7 @@
 								</div>
 							</form>
 						<?php endif; ?>
+						<?php endif;?>
 					</div>
 				<?php endif;?>
 				</div>
@@ -237,7 +242,7 @@
 					<div class="widget">
 						<h3>BLOG SEARCH</h3>
 						<form method="get" action="<?=base_url('/blog/search')?>" class="input-group">
-							<input type="text" class="form-control" name="keyword" placeholder="search..." />
+							<input type="text" class="form-control" style="height:46px;" name="keyword" placeholder="search..." />
 							<span class="input-group-btn">
 								<button class="btn btn-primary"><i class="fa fa-search"></i></button>
 							</span>
@@ -256,17 +261,17 @@
 						    <?php if($parent_category->parent_id == 0):?>
 
 						      <?php if($parent_category->has_children()):?>
-						        <li id="parent<?=$i?>"><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-plus-circle"></i><?=$parent_category->name?></a></li>
+						        <li id="parent<?=$i?>"><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-plus-circle"></i><?=stripslashes($parent_category->name)?></a></li>
 						          <ul class="child<?=$i?> nav nav-list" style="display: none; margin-left: 10%">
-						                <li><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-th-large"></i>All Posts: <?=$parent_category->name?></a></li>
+						                <li><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-th-large"></i>All Posts: <?=stripslashes($parent_category->name)?></a></li>
 						            <?php foreach($categories as $category):?>
 						              <?php if($category->parent_id == $parent_category->id):?>
-						                <li><a href="<?=base_url('blog/category/'.$category->id)?>"><i class="fa fa-arrow-circle-o-right"></i><?=$category->name?></a></li>
+						                <li><a href="<?=base_url('blog/category/'.$category->id)?>"><i class="fa fa-arrow-circle-o-right"></i><?=stripslashes($category->name)?></a></li>
 						              <?php endif;?>
 						            <?php endforeach;?>
 						          </ul>
 						      <?php else:?>
-						        <li><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-arrow-circle-o-right"></i><?=$parent_category->name?></a></li>
+						        <li><a href="<?=base_url('blog/category/'.$parent_category->id)?>"><i class="fa fa-arrow-circle-o-right"></i><?=stripslashes($parent_category->name)?></a></li>
 						      <?php endif;?>
 
 						    <?php endif;?>
@@ -300,7 +305,7 @@
 						});
 
 						function createCallback( i ){
-							return function(){
+							return function(event){
 								event.preventDefault();
 								if($(".child" + i).hasClass('visible-li'))
 									$(".child" + i).removeClass('visible-li');
@@ -326,7 +331,7 @@
 						?>
 						<?php foreach ($recent_posts->get() as $recent_post):?>
 					        <?php if($j <= $recent_post_limit):?>
-							    <li><a href="<?=base_url()?>blog/post/<?=$recent_post->slug?>"><i class="fa fa-sign-out"></i> <?=$recent_post->title?></a> <small> <?=date('d.M.Y / h:i',$recent_post->time_created)?></small></li>
+							    <li><a href="<?=base_url()?>blog/post/<?=$recent_post->slug?>"><i class="fa fa-sign-out"></i> <?=stripslashes($recent_post->title)?></a> <small> <?=date('d.M.Y / h:i',$recent_post->time_created)?></small></li>
 							<?php $j++?>
 							<?php else:?>
                             <?php endif?>							

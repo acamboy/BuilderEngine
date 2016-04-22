@@ -257,15 +257,47 @@ class Admin_main extends BE_Controller
         $this->show->set_default_breadcrumb(1, "General", "");
         $this->load->model("builderengine");
 
-        if ($_POST)
+        if ($_POST){
             foreach ($_POST as $key => $value) {
                 $this->builderengine->set_option($key, $value);
             }
+			
+			$allowed_groups = array();
+			$default_groups = explode(',',$_POST['default_website_access_group']);
+			$groups = new Group();
+			$module_permissions = new Group_permission();
+			
+			foreach($default_groups as $default_group){
+				$group = $groups->where('name',$default_group)->get();
+				array_push($allowed_groups,$group->id);
+			}
+
+			foreach($allowed_groups as $allowed_group){
+				$module_permission = $module_permissions->where('module_id',1)->where('access','frontend')->where('group_id',$allowed_group)->get();
+				if($module_permission->group_id != $allowed_group && $allowed_group != 1 && $allowed_group != 2 && $allowed_group != 3){
+					$new_permission = new Group_permission();
+					$new_permission->module_id = 1;
+					$new_permission->group_id = $allowed_group;
+					$new_permission->access = 'frontend';
+					$new_permission->save();
+				}
+				else{
+					$permissions = new Group_permission();
+					$existing_groups = explode(',',$_POST['default_website_access_group']);
+					foreach($permissions->get() as $permission){
+						if(!in_array($permission->group_id,$existing_groups) && $permission->group_id != 1 && $permission->group_id != 2 && $permission->group_id != 3){
+							$permission->delete();
+						}
+					}
+				}
+			}
+		}
 
         $data['current_page'] = 'settings';
         $data['builderengine'] = &$this->builderengine;
 		$data['erase_content_control'] = $this->builderengine->get_option('erase_content_control');
-        $this->show->backend('settings', $data);
+ 		$data['default_website_access_groups'] = $this->builderengine->get_option('default_website_access_group');
+		$this->show->backend('settings', $data);
     }
 
     public function seo_settings()

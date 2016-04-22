@@ -114,9 +114,21 @@
 			$this->admin_select('form_animation_duration', $durations,'Animation duration: ',$form_animation_duration);
 			$this->admin_select('form_animation_event', $events,'Animation Start: ',$form_animation_event);
 			$this->admin_select('form_animation_delay', $delays,'Animation Delay: ',$form_animation_delay);
+            $custom_css = $this->block->data('custom_css');
+            $custom_classes = $this->block->data('custom_classes');
+            $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+            $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
         }
 		public function generate_content()
 		{
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
             $field1_name = $this->block->data('field1_name');
             $field1_active = $this->block->data('field1_active');
             $field1_required = $this->block->data('field1_required');
@@ -165,6 +177,7 @@
             $form_text_font_size = $this->block->data('form_text_font_size');
             $form_background_color = $this->block->data('form_background_color');
 			$error = '';
+			$info = '';
 
             if(isset($_POST['contactform'.$this->block->get_id()]))
             {
@@ -194,6 +207,7 @@
 							$message .= "\n\n".base_url();
 
 							mail($to, $title, $message);
+							$info = 'Message Sent Successfully !';
 						}else{
 							$error = 'Wrong captcha ! ';
 						}
@@ -212,6 +226,7 @@
 						$message .= "\n\n".base_url();
 
 						mail($to, $title, $message);
+						$info = 'Message Sent Successfully !';
 					}
                 }
             }
@@ -232,7 +247,7 @@
 				<link href="'.base_url('builderengine/public/animations/css/animate.min.css').'" rel="stylesheet" />
 				<div class="row">
 				<div id="form'.$this->block->get_id().'" '.$background_style.' class="col-md-12 form-col" data-animation="true" data-animation-type="fadeInRight">
-                    <form class="form-horizontal" style="padding-right:20px !important;padding-left:20px !important;" method="post">';
+                    <form id="forms'.$this->block->get_id().'" class="form-horizontal" style="padding-right:20px !important;padding-left:20px !important;" method="post">';
                     if($field1_active != 'no')
                     {
                         $output .= '
@@ -243,10 +258,10 @@
                             $output .= '
                             </label>
                             <div class="col-md-9">
-                                <input type="text" name="'.strtolower(str_replace(' ', '_', $field1_name)).'" class="form-control"';
+                                <input id="'.$field1_name.$this->block->get_id().'" type="text" name="'.strtolower(str_replace(' ', '_', $field1_name)).'" class="form-control"';
                             if($field1_required == 'yes')
                                 $output .= ' required';
-                            $output .= '/>
+                            $output .= ' />
                             </div>
                         </div>';
                     }
@@ -260,10 +275,10 @@
                             $output .= '
                             </label>
                             <div class="col-md-9">
-                                <input type="text" name="'.strtolower(str_replace(' ', '_', $field2_name)).'" class="form-control"';
+                                <input id="'.$field2_name.$this->block->get_id().'" type="email" name="'.strtolower(str_replace(' ', '_', $field2_name)).'" class="form-control"';
                             if($field2_required == 'yes')
                                 $output .= ' required';
-                            $output .= '/>
+                            $output .= ' />
                             </div>
                         </div>';
                     }
@@ -277,10 +292,10 @@
                             $output .= '
                             </label>
                             <div class="col-md-9">
-                                <input type="text" name="'.strtolower(str_replace(' ', '_', $field3_name)).'" class="form-control"';
+                                <input id="'.$field3_name.$this->block->get_id().'" type="text" name="'.strtolower(str_replace(' ', '_', $field3_name)).'" class="form-control"';
                             if($field3_required == 'yes')
                                 $output .= ' required';
-                            $output .= '/>
+                            $output .= ' />
                             </div>
                         </div>';
                     }
@@ -294,9 +309,9 @@
                             $output .= '
                             </label>
                             <div class="col-md-9">
-                                <textarea class="form-control" name="'.strtolower(str_replace(' ', '_', $field4_name)).'" rows="5"';
+                                <textarea id="'.$field4_name.$this->block->get_id().'" class="form-control" name="'.strtolower(str_replace(' ', '_', $field4_name)).'" rows="5"';
                             if($field4_required == 'yes')
-                                $output .= ' required';
+                                $output .= ' required ';
                             $output .= '
                             ></textarea>
                             </div>
@@ -311,17 +326,35 @@
                                 <div class="col-md-4">
                                     <input required class="form-control input-lg" type="text" name="captcha" id="captcha" />
                                 </div>
-                                <div class="col-md-5">'.
-                                    $this->createCaptcha($this->block->get_id())
-                                .'</div>'.
-                                    $error
-                            .'</div>';
+                                <div class="col-md-5">
+                                    <span id="captchaImg'.$this->block->get_id().'">'.$this->createCaptcha($this->block->get_id()).'</span>
+                                </div>
+							</div>';
+							$output .='
+							<div id="error'.$this->block->get_id().'" class="alert alert-warning alert-dismissible col-md-9 col-md-offset-3" role="alert" style="display:none;margin-left:25.5%;">
+							  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							  <i class="fa fa-info-circle" style="font-size:18px;"></i> <strong> Wrong Captcha !</strong>
+							</div>
+							';
                     }
+
+						$output .='
+						<div id="info'.$this->block->get_id().'" class="alert alert-success alert-dismissible col-md-9 col-md-offset-3" role="alert" style="display:none;margin-left:25.5%;">
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						  <i class="fa fa-info-circle" style="font-size:18px;"></i> <strong> Message Sent Successfully ! </strong>
+						</div>
+						';
+
                         $output .= '
+						<input type="hidden" name="cap" value="'.$this->block->get_id().'" />
+						<input type="hidden" name="emailDestination" value="'.$email_destination.'" />
+						<input type="hidden" name="emailTitle" value="'.$email_title.'" />
+						<input type="hidden" name="captchaActive" value="'.$captcha_active.'" />
+						<input type="hidden" name="emailActive" value="'.$email_active.'" />
                         <div class="form-group">
                             <label '.$label_style.' class="control-label col-md-3"></label>
                             <div class="col-md-9 text-left">
-                                <button name="contactform'.$this->block->get_id().'" type="submit" class="btn btn-contact btn-block"';
+                                <button id="submit'.$this->block->get_id().'" name="contactform'.$this->block->get_id().'" type="submit" class="btn btn-contact btn-block"';
                                 if($email_active == 'no')
                                     $output .= 'style="pointer-events:none !important; background: rgb(165, 164, 164);border: 1px solid rgb(165, 164, 164);"';
                                 $output .= '>Send Message</button>
@@ -330,13 +363,57 @@
                     </form>
                 </div>
 			</div>
+			<script>
+			$(function () {
+				$("#submit'.$this->block->get_id().'").click( function (e) {
+				  e.preventDefault();
+					var first = $.trim($("#'.$field1_name.$this->block->get_id().'").val());
+					var firstReq = "'.$field1_required.'";
+					var second = $.trim($("#'.$field2_name.$this->block->get_id().'").val());
+					var secondReq = "'.$field2_required.'";
+					var third = $.trim($("#'.$field3_name.$this->block->get_id().'").val());
+					var thirdReq = "'.$field3_required.'";
+					var fourth = $.trim($("#'.$field4_name.$this->block->get_id().'").val());
+					var fourthReq = "'.$field4_required.'";
+					
+					if (first  === "" && firstReq === "yes") {
+						alert("'.$field1_name.' field is empty.");
+						return false;
+					}
+					if (second  === "" && secondReq === "yes") {
+						alert("'.$field2_name.' field is empty.");
+						return false;
+					}
+					if (third  === "" && thirdReq === "yes") {
+						alert("'.$field3_name.' field is empty.");
+						return false;
+					}
+					if (fourth  === "" && fourthReq === "yes") {
+						alert("'.$field4_name.' field is empty.");
+						return false;
+					}
+
+				  $.ajax({
+					type: "post",
+					url: "'.base_url('/admin/ajax/send_email').'",
+					data: $("#forms'.$this->block->get_id().'").serialize(),
+					success: function (data) {
+					    if(data == "true"){
+							$("#error'.$this->block->get_id().'").css("display","none");
+							$("#info'.$this->block->get_id().'").show();
+					    }else{
+							$("#info'.$this->block->get_id().'").css("display","none");
+							$("#error'.$this->block->get_id().'").show();
+						}
+						$("#forms'.$this->block->get_id().'")[0].reset();						
+					}
+				  });
+				});
+			});
+			</script>
 	        ';
 
-	        return $output;
-		}
-		public function generate_admin_menus()
-		{
-			
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), '', $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
 		}
 	}
 ?>

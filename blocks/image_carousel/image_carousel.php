@@ -105,6 +105,7 @@
                   <li role="presentation" class="active"><a href="#img1" aria-controls="img1" role="tab" data-toggle="tab">Image 1</a></li>
                   <li role="presentation"><a href="#img2" aria-controls="img2" role="tab" data-toggle="tab">Image 2</a></li>
                   <li role="presentation"><a href="#img3" aria-controls="img3" role="tab" data-toggle="tab">Image 3</a></li>
+				  <li role="presentation"><a href="#customcss" aria-controls="customcss" role="tab" data-toggle="tab">Custom CSS</a></li>
               </ul>
 
               <div class="tab-content">
@@ -132,6 +133,14 @@
 						$this->admin_select('image3_animation_delay', $delays,'Animation Delay: ',$image3_animation_delay);
                       ?>
                   </div>
+				  <div role="tabpanel" class="tab-pane fade" id="customcss">
+					  <?php
+					  $custom_css = $this->block->data('custom_css');
+					  $custom_classes = $this->block->data('custom_classes');
+					  $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+					  $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+					  ?>
+				  </div>
               </div>
 
           </div>
@@ -194,6 +203,14 @@
 		
 		public function output_custom_carousel()
 		{
+			global $active_controller;
+			$CI = &get_instance();
+			$CI->load->module('layout_system');
+
+			$custom_css = $this->block->data('custom_css');
+			$style_arr['text'] = ';'.$custom_css;
+			$this->block->set_data("style", $style_arr);
+
 			$image1 = $this->block->data('image1');
 			$image2 = $this->block->data('image2');
 			$image3 = $this->block->data('image3');
@@ -214,16 +231,17 @@
 						height: auto;
 					}
 				</style>
-					<div class="owl-container">
-						<div id="demo-one">
-							<div id="owl-one" class="owl-carousel">
-								  <div id="imgcrs1'.$this->block->get_id().'" class="item"><img src="'.$image1.'" alt="The Last of us"></div>
-								  <div id="imgcrs2'.$this->block->get_id().'" class="item"><img src="'.$image2.'" alt="The Last of us"></div>
-								  <div id="imgcrs3'.$this->block->get_id().'" class="item"><img src="'.$image3.'" alt="The Last of us"></div>
-							</div>
+				<div class="owl-container">
+					<div id="demo-one-'.$this->block->get_id().'">
+						<div id="owl-one" class="owl-carousel">
+							  <div id="imgcrs1'.$this->block->get_id().'" class="item"><img src="'.$image1.'" alt="The Last of us"></div>
+							  <div id="imgcrs2'.$this->block->get_id().'" class="item"><img src="'.$image2.'" alt="The Last of us"></div>
+							  <div id="imgcrs3'.$this->block->get_id().'" class="item"><img src="'.$image3.'" alt="The Last of us"></div>
 						</div>
-					</div>';
-			return $output;
+					</div>
+				</div>';
+
+			return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), '', $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
 		}
 
     }

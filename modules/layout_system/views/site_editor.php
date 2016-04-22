@@ -493,7 +493,7 @@ function showAdminWindowIframe(url)
       },
       function(data) {
           $("#admin-window").html(data);
-          $("#admin-window-content").html("<iframe src='" + url + "' style='width:100%; border:none;min-height:340px'></iframe>");
+          $("#admin-window-content").html("<iframe src='" + url + "' style='width:100%; border:none;min-height:430px'></iframe>");
           $("#admin-window").css("z-index", "999");
           $("#admin-window").css("width", "100%");
 

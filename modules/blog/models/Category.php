@@ -28,6 +28,7 @@
             $this->parent_id = $data['parent_id'];
     		$this->name = $data['name'];
     		$this->image = $data['image'];
+			$this->time_created = time();
     		$this->groups_allowed = $data['groups_allowed'];
     		$this->save();
     	}

@@ -157,6 +157,7 @@ class testimonials_block_handler extends  block_handler{
                     <li role="presentation"><a href="#author" aria-controls="author" role="tab" data-toggle="tab">Author</a></li>
                     <li role="presentation"><a href="#profession" aria-controls="profession" role="tab" data-toggle="tab">Profession</a></li>
 					<li role="presentation"><a href="#animations" aria-controls="animations" role="tab" data-toggle="tab">Animations</a></li>
+                    <li role="presentation"><a href="#customcss" aria-controls="customcss" role="tab" data-toggle="tab">Custom CSS</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -189,6 +190,14 @@ class testimonials_block_handler extends  block_handler{
 						$this->admin_select('animation_delay', $delays,'Animation Delay: ',$animation_delay);
                         ?>
                     </div>
+                    <div role="tabpanel" class="tab-pane fade" id="customcss">
+                        <?php
+                        $custom_css = $this->block->data('custom_css');
+                        $custom_classes = $this->block->data('custom_classes');
+                        $this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+                        $this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
+                        ?>
+                    </div>
                 </div>
 
             </div>
@@ -196,6 +205,14 @@ class testimonials_block_handler extends  block_handler{
         }
         public function generate_content()
         {
+            global $active_controller;
+            $CI = &get_instance();
+            $CI->load->module('layout_system');
+
+            $custom_css = $this->block->data('custom_css');
+            $style_arr['text'] = ';'.$custom_css;
+            $this->block->set_data("style", $style_arr);
+
             $slide_author = $this->block->data('slide_author');
             $slide_author_profession = $this->block->data('slide_author_profession');
             $slide_text = $this->block->data('slide_text');
@@ -313,11 +330,7 @@ class testimonials_block_handler extends  block_handler{
                 </div>
             </div>';
 
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
-            
+            return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'testimonials'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

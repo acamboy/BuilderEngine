@@ -38,13 +38,13 @@
                             <?php if($post->user_id == $id_user):?>
                                 <tr class="odd gradeX">
     							
-                                    <td><?=$post->title;?></td>
+                                    <td><?=stripslashes($post->title);?></td>
                                     <td><?=$post->slug;?></td>
 
      								<?php $categories = new Category;?>
     								<?php foreach($categories->get() as $category):?>
     								<?php if($category->id == $post->category_id):?>
-                                    <td><?=$category->name;?></td>
+                                    <td><?=stripslashes($category->name);?></td>
     								<?php endif?>
     								<?php endforeach?>
 

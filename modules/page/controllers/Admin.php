@@ -23,9 +23,16 @@
         function add(){
             $this->load->model("pages");
             if($_POST){
-                $this->pages->add($_POST, $this->user->get_id());
-                $this->user->editor_mode(true);
-                redirect('/editor/page-'.$_POST['slug'].".html?force-editor-mode=edit", 'location');
+				$this->db->where("title",$_POST['title']);
+				$query = $this->db->get("pages");
+				$result = $query->result();				
+				if($_POST['title'] == $result[0]->title || count($result) > 0){
+					redirect('admin/module/page/add?error=1','location');
+				}else{
+					$this->pages->add($_POST, $this->user->get_id());
+					$this->user->editor_mode(true);
+					redirect('/editor/page-'.$_POST['slug'].".html?force-editor-mode=edit", 'location');
+				}
             }
                 
             $pages_folder = "themes/".$this->BuilderEngine->get_option("active_frontend_theme")."/templates";
@@ -54,8 +61,15 @@
         function edit_page($id){
             $this->load->model("pages");
             if($_POST){
-                $this->pages->edit_page_link($_POST['old_name'], $_POST);
-                $this->pages->edit($_POST['id'], $_POST);
+				$this->db->where("title",$_POST['title']);
+				$query = $this->db->get("pages");
+				$result = $query->result();
+				if($_POST['title'] == $result[0]->title && $id != $result[0]->id ){
+					redirect('admin/module/page/edit_page/'.$id.'?error='.$_POST['title'],'location');
+				}else{				
+					$this->pages->edit_page_link($_POST['old_name'], $_POST);
+					$this->pages->edit($_POST['id'], $_POST);
+				}
             }
             
             $data['page'] = $this->pages->get($id);

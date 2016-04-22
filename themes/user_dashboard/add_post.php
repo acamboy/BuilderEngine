@@ -47,7 +47,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4" for="title">Post Title:</label>
 						<div class="col-md-8 col-sm-8">
-							<input class="form-control" type="text" id="title" name="title" value="<?=$object->title?>" data-parsley-required="true" />
+							<input class="form-control" type="text" id="title" name="title" value="<?=stripslashes($object->title)?>" data-parsley-required="true" />
 						</div>
 					</div>
 		            <div class="form-group">
@@ -66,15 +66,18 @@
                                 </span>
 								<br/>
 								<div id="avat" class="alert" style="display: block;width:130px;margin-top:10px;margin-bottom:10px;"> 
-								<script>var input = "<input type=\"hidden\" name=\"image\" value=\"<?=base_url('builderengine/public/img/photo_placeholder.png')?>\">";</script>
+								<script>var input = "<input type=\"hidden\" name=\"image1\" value=\"<?=base_url('builderengine/public/img/photo_placeholder.png')?>\">";</script>
 									<a class="close" onclick="$('#avat').hide();$('#plc').append(input).show();('#uploadImage1').remove();">×</a> 
-									<?php if($object->image==''){$object->image = base_url().'builderengine/public/img/photo_placeholder.png';}?>
-									  <img id="uploadPreview1" src="<?=$object->image?>" width="80"/> 
+									<?php if($page =='Add') 
+										    $image = base_url('builderengine/public/img/photo_placeholder.png');
+										  else
+											$image = $object->image;
+									?>
+									<img id="uploadPreview1" src="<?=$image?>" width="80"/> 
 								</div>
 								<div id="plc" class="alert" style="display: none;width:130px;margin-top:10px;margin-bottom:10px;"> 
 									<!--<a class="close" onclick="$('#plc').hide();$('#avat').show();">×</a> -->
-									  <img id="uploadPreview1" src="<?=base_url('builderengine/public/img/photo_placeholder.png')?>" width="80"/>
-									  
+									<img id="uploadPreview1" src="<?=base_url('builderengine/public/img/photo_placeholder.png')?>" width="80"/> 
 								</div>
 						</div>
 					</div>
@@ -101,11 +104,11 @@
 								<?php if($use_created_categories):?>
 			                        <?php $categories = new Category();?>
 									<?php foreach($categories->get() as $category):?>
-										<option value="<?=$category->id?>" <?php if($category->id == $object->category_id) echo 'selected'?>><?=$category->name?></option>
+										<option value="<?=$category->id?>" <?php if($category->id == $object->category_id) echo 'selected'?>><?=stripslashes($category->name)?></option>
 			                        <?php endforeach?>
 		                        <?else:?>
 									<?php foreach($default_user_post_category as $category):?>
-										<option value="<?=$category->id?>" <?php if($category->id == $object->category_id) echo 'selected'?>><?=$category->name?></option>
+										<option value="<?=$category->id?>" <?php if($category->id == $object->category_id) echo 'selected'?>><?=stripslashes($category->name)?></option>
 			                        <?php endforeach?>
 								<?php endif; ?>
 							</select>
@@ -116,21 +119,30 @@
 						<div class="col-md-6 col-sm-6">
 							<label class="radio-inline">
 								<?php if($object->comments_allowed == 'yes') 
-							    {  
-							    	$check1 = 'checked';  
-							    	$check2 = ''; 
-							    }
-							   	else
-							    {  
-							    	$check1 = ''; 
-							    	$check2 = 'checked';	
-							    } 					 
-								?>
-		                      	<input type="radio" name="comments_allowed" value="yes" <?=$check1?>/>Yes
-		                    </label>
-		                    <label class="radio-inline">
-		                        <input type="radio" name="comments_allowed" value="no" <?=$check2?>/>No Comments
-		                    </label>
+								{  
+									$check1 = 'checked';  
+									$check2 = '';
+									$check3 = '';
+								}
+								elseif($object->comments_allowed == 'no')
+								{  
+									$check1 = ''; 
+									$check2 = 'checked';
+									$check3 = '';
+								}
+								else{
+									$check1 = ''; 
+									$check2 = '';
+									$check3 = 'checked';
+								}?>
+								<input type="radio" name="comments_allowed" value="yes" <?=$check1?>/>Yes
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="comments_allowed" value="no" <?=$check2?>/>Disable,Show existing
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="comments_allowed" value="hide" <?=$check3?>/>Disable,Hide all
+							</label>
 						</div>
 					</div>
 					<div class="form-group">
@@ -141,7 +153,7 @@
 			                    	<?php if($page == 'Edit'):?>
 										<?php $tags = explode(',', $object->tags);?>
 										<?php foreach($tags as $tag):?>
-										 	<li><?=$tag?></li>
+										 	<li><?=stripslashes($tag)?></li>
 										<?php endforeach?>
 									<?php endif;?>
 			                    </ul>

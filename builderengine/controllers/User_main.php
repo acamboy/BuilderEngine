@@ -305,7 +305,7 @@ class User_main extends BE_Controller
 
 		$data['user_data'] = $this->users->get_by_id($user_id);
 		$data['groups'] = $this->users->get_groups();
-		$data['current_page'] = 'users';
+		$data['current_page'] = 'account';
 		$this->show->user_backend('edit_user', $data);
     }
     public function groups()
@@ -321,8 +321,7 @@ class User_main extends BE_Controller
             }
 
             $data['groups'] = $groups;
-            $data['current_page'] = 'groups';
-            
+            $data['current_page'] = 'groups';       
             $this->show->set_user_backend();
             $this->show->user_backend('groups',$data);
         }  

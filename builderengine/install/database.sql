@@ -150,10 +150,10 @@ INSERT INTO `be_link_permissions` VALUES ('10', '1');
 DROP TABLE IF EXISTS `be_links`;
 CREATE TABLE `be_links` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  `target` varchar(500) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `tags` varchar(255) DEFAULT NULL,
+  `name` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `target` varchar(500) CHARACTER SET utf8 DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `tags` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `parent` int(11) DEFAULT '0',
   `order` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -234,9 +234,9 @@ CREATE TABLE `be_options` (
 -- ----------------------------
 -- Records of be_options
 -- ----------------------------
-INSERT INTO `be_options` VALUES ('1', 'active_frontend_theme', 'default_theme_2015');
+INSERT INTO `be_options` VALUES ('1', 'active_frontend_theme', 'default_theme_2016');
 INSERT INTO `be_options` VALUES ('2', 'active_backend_theme', 'dashboard');
-INSERT INTO `be_options` VALUES ('3', 'version', '3.2.0');
+INSERT INTO `be_options` VALUES ('3', 'version', '3.2.3');
 INSERT INTO `be_options` VALUES ('4', 'active_user_backend_theme', 'user_dashboard');
 INSERT INTO `be_options` VALUES ('5', 'default_registration_group', 'Members');
 INSERT INTO `be_options` VALUES ('6', 'login_title', 'Website Member Login');
@@ -248,6 +248,8 @@ INSERT INTO `be_options` VALUES ('11', 'welcome_email', '<h2>Welcome</h2><br>We 
 INSERT INTO `be_options` VALUES ('12', 'email_address', 'noreply@mysite.com');
 INSERT INTO `be_options` VALUES ('13', 'user_dashboard_activ', 'no');
 INSERT INTO `be_options` VALUES ('14', 'notify_admin_registered_user', 'no');
+INSERT INTO `be_options` VALUES ('15', 'be_blog_access_groups', 'Members');
+INSERT INTO `be_options` VALUES ('16', 'default_website_access_group', 'Administrators,Members,Guests');
 
 -- ----------------------------
 -- Table structure for be_page_versions
@@ -333,7 +335,7 @@ CREATE TABLE `be_blog_posts` (
   `time_created` int(11) DEFAULT '0',
   `category_id` int(11) DEFAULT '0',  
   `user_id` int(11) unsigned NOT NULL,  
-  `comments_allowed` enum('yes','no') DEFAULT 'yes',
+  `comments_allowed` enum('yes','no','hide') DEFAULT 'yes',
   `tags` varchar(255) DEFAULT '',
   `groups_allowed` varchar(255) DEFAULT '',
   `slug` varchar(255) DEFAULT '',
@@ -355,6 +357,7 @@ CREATE TABLE `be_blog_categories` (
   `user_id` int(11) unsigned NOT NULL,
   `name` varchar(255) DEFAULT '',
   `image` varchar(255) DEFAULT '',
+  `time_created` int(11) DEFAULT NULL,
   `groups_allowed` varchar(255) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

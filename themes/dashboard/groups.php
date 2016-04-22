@@ -30,7 +30,8 @@
                             	<a <?php echo href('admin', 'user/delete_group/'.$group->id)?> class="btn btn-danger btn-xs">Delete Group</a>
 								<?php endif;?>
                             </div>
-                            <h4 class="panel-title"><?php echo $group->name?></h4>
+							<?php $label = ($this->BuilderEngine->get_option('default_registration_group') == $group->name)?' &nbsp;&nbsp;<span class="label label-warning">Set Default</span>':'';?>
+                            <h4 class="panel-title"><?php echo $group->name?><?=$label?></h4>
                         </div>
                         <div class="panel-body">
                             <p><?php echo $group->description?></p>

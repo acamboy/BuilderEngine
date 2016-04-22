@@ -5,11 +5,11 @@
 <?php if (isset($groups)): ?>
 	
 <script>
-                    $(document).ready(function() {
-                        $("#groups").select2({tags:[ <?php foreach ($groups as $group): ?>"<?php echo $group->name?>", <?php endforeach;?>]});
-                        $("#tags").select2({tags:[]});
-                    });
-                </script>
+	$(document).ready(function() {
+		$("#groups").select2({tags:[ <?php foreach ($groups as $group): ?>"<?php echo $group->name?>", <?php endforeach;?>]});
+		$("#tags").select2({tags:[]});
+	});
+</script>
 <?php endif ?>
 <!-- begin #content -->
 <div id="content" class="content" style="min-height:800px">
@@ -61,11 +61,13 @@
 					                            	<div class="col-md-6 col-sm-6">
 						                                <select class="form-control" name="color_pattern"/>
 						                                <?php $colors = scandir('themes/'.$BuilderEngine->get_option("active_frontend_theme").'/css/color_patterns');?>
+															<?php if(!in_array('default.css',$colors)):?>
 						                                	<option value="default">Default</option>
+															<?php endif;?>
 															<?php foreach($colors as $color):?>
 																<?php if($color != '.' && $color != '..'):?>
 																	<?php $color_name = str_replace('.css', '', $color);?>
-																	<option value="<?=$color_name?>" <?php if($BuilderEngine->get_option('theme_color_pattern') == $color_name) echo 'selected';?>><?=ucfirst($color_name)?></option>
+																	<option value="<?=$color_name?>" <?if($BuilderEngine->get_option('theme_color_pattern') == $color_name) echo 'selected';?>><?=ucfirst($color_name)?></option>
 																<?php endif;?>
 															<?php endforeach;?>
 															<?php

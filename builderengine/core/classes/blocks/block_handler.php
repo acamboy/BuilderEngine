@@ -113,17 +113,21 @@
             </div>';
 		}
 
-		function admin_input($var, $type, $title, $value = "")
+		function admin_input($var, $type, $title, $value = "", $block_id = null)
 		{
 
 			if($this->block->data($var) != "")
 				$value = $this->block->data($var);
+			if($type == 'checkbox')
+				$id = 'id="checkbox-'.$block_id.'"';
+			else
+				$id = '';
 
 			echo'
 			<link href="'.get_theme_path().'css/bootstrap.min.css" rel="stylesheet">
             <div class="form-group">
                 <label>'.$title.'</label>
-                <input type="'.$type.'" name="'.$var.'" class="form-control" value="'.$value.'" ng-model="'.$var.'" placeholder="'.$title.'">
+                <input '.$id.' type="'.$type.'" name="'.$var.'" class="form-control" value="'.$value.'" ng-model="'.$var.'" placeholder="'.$title.'">
             </div>';
 
 			/*echo"
@@ -264,7 +268,7 @@
                     unlink(BASEPATH."../files/captcha/".$CI->session->userdata['image']);
 
             $CI->session->set_userdata(array(
-                'captcha'.$block_id => $captcha,
+                'captcha'.$block_id => $cap['word'],
                 'image' => $cap['time'].'.jpg'
             ));
 

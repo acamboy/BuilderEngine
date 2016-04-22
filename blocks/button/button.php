@@ -44,11 +44,23 @@ class button_block_handler extends  block_handler{
 			$this->admin_select('button_animation_type', $types,'Animation type: ',$button_animation_type);
 			$this->admin_select('button_animation_duration', $durations,'Animation duration: ',$button_animation_duration);
 			$this->admin_select('button_animation_event', $events,'Animation Start: ',$button_animation_event);
-			$this->admin_select('button_animation_delay', $delays,'Animation Delay: ',$button_animation_delay);	
+			$this->admin_select('button_animation_delay', $delays,'Animation Delay: ',$button_animation_delay);
+			$custom_css = $this->block->data('custom_css');
+			$custom_classes = $this->block->data('custom_classes');
+			$this->admin_textarea('custom_css','Custom CSS: ', $custom_css, 4);
+			$this->admin_textarea('custom_classes','Custom Classes: ', $custom_classes, 2);
 		}
 		
         public function generate_content()
         {
+			global $active_controller;
+			$CI = &get_instance();
+			$CI->load->module('layout_system');
+
+			$custom_css = $this->block->data('custom_css');
+			$style_arr['text'] = ';'.$custom_css;
+			$this->block->set_data("style", $style_arr);
+
             $button_style = $this->block->data('color');
             $button_text = $this->block->data('text');
 			$button_action = $this->block->data('action');
@@ -70,14 +82,12 @@ class button_block_handler extends  block_handler{
             $output = '
                 <link href="'.base_url('blocks/button/style.css').'" rel="stylesheet">
 				<link href="'.base_url('builderengine/public/animations/css/animate.min.css').'" rel="stylesheet" />
-				<a href="'.$button_action.'" id="button'.$this->block->get_id().'" role="button" class="btn btn-'.$button_style.'">'.$button_text.'</a>
+				<div id="button-container-'.$this->block->get_id().'">
+					<a href="'.$button_action.'" id="button'.$this->block->get_id().'" role="button" class="btn btn-'.$button_style.'">'.$button_text.'</a>
+            	</div>
             ';
 
-            return $output;
-        }
-        public function generate_admin_menus()
-        {
-            
+			return $output.$CI->layout_system->load_new_block_scripts($this->block->get_id(), 'button-container-'.$this->block->get_id(), $CI->BuilderEngine->get_page_path(), '', $this->block->get_name(), 'with_settings');
         }
     }
 ?>

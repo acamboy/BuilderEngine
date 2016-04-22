@@ -22,19 +22,29 @@
         <div class="panel-body panel-form">
             <form class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="title">Page Title:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="title">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page Name"></i>
+						Page Title:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <input class="form-control" type="text" id="title" name="title" placeholder="Page Name / Title"/>
+						<?=(isset($_GET['error']))?'<span class="label label-danger">Page title already exists !':''?>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="slug">URL Slug:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="slug">
+					<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page URL Slug"></i>
+					URL Slug:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <input class="form-control" type="text" id="slug" name="slug" placeholder="URL Address Link"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="template">Page Template:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="template">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page Template"></i>
+						Page Template:
+					</label>
                     <div class="col-md-6 col-sm-6">                             
                         <select class="form-control" id="template" name="template">
                             <?php foreach($theme_pages as $theme_page): ?>
@@ -44,13 +54,19 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="pagemeta">Page Meta Description:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="pagemeta">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page SEO Description"></i>
+						Page Meta Description:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <input class="form-control" type="text" id="pagemeta" name="meta_desc" placeholder="SEO Page Description" data-parsley-required="true" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="pagemetakeywords">Page Meta Keywords:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="pagemetakeywords">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Page SEO Keywords"></i>
+						Page Meta Keywords:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <input class="form-control" type="text" id="pagemetakeywords" name="meta_keywords" placeholder="SEO Page Keywords" data-parsley-required="true" />
                     </div>
@@ -71,7 +87,10 @@
                 </div>
 				-->
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="pagemetakeywords">SEO Restrictions:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="pagemetakeywords">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="SEO Restrictions"></i>
+						SEO Restrictions:
+					</label>
                     <div class="col-md-8 col-sm-8">
                         <label class="checkbox-inline">
                             <input type="checkbox" name="seo_index" value="" />
@@ -100,7 +119,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="fullname">Add to Navigation:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="fullname">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Create a new Navigation Link for this page"></i>
+						Add to Navigation:
+					</label>
                     <div class="col-md-6 col-sm-6">
                         <label class="radio-inline">
                             <input type="radio" name="add_to_nav" value="no" checked />
@@ -120,7 +142,10 @@
                     </div></div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-4" for="website">Groups (Accounts) Access Allowed:</label>
+                    <label class="control-label col-md-4 col-sm-4" for="website">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Only members of groups selected will see this webpage"></i>
+						Group Access Policy:
+					</label>
                     <div class="form-group">
                     <div class="col-md-6 col-sm-6">
                         <ul id="access-groups">

@@ -135,7 +135,11 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4" for="website">Default Group Access Allowed for Blog:</label>
+						<label class="control-label col-md-4 col-sm-4" for="website">
+						<i class="fa fa-question-circle" style="font-size:16px;" data-toggle="tooltip" data-placement="top" title="Allows a group membership policy to be defined for users registering by way of this Modules registration page, that takes precedence over the system default user group."></i>
+						Module Default Registration Group(s):<br>
+							
+						</label>
 						<div class="form-group">
 						<div class="col-md-8 col-sm-8">
                             <ul id="access-groups">

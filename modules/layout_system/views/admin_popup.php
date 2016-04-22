@@ -15,22 +15,33 @@
     <script>
         $("#admin-window").css('display','block');
         $("#admin-window").draggable();
+		
+		$(".collapse-element").click(function () {
+			$header = $(this);
+			$content = $('.coll');
+			$content.slideToggle(500, function () {
+				$header.text(function () {
+				});
+			});
+		});
     </script>
 
-    <div class="block-editor"  style="width: 740px; position: absolute;width: 100%;background-color: #2D353C;height: 400px;">
-        <div style="width: 50%;margin-left: auto;margin-right: auto;max-height: 400px;">
-            <div class="row" style="max-height: 400px;">
-                <div style="max-height: 400px;">
-                    <div style="padding-left: 10px; margin-top:20px">
-                        <!--<h4 id="custom-editor-title" style="float:left">Block Settings</h4>-->
-                        <a href="#" id="popup-close" style="margin-top:10px;font-size: 30px;line-height: 30px;position: absolute;left: 71.6%;color: #FA4F4B;" class="close i-close-2"><i class="fa fa-times btn btn-xs btn-danger"></i></a>
-                    </div>
-
-                    <div id='admin-window-content'>
-                    </div>
-                </div>
+    <div class="block-editor"  data-sortable-id="ui-widget-7" style="position: absolute;width: 100%;">
+        <div class="panel panel-inverse" style="width: 50%;margin-left: auto;margin-right: auto;max-height: 400px;">
+            <div class="panel-heading">
+				<div class="panel-heading-btn">
+				   <a href="#" data-placement="top" class="collapse-element btn btn-xs btn-warning"><i class="fa fa-minus"></i></a>
+				   <a href="#" id="popup-close" class="close i-close-2 btn btn-xs btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+					<a href="#" id="" class="" data-click=""><i class=""></i></a>
+				</div>
+				<h4 class="panel-title">Block Settings</h4>
             </div>
-        </div>
-    </div>
-
+			<div class="panel-body coll">
+                <div data-scrollbar="true" data-height="280px">
+					<div class="widget-content" id='admin-window-content'> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

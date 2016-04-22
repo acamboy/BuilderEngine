@@ -28,6 +28,7 @@
                                 <th>Category Name</th>
                                 <th>Parent Category</th>
 								<th>Groups</th>
+								<th>Date Created</th>
 								<th>Actions</th>
                             </tr>
                         </thead>
@@ -35,16 +36,21 @@
                           <?php foreach($objects as $object):?>
                             <?php if($object->user_id == $id_user): ?>
                                 <tr class="odd gradeX">
-                                    <td><?=$object->name;?></td>
+                                    <td><?=stripslashes($object->name);?></td>
     								<?php if($object->parent_id == 0):?>
                                     <td>No Parent</td>
     								<?php else:?>
     								<?php $categories = new Category;?>
     								<?php foreach($categories->where('id',$object->parent_id)->get() as $category): ?>
-    								<td><?=$category->name?></td>
-                                    <?php endforeach?>
-    								<?php endif?>
+    								<td><?=stripslashes($category->name);?></td>
+                                    <?php endforeach;?>
+    								<?php endif;?>
     								<td><?=$object->groups_allowed?></td>
+									<?php if($object->time_created):?>
+									<td><?=date('d.m.Y',$object->time_created)?></td>
+									<?php else:?>
+									<td></td>
+									<?php endif;?>
     								<td> 
     							        <div class="btn-group-vertical">
     						               <a href="<?=base_url()?>user/blog/add_category/edit/<?=$object->id?>" class="btn btn-success" type="button" ><i class="fa fa-edit"></i> Edit</a>

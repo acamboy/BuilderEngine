@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***********************************************************
 * BuilderEngine v3.1.0
 * ---------------------------------
@@ -74,9 +74,9 @@
         	switch($parent->type())
         	{
         		case "column":
-					uksort($data['blocks'], array($this,'cmp_myarr'));
 					$this->load->view('ajax/block_list_dropdown', $data);
 					break;
+
 				case "row":
 					$this->load->view('ajax/row_block_list_dropdown', $data);
 					break;
@@ -85,17 +85,18 @@
 					break;
 				case "page":
 					$this->load->view('ajax/page_block_list_dropdown', $data);
-					break;				
+					break;
 				case "header":
 				case "footer":
 					$this->load->view('ajax/header_block_list_dropdown', $data);
 					break;
+
         	}
 		}
 		public function versions_window($mode)
 		{
 			$this->user->require_group("Frontend Manager");
-			
+
 	        $page_path = $mode.'/index';
 	        if($mode == "page")
 	            $page_versions = $this->versions->get_page_versions($page_path);
@@ -136,7 +137,136 @@
     	{
     		$this->load->view('admin_popup');
     	}
-    	function block_admin($block_name, $menu = '')
+
+        function new_block_delete()
+        {
+			if($_POST)
+			{
+				$block_name = $_POST['blockName'];
+				$key_to_delete = $_POST['keyToDelete'];
+				$page_path = $_POST['pagePath'];
+
+				$this->BuilderEngine->set_page_path($page_path);
+
+				$block = new Block($block_name);
+				$block->load();
+				$old_content = $block->data('content');
+				unset($old_content[$key_to_delete]);
+
+				$block->set_data('content', $old_content, true);
+				$block->save();
+
+				return print_r($block->data('content'), true);
+			}
+        }
+
+        function new_block_save()
+        {
+			if($_POST)
+			{
+				$block_name = $_POST['blockName'];
+				$field_name = $_POST['fieldName'];
+				$field_value = $_POST['fieldValue'];
+				$page_path = $_POST['pagePath'];
+				$is_array = $_POST['isArray'];
+				$real_name = $_POST['realName'];
+
+				if($is_array == true)
+				{
+					$block_name = urldecode($block_name);
+					$field_name = urldecode($field_name);
+					$field_value = urldecode($field_value);
+
+					$field_info = explode('-', $field_name);
+
+					$content = array();
+					$content[$field_info[1]] = array();
+					$content[$field_info[1]][$field_info[2]] = $field_value;
+
+					$this->BuilderEngine->set_page_path($page_path);
+					$block = new Block($real_name);
+					$block->load();
+
+
+					$old_content = $block->data('content');
+					if(empty($old_content))
+						$old_content[0] = array();
+
+					foreach($old_content as $old_element)
+					{
+						$old_element = (object)$old_element;
+					}
+
+					$merged = array();
+					foreach($content as $key_1 => $elem_1)
+					{
+						foreach($old_content as $key_2 => $elem_2)
+						{
+							if($key_1 == $key_2)
+								$merged[$key_2] = array_merge($elem_2, $elem_1);
+							else
+								$merged[$key_1] = $elem_1;
+						}
+					}
+
+					$result_array = array();
+					foreach($old_content as $key_1 => $elem_1)
+					{
+						foreach($merged as $key_2 => $elem_2)
+						{
+							if($key_2 > max(array_keys($old_content)))
+								$result_array[$key_2] = $elem_2;
+						}
+					}
+					foreach($old_content as $key_1 => $elem_1)
+					{
+						foreach($merged as $key_2 => $elem_2)
+						{
+							if($key_1 == $key_2)
+								$result_array[$key_1] = $elem_2;
+							else
+								$result_array[$key_1] = $elem_1;
+						}
+					}
+					ksort($result_array);
+					$objects_result_array = array();
+					foreach($result_array as $key => $elem)
+					{
+						$objects_result_array[$key] = $this->convertToObject($elem);
+					}
+					$block->set_data('content', $objects_result_array, true);
+					$block->save();
+					$new_data = $block->data('content');
+
+					return print_r($new_data, true);
+				}
+				else
+				{
+					$block_name = urldecode($block_name);
+					$field_name = urldecode($field_name);
+					$field_value = urldecode($field_value);
+
+					$this->BuilderEngine->set_page_path($page_path);
+					$block = new Block($block_name);
+					$block->load();
+					$block->set_data($field_name, $field_value, true);
+					$block->save();
+				}
+			}
+        }
+
+        function convertToObject($array) {
+            $object = new stdClass();
+            foreach ($array as $key => $value) {
+                if (is_array($value)) {
+                    $value = $this->convertToObject($value);
+                }
+                $object->$key = $value;
+            }
+            return $object;
+        }
+
+    	function block_admin($block_name, $menu = '', $menu_type = '')
     	{
     		$page_path = $_GET['page_path'];
     		PC::debug("Setting page path to ".$page_path);
@@ -170,7 +300,7 @@
     					$.ajax( {
 					        url: site_root + "/index.php/layout_system/ajax/block_admin/'.$block_name.'?page_path='.$page_path.'",
 					        async: false,
-					        type: "post",          
+					        type: "post",
 					        data: $("#block-admin-form").serialize(),
 					    }).fail(function (data){alert(console.log(data))});
 					    window.top.notifyChange();
@@ -178,7 +308,7 @@
 						$("#admin-window").remove();
 
 					event.preventDefault();
-						
+
     				});
 				});
     			</script>
@@ -192,14 +322,14 @@
     		<input type="hidden" name="block_save" name="">
     		<input type="hidden" name="page_path" value="'.$page_path.'">';
     		if($menu == 'styler')
-    			$block->generate_admin('styler');
+    			$block->generate_admin('styler', $menu_type);
     		else
     			$block->generate_admin();
     		echo '
 
     			<div class=\"control-group\" style="float:right; margin-top:20px;margin-right: -15px;">
 	            	<div class=\"controls controls-row\">
-	            		<input id="block-admin-save" type="submit" class="btn btn-primary" value="Save Changes">
+	            		<input id="block-admin-save" type="submit" class="btn btn-success" value="Save Changes">
             		</div>
             	</div>
 	            		';
@@ -251,8 +381,8 @@
 	        	$block->add_block($child);
 	        }
 	        $block->save();
-	        
-	        
+
+
 
 
 	        //$this->db->query("UNLOCK TABLES");
@@ -273,7 +403,7 @@
 
 	        if(isset($_REQUEST['content']))
 	       		$block->save_content($_REQUEST['content']);
-	       	
+
 
 			if(isset($_REQUEST['size'])){
 				$block->remove_css_class($_REQUEST['initial_size']);
@@ -284,7 +414,7 @@
 	        $block->save();
 
         }
- 
+
         function undo_block_free_mode()
         {
         	PC::blabla($_POST['page_path']);
@@ -349,7 +479,7 @@
 	        $page_path = mysql_real_escape_string($_REQUEST['page']);
 	        $version_id = $this->versions->get_pending_page_version_id($page_path);
 	        if($version_id)
-	        {  
+	        {
 	            $this->toggle_version_approved($version_id);
 	            $this->version_activate($version_id);
 	        }
@@ -391,7 +521,7 @@
 
 	        echo count($block->blocks);
 	        $block->remove_child($name);
-	        
+
 	        $block->save();
 
 	    }
@@ -400,14 +530,17 @@
 	    	print_r(scandir("."));
 	    }
 
-	    function add_block($parent, $type)
+	    function add_block($parent, $type, $page_path = '')
 	    {
-	    	$page_path = $_POST['page_path'];
+            if($page_path == '')
+	    	    $page_path = $_POST['page_path'];
+            else
+                $page_path = str_replace('_', '/', $page_path);
 	    	PC::page_paths($page_path);
 	    	$this->BuilderEngine->set_page_path($page_path);
 	    	//$this->blocks->set_page_path($this->blocks->get_page_path_of($parent));
 	    	$max_id = $this->blocks->get_max_block_id();
-	        
+
 	    	$new_id = $max_id + 1;
 	    	$new_block_name = "custom-block-".$new_id;
 
@@ -415,6 +548,7 @@
 	        $block->load();
 	        $new_block = new Block($new_block_name);
 	        $new_block->set_type($type);
+			$new_block->set_id($new_id);
 	        if(isset($_POST['data_class']) && $_POST['data_class'] != "")
 	        {
 	        	$new_block->add_css_class($_POST['data_class']);
@@ -427,35 +561,58 @@
 	        $new_block->set_content("Your new block.");
 
 	        $new_block->show();
-	        
+
 	    }
 
-		function cmp_myarr($a, $b)
+        public function get_blocks_for($block_type, $block_id, $block_name)
+        {
+			$data['block_type'] = $block_type;
+			$data['block_name'] = $block_name;
+
+			$block_info = explode('-', $block_name);
+			if(strpos($block_name, 'custom-block') !== false)
+				$data['block_id'] = $block_info[2];
+			else
+				$data['block_id'] = $block_id;
+			$data['blocks'] = get_blocks();
+            return $this->load->view('ajax/blocks_list', $data, true);
+        }
+
+		public function get_output_for($module, $object)
 		{
-			$arr = array(
-				"Generic" => 1,
-				"Core" => 2,
-				"Bootstrap" => 3,
-				"Page System" => 4,
-				"Blog" => 5,
-				"Forum" => 6,
-				"Video Gallery" => 7,
-				"Photo Gallery" => 8,
-				"Sound Depot" => 9,
-				"Portfolio" => 10,
-				"News" => 11,
-				"Article" => 12,
-				"Ecommerce" => 13,	
-				);
-			/*
-			if (isset($arr[$a])) {
-				return $arr[$a];
-			} else {
-				return -1;
-			}
-			*/
-			return $arr[$a] - $arr[$b];
-		}   
+			$this->load->module($module);
+			$objects = new $object();
+			$data['objects'] = $objects->get();
+			return $this->load->view('ajax/module_output_sidebar', $data, true);
+		}
+
+		public function change_module_block_output($block_id, $newOutputObjectId, $page_path, $block_name)
+		{
+			$page_path = str_replace('_', '/', $page_path);
+			$this->BuilderEngine->set_page_path($page_path);
+			$block = new Block('custom-block-'.$block_id);
+			$block->load();
+
+			$custom_content = array();
+			$custom_content['output'] = 'custom';
+			$custom_content['outputId'] = $newOutputObjectId;
+
+			$block->set_data('output', $custom_content, true);
+			$block->save();
+
+			$block = new Block($block_name);
+			$block->load();
+		}
+
+		public function return_new_block_output($page_path, $block_name, $block_type = false)
+		{
+			$page_path = str_replace('_', '/', $page_path);
+			$this->BuilderEngine->set_page_path($page_path);
+			$block = new Block($block_name);
+			$block->load();
+
+			return $block->show();
+		}
 	}
 
 ?>

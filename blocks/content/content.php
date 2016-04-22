@@ -36,6 +36,10 @@ class Content_block_handler extends  block_handler{
         }
 		public function generate_content()
 		{
+			global $active_controller;
+			$CI = &get_instance();
+			$CI->load->module('layout_system');
+
 	        $this->block->force_data_modification();
 
 	        $style_arr = $this->block->data("style");
@@ -59,8 +63,8 @@ class Content_block_handler extends  block_handler{
                 $output .= '
                 });
             </script>';
-            return $output;
-	        //return $output;
+
+			return $output.$CI->layout_system->load_section_script($this->block->get_id(), $CI->BuilderEngine->get_page_path(), 'content', $this->block->get_name());
 		}
 	}
 ?>
